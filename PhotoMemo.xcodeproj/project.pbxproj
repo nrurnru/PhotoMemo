@@ -3,17 +3,20 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		26AE1FD492FDD86481BB738B /* Pods_PhotoMemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F7E57A2DC9024B2873FFD2A /* Pods_PhotoMemo.framework */; };
 		DE3C0D5025B3353A00F33612 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3C0D4F25B3353A00F33612 /* AppDelegate.swift */; };
 		DE3C0D5225B3353A00F33612 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3C0D5125B3353A00F33612 /* SceneDelegate.swift */; };
-		DE3C0D5425B3353A00F33612 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3C0D5325B3353A00F33612 /* ViewController.swift */; };
+		DE3C0D5425B3353A00F33612 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3C0D5325B3353A00F33612 /* MainViewController.swift */; };
 		DE3C0D5725B3353A00F33612 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE3C0D5525B3353A00F33612 /* Main.storyboard */; };
 		DE3C0D5925B3353D00F33612 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE3C0D5825B3353D00F33612 /* Assets.xcassets */; };
 		DE3C0D5C25B3353D00F33612 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE3C0D5A25B3353D00F33612 /* LaunchScreen.storyboard */; };
+		DE3C0D7D25B3453E00F33612 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3C0D7C25B3453E00F33612 /* SettingViewController.swift */; };
+		DE3C0D8125B347FC00F33612 /* NewMemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3C0D8025B347FC00F33612 /* NewMemoViewController.swift */; };
+		DE3C0D8425B3482400F33612 /* MemoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3C0D8325B3482400F33612 /* MemoDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,11 +26,14 @@
 		DE3C0D4C25B3353A00F33612 /* PhotoMemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoMemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE3C0D4F25B3353A00F33612 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE3C0D5125B3353A00F33612 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		DE3C0D5325B3353A00F33612 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		DE3C0D5325B3353A00F33612 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		DE3C0D5625B3353A00F33612 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DE3C0D5825B3353D00F33612 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DE3C0D5B25B3353D00F33612 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DE3C0D5D25B3353D00F33612 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DE3C0D7C25B3453E00F33612 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		DE3C0D8025B347FC00F33612 /* NewMemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMemoViewController.swift; sourceTree = "<group>"; };
+		DE3C0D8325B3482400F33612 /* MemoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,7 +54,6 @@
 				1962D6CD770D5C870255E823 /* Pods-PhotoMemo.debug.xcconfig */,
 				379DFDF62B4362B0D4C6AA91 /* Pods-PhotoMemo.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -81,15 +86,58 @@
 		DE3C0D4E25B3353A00F33612 /* PhotoMemo */ = {
 			isa = PBXGroup;
 			children = (
-				DE3C0D4F25B3353A00F33612 /* AppDelegate.swift */,
-				DE3C0D5125B3353A00F33612 /* SceneDelegate.swift */,
-				DE3C0D5325B3353A00F33612 /* ViewController.swift */,
-				DE3C0D5525B3353A00F33612 /* Main.storyboard */,
+				DE3C0D7B25B3452800F33612 /* View */,
+				DE3C0D7A25B3427E00F33612 /* System */,
+				DE3C0D7925B3424A00F33612 /* Storyboard */,
+				DE3C0D7825B3423700F33612 /* ViewModel */,
+				DE3C0D7725B3421F00F33612 /* Model */,
 				DE3C0D5825B3353D00F33612 /* Assets.xcassets */,
-				DE3C0D5A25B3353D00F33612 /* LaunchScreen.storyboard */,
 				DE3C0D5D25B3353D00F33612 /* Info.plist */,
 			);
 			path = PhotoMemo;
+			sourceTree = "<group>";
+		};
+		DE3C0D7725B3421F00F33612 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		DE3C0D7825B3423700F33612 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		DE3C0D7925B3424A00F33612 /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				DE3C0D5525B3353A00F33612 /* Main.storyboard */,
+				DE3C0D5A25B3353D00F33612 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboard;
+			sourceTree = "<group>";
+		};
+		DE3C0D7A25B3427E00F33612 /* System */ = {
+			isa = PBXGroup;
+			children = (
+				DE3C0D4F25B3353A00F33612 /* AppDelegate.swift */,
+				DE3C0D5125B3353A00F33612 /* SceneDelegate.swift */,
+			);
+			path = System;
+			sourceTree = "<group>";
+		};
+		DE3C0D7B25B3452800F33612 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DE3C0D5325B3353A00F33612 /* MainViewController.swift */,
+				DE3C0D7C25B3453E00F33612 /* SettingViewController.swift */,
+				DE3C0D8025B347FC00F33612 /* NewMemoViewController.swift */,
+				DE3C0D8325B3482400F33612 /* MemoDetailViewController.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -206,9 +254,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DE3C0D5425B3353A00F33612 /* ViewController.swift in Sources */,
+				DE3C0D5425B3353A00F33612 /* MainViewController.swift in Sources */,
+				DE3C0D8425B3482400F33612 /* MemoDetailViewController.swift in Sources */,
 				DE3C0D5025B3353A00F33612 /* AppDelegate.swift in Sources */,
 				DE3C0D5225B3353A00F33612 /* SceneDelegate.swift in Sources */,
+				DE3C0D8125B347FC00F33612 /* NewMemoViewController.swift in Sources */,
+				DE3C0D7D25B3453E00F33612 /* SettingViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
