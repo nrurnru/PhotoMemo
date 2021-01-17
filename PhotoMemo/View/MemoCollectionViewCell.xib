@@ -17,9 +17,9 @@
                 <rect key="frame" x="0.0" y="0.0" width="113" height="86"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5cj-eL-ipu">
-                        <rect key="frame" x="35.5" y="32.5" width="42" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5cj-eL-ipu">
+                        <rect key="frame" x="8" y="34" width="97" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -28,7 +28,9 @@
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <color key="backgroundColor" systemColor="systemGrayColor"/>
             <constraints>
+                <constraint firstItem="5cj-eL-ipu" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="1C3-0E-Uu4"/>
                 <constraint firstItem="5cj-eL-ipu" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="HtT-ig-yQ2"/>
+                <constraint firstAttribute="trailing" secondItem="5cj-eL-ipu" secondAttribute="trailing" constant="8" id="ZlD-QS-fzx"/>
                 <constraint firstItem="5cj-eL-ipu" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="cmW-X1-FJh"/>
             </constraints>
             <size key="customSize" width="113" height="86"/>

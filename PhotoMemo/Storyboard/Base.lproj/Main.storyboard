@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hap-JT-pgf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="NIm-Oi-9VU">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
@@ -8,20 +8,55 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Memo Detail View Controller-->
+        <!--Title-->
         <scene sceneID="uZv-mK-tdd">
             <objects>
-                <viewController id="uJS-FO-dO5" customClass="MemoDetailViewController" customModule="PhotoMemo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MemoDetailViewController" id="uJS-FO-dO5" customClass="MemoDetailViewController" customModule="PhotoMemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="adY-UJ-KdG">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c2d-O8-5MV">
+                                <rect key="frame" x="0.0" y="812" width="414" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="TsQ-Ek-Rw2"/>
+                                </constraints>
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="NUZ-f1-8kB"/>
+                                    <barButtonItem systemItem="trash" id="pIc-7h-MSb"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="dFW-5Q-zT6"/>
+                                </items>
+                            </toolbar>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="IA6-Gj-RSo">
+                                <rect key="frame" x="0.0" y="140" width="414" height="175"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="175" id="E5b-ZL-Qcp"/>
+                                </constraints>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="O9J-x7-JZR"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="O9J-x7-JZR" firstAttribute="trailing" secondItem="IA6-Gj-RSo" secondAttribute="trailing" id="3Ix-nZ-J49"/>
+                            <constraint firstItem="IA6-Gj-RSo" firstAttribute="leading" secondItem="O9J-x7-JZR" secondAttribute="leading" id="Zn1-nW-58O"/>
+                            <constraint firstItem="IA6-Gj-RSo" firstAttribute="top" secondItem="O9J-x7-JZR" secondAttribute="top" id="jen-sV-sjq"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Title" id="wOh-VI-BFe">
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="noN-TB-GAm"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="memoTextView" destination="IA6-Gj-RSo" id="uJd-dD-AyK"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vTX-Rv-UIk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1958" y="-573"/>
+            <point key="canvasLocation" x="1957.9710144927537" y="-573.21428571428567"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -32,7 +67,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="wcT-pe-i2b">
-                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <rect key="frame" x="0.0" y="140" width="414" height="722"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="4ko-aD-uta">
                                     <size key="itemSize" width="128" height="128"/>
@@ -53,11 +88,18 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Xfu-rp-ZAZ">
-                        <barButtonItem key="rightBarButtonItem" title="Item" image="square.and.pencil" catalog="system" id="Sni-gH-aUo">
-                            <connections>
-                                <segue destination="4D7-AF-rTs" kind="show" id="qPP-VW-Jtw"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem title="Item" image="square.and.pencil" catalog="system" id="Sni-gH-aUo">
+                                <connections>
+                                    <segue destination="4D7-AF-rTs" kind="show" id="qPP-VW-Jtw"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Item" id="UQ4-UG-cWh">
+                                <connections>
+                                    <segue destination="uJS-FO-dO5" kind="show" id="6jA-TF-7i6"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="memoCollectionView" destination="wcT-pe-i2b" id="mst-UT-JR1"/>
@@ -74,10 +116,34 @@
                     <view key="view" contentMode="scaleToFill" id="WXf-Zx-eYR">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="메모를 입력하세요" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="44h-Es-A7H">
+                                <rect key="frame" x="0.0" y="140" width="414" height="722"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="QS3-1M-fYw"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="44h-Es-A7H" firstAttribute="leading" secondItem="QS3-1M-fYw" secondAttribute="leading" id="OhV-to-MER"/>
+                            <constraint firstItem="QS3-1M-fYw" firstAttribute="trailing" secondItem="44h-Es-A7H" secondAttribute="trailing" id="kt7-wE-RhV"/>
+                            <constraint firstItem="QS3-1M-fYw" firstAttribute="bottom" secondItem="44h-Es-A7H" secondAttribute="bottom" id="oI0-0B-eNa"/>
+                            <constraint firstItem="44h-Es-A7H" firstAttribute="top" secondItem="QS3-1M-fYw" secondAttribute="top" id="sfT-Bs-Ve6"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="P3w-a0-wHr"/>
+                    <navigationItem key="navigationItem" id="P3w-a0-wHr">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="jFF-ua-gBC">
+                            <connections>
+                                <action selector="saveAction:" destination="4D7-AF-rTs" id="CFr-PY-NLg"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="memoTextView" destination="44h-Es-A7H" id="Ot7-Wg-hHk"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HC2-5v-CS4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -99,33 +165,14 @@
             </objects>
             <point key="canvasLocation" x="1048" y="842"/>
         </scene>
-        <!--Tab Bar Controller-->
-        <scene sceneID="qPk-zq-VDa">
-            <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="hap-JT-pgf" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="YJG-Dh-K3R">
-                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </tabBar>
-                    <connections>
-                        <segue destination="NIm-Oi-9VU" kind="relationship" relationship="viewControllers" id="seG-VU-RTK"/>
-                        <segue destination="q9p-dV-jFp" kind="relationship" relationship="viewControllers" id="klE-Mj-vaT"/>
-                    </connections>
-                </tabBarController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="d9a-pM-dwd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="137.68115942028987" y="113.83928571428571"/>
-        </scene>
         <!--Memo-->
         <scene sceneID="6s4-Qd-VKz">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="NIm-Oi-9VU" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Memo" image="pencil.and.outline" catalog="system" id="eZG-CW-psw"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="WwE-F6-ptX">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="WwE-F6-ptX">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -142,6 +189,9 @@
         <image name="gearshape.fill" catalog="system" width="128" height="121"/>
         <image name="pencil.and.outline" catalog="system" width="128" height="128"/>
         <image name="square.and.pencil" catalog="system" width="128" height="115"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

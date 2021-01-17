@@ -9,21 +9,24 @@ import UIKit
 
 class MemoDetailViewController: UIViewController {
 
+    @IBOutlet var memoTextView: UITextView!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    private func setUp() {
+        memoTextView.delegate = self
     }
-    */
+    
+    private func setupUI() {
+        self.navigationController?.navigationBar.backgroundColor = .white
+        
+    }
 
+}
+
+extension MemoDetailViewController: UITextViewDelegate {
+    //
 }

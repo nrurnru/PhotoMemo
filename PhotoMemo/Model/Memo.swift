@@ -9,6 +9,7 @@ import RealmSwift
 
 
 class Memo: Object {
+    @objc dynamic var id: Int = Int()
     @objc dynamic var text: String = ""
     @objc dynamic var createdAt: Date = Date()
     @objc dynamic var updatedAt: Date = Date()

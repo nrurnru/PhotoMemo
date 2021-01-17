@@ -10,9 +10,10 @@ import RealmSwift
 
 class RealmManager {
     private init(){}
+    static let configuration = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
     static let shared = RealmManager()
     
-    private let realm = try! Realm()
+    private let realm = try! Realm(configuration: configuration)
     
     func saveData<T: Object>(data: T) {
         try! realm.write {
