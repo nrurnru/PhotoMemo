@@ -38,6 +38,12 @@ class MemoDetailViewController: UIViewController {
         RealmManager.shared.updateMemo(memo: memo, text: text)
         self.navigationController?.popViewController(animated: true)
     }
+    
+    @IBAction func deleteAction(_ sender: Any) {
+        guard let memo = self.memo else { return }
+        RealmManager.shared.deleteData(data: memo)
+        self.navigationController?.popViewController(animated: true)
+    }
 }
 
 extension MemoDetailViewController: UITextViewDelegate {

@@ -47,11 +47,19 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="wOh-VI-BFe">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="noN-TB-GAm">
-                            <connections>
-                                <action selector="saveAction:" destination="uJS-FO-dO5" id="sZG-VF-Czn"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="save" id="noN-TB-GAm">
+                                <connections>
+                                    <action selector="saveAction:" destination="uJS-FO-dO5" id="sZG-VF-Czn"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem style="plain" systemItem="trash" id="Ydj-Br-ngD">
+                                <color key="tintColor" systemColor="systemRedColor"/>
+                                <connections>
+                                    <action selector="deleteAction:" destination="uJS-FO-dO5" id="mbQ-g1-Sbe"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="memoTextView" destination="IA6-Gj-RSo" id="uJd-dD-AyK"/>
@@ -197,6 +205,9 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

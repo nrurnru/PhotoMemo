@@ -32,4 +32,10 @@ class RealmManager {
             realm.add(_ : memo, update: .error)
         }
     }
+    
+    func deleteData<T: Object>(data: T) {
+        try! realm.write {
+            realm.delete(data)
+        }
+    }
 }
