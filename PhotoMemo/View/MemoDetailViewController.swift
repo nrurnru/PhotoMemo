@@ -6,25 +6,38 @@
 //
 
 import UIKit
+import RealmSwift
 
 class MemoDetailViewController: UIViewController {
 
     @IBOutlet var memoTextView: UITextView!
+    var memo: Memo? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
+        setUp()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationItem.title = "메모 보기"
     }
     
     private func setUp() {
         memoTextView.delegate = self
+        memoTextView.text = memo?.text
     }
     
     private func setupUI() {
-        self.navigationController?.navigationBar.backgroundColor = .white
-        
+
     }
 
+    @IBAction func saveAction(_ sender: Any) {
+        guard let memo = self.memo else { return }
+        guard let text = memoTextView.text else { return }
+        RealmManager.shared.updateMemo(memo: memo, text: text)
+        self.navigationController?.popViewController(animated: true)
+    }
 }
 
 extension MemoDetailViewController: UITextViewDelegate {

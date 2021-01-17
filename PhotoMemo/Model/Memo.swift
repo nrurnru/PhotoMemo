@@ -15,4 +15,8 @@ class Memo: Object {
     @objc dynamic var updatedAt: Date = Date()
     @objc dynamic var isDeleted: Bool = false
     @objc dynamic var isSynced: Bool = false
+    
+    override static func primaryKey() -> String? {
+        return "id"
+    }
 }

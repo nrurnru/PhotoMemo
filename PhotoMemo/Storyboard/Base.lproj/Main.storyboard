@@ -27,13 +27,12 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="dFW-5Q-zT6"/>
                                 </items>
                             </toolbar>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="IA6-Gj-RSo">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Memo" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="IA6-Gj-RSo">
                                 <rect key="frame" x="0.0" y="140" width="414" height="175"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="175" id="E5b-ZL-Qcp"/>
                                 </constraints>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -48,7 +47,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="wOh-VI-BFe">
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="noN-TB-GAm"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="noN-TB-GAm">
+                            <connections>
+                                <action selector="saveAction:" destination="uJS-FO-dO5" id="sZG-VF-Czn"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="memoTextView" destination="IA6-Gj-RSo" id="uJd-dD-AyK"/>

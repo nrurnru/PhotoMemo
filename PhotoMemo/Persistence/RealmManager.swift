@@ -24,4 +24,12 @@ class RealmManager {
     func loadData<T: Object>(_: T.Type) -> Results<T> {
         return realm.objects(T.self)
     }
+    
+    func updateMemo(memo: Memo, text: String) {
+        try! realm.write {
+            memo.text = text
+            memo.createdAt = Date()
+            realm.add(_ : memo, update: .error)
+        }
+    }
 }
