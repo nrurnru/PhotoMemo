@@ -28,7 +28,7 @@ class RealmManager {
     func updateMemo(memo: Memo, text: String) {
         try! realm.write {
             memo.text = text
-            memo.createdAt = Date()
+            memo.updatedAt = Date()
             realm.add(_ : memo, update: .error)
         }
     }
