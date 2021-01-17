@@ -9,7 +9,7 @@ import UIKit
 import RealmSwift
 
 class MainViewController: UIViewController {
-    var data = RealmManager.shared.loadData(Memo.self)
+    var data = RealmManager.shared.loadData(Memo.self).sorted(byKeyPath: "createdAt", ascending: false)
     @IBOutlet var memoCollectionView: UICollectionView!
     
     override func viewDidLoad() {
@@ -35,7 +35,11 @@ class MainViewController: UIViewController {
     
     private func configureFlowLayout() {
         guard let layout = memoCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
-        layout.itemSize.width = memoCollectionView.frame.width / 3 - 10
+        let itemSize = view.frame.width / 3
+        layout.itemSize.width = itemSize
+        layout.itemSize.height = itemSize
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 0
         memoCollectionView.setCollectionViewLayout(layout, animated: false)
         memoCollectionView.reloadData()
     }
@@ -49,8 +53,9 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "memoCell", for: indexPath) as! MemoCollectionViewCell
-        cell.text?.text = data[indexPath.row].id.description
-
+        cell.text?.text = data[indexPath.row].text
+        cell.layer.borderWidth = 1
+        cell.layer.borderColor = view.backgroundColor?.cgColor
         return cell
     }
     
