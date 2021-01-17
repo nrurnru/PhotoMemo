@@ -19,6 +19,9 @@
 		DE3C0D8425B3482400F33612 /* MemoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3C0D8325B3482400F33612 /* MemoDetailViewController.swift */; };
 		DE77EB2B25B34B990065FA3F /* MemoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE77EB2925B34B990065FA3F /* MemoCollectionViewCell.swift */; };
 		DE77EB2C25B34B990065FA3F /* MemoCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DE77EB2A25B34B990065FA3F /* MemoCollectionViewCell.xib */; };
+		DEAF2D6325B3A97E00ECAC0C /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAF2D6225B3A97E00ECAC0C /* MainViewModel.swift */; };
+		DEAF2D6625B3A99800ECAC0C /* Memo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAF2D6525B3A99800ECAC0C /* Memo.swift */; };
+		DEAF2D6A25B3AE6E00ECAC0C /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAF2D6925B3AE6E00ECAC0C /* RealmManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +41,9 @@
 		DE3C0D8325B3482400F33612 /* MemoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoDetailViewController.swift; sourceTree = "<group>"; };
 		DE77EB2925B34B990065FA3F /* MemoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoCollectionViewCell.swift; sourceTree = "<group>"; };
 		DE77EB2A25B34B990065FA3F /* MemoCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MemoCollectionViewCell.xib; sourceTree = "<group>"; };
+		DEAF2D6225B3A97E00ECAC0C /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		DEAF2D6525B3A99800ECAC0C /* Memo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memo.swift; sourceTree = "<group>"; };
+		DEAF2D6925B3AE6E00ECAC0C /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +96,7 @@
 		DE3C0D4E25B3353A00F33612 /* PhotoMemo */ = {
 			isa = PBXGroup;
 			children = (
+				DEAF2D6825B3AE5400ECAC0C /* Persistence */,
 				DE3C0D7B25B3452800F33612 /* View */,
 				DE3C0D7A25B3427E00F33612 /* System */,
 				DE3C0D7925B3424A00F33612 /* Storyboard */,
@@ -104,6 +111,7 @@
 		DE3C0D7725B3421F00F33612 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				DEAF2D6525B3A99800ECAC0C /* Memo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -111,6 +119,7 @@
 		DE3C0D7825B3423700F33612 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				DEAF2D6225B3A97E00ECAC0C /* MainViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -144,6 +153,14 @@
 				DE77EB2A25B34B990065FA3F /* MemoCollectionViewCell.xib */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		DEAF2D6825B3AE5400ECAC0C /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				DEAF2D6925B3AE6E00ECAC0C /* RealmManager.swift */,
+			);
+			path = Persistence;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -267,7 +284,10 @@
 				DE77EB2B25B34B990065FA3F /* MemoCollectionViewCell.swift in Sources */,
 				DE3C0D5225B3353A00F33612 /* SceneDelegate.swift in Sources */,
 				DE3C0D8125B347FC00F33612 /* NewMemoViewController.swift in Sources */,
+				DEAF2D6625B3A99800ECAC0C /* Memo.swift in Sources */,
+				DEAF2D6A25B3AE6E00ECAC0C /* RealmManager.swift in Sources */,
 				DE3C0D7D25B3453E00F33612 /* SettingViewController.swift in Sources */,
+				DEAF2D6325B3A97E00ECAC0C /* MainViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
