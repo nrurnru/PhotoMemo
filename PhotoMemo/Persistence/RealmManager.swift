@@ -10,6 +10,8 @@ import RealmSwift
 
 class RealmManager {
     private init(){}
+    
+    // memory leak 확인
     static let configuration = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
     static let shared = RealmManager()
     
@@ -36,6 +38,12 @@ class RealmManager {
     func deleteData<T: Object>(data: T) {
         try! realm.write {
             realm.delete(data)
+        }
+    }
+    
+    func deleteDataList<T: Object>(dataList: [T]) {
+        try! realm.write {
+            realm.delete(dataList)
         }
     }
 }

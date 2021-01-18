@@ -28,7 +28,7 @@
                                 </items>
                             </toolbar>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Memo" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="IA6-Gj-RSo">
-                                <rect key="frame" x="0.0" y="140" width="414" height="175"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="175"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="175" id="E5b-ZL-Qcp"/>
@@ -105,15 +105,18 @@
                                     <segue destination="4D7-AF-rTs" kind="show" id="qPP-VW-Jtw"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="Item" id="UQ4-UG-cWh">
+                            <barButtonItem systemItem="trash" id="OzD-0D-AZ1">
+                                <color key="tintColor" systemColor="systemRedColor"/>
                                 <connections>
-                                    <segue destination="uJS-FO-dO5" kind="show" id="6jA-TF-7i6"/>
+                                    <action selector="deleteAction:" destination="BYZ-38-t0r" id="9K4-hj-4uC"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="deleteMemoBarButton" destination="OzD-0D-AZ1" id="cme-nI-buJ"/>
                         <outlet property="memoCollectionView" destination="wcT-pe-i2b" id="mst-UT-JR1"/>
+                        <outlet property="newMemoBarButton" destination="Sni-gH-aUo" id="E2Q-DR-2iZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

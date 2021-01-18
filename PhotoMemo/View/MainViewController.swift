@@ -10,7 +10,11 @@ import RealmSwift
 
 class MainViewController: UIViewController {
     var data = RealmManager.shared.loadData(Memo.self).sorted(byKeyPath: "createdAt", ascending: false)
+    var selectedItem: [Memo] = []
+    
     @IBOutlet var memoCollectionView: UICollectionView!
+    @IBOutlet var newMemoBarButton: UIBarButtonItem!
+    @IBOutlet var deleteMemoBarButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +33,8 @@ class MainViewController: UIViewController {
         memoCollectionView.delegate = self
         memoCollectionView.dataSource = self
         
+        memoCollectionView.allowsMultipleSelectionDuringEditing = true
+        
         let nib = UINib(nibName: "MemoCollectionViewCell", bundle: nil)
         memoCollectionView.register(nib, forCellWithReuseIdentifier: "memoCell")
     }
@@ -42,6 +48,25 @@ class MainViewController: UIViewController {
         layout.minimumLineSpacing = 0
         memoCollectionView.setCollectionViewLayout(layout, animated: false)
         memoCollectionView.reloadData()
+    }
+    
+    @IBAction func deleteAction(_ sender: UIBarButtonItem) {
+        switch memoCollectionView.isEditing {
+        case true: //수정끝
+            //TODO: 확인 알림 필요
+            RealmManager.shared.deleteDataList(dataList: selectedItem)
+            selectedItem.removeAll()
+            
+            newMemoBarButton.isEnabled = true
+            deleteMemoBarButton.tintColor = .systemBlue
+            memoCollectionView.isEditing = false
+            memoCollectionView.reloadData()
+            
+        case false: //수정시작
+            memoCollectionView.isEditing = true
+            deleteMemoBarButton.tintColor = .systemRed
+            newMemoBarButton.isEnabled = false
+        }
     }
 }
 
@@ -60,8 +85,21 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "MemoDetailViewController") as? MemoDetailViewController else { return }
-        vc.memo = data[indexPath.row]
-        self.navigationController?.pushViewController(vc, animated: true)
+        switch memoCollectionView.isEditing {
+        case true:
+            let memo = data[indexPath.row]
+            self.selectedItem.append(memo)
+        case false:
+            guard let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "MemoDetailViewController") as? MemoDetailViewController else { return }
+            vc.memo = data[indexPath.row]
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        guard memoCollectionView.isEditing == true else { return }
+        let memo = data[indexPath.row]
+        guard let index = selectedItem.firstIndex(of: memo) else { return }
+        selectedItem.remove(at: index)
     }
 }
