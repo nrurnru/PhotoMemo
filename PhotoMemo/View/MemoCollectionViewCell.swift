@@ -14,5 +14,14 @@ class MemoCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
 
     }
-
+    
+    override var isSelected: Bool {
+        didSet {
+            if isSelected {
+                backgroundColor = .tertiarySystemFill
+            } else {
+                backgroundColor = UIColor(named: "memoBase")
+            }
+        }
+    }
 }
