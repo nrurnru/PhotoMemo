@@ -22,7 +22,7 @@ class Memo: Object {
     }
 }
 
-class MemoAdapter: Encodable {
+class MemoAdapter: Codable {
     let formatter = ISO8601DateFormatter()
     
     init(memo: Memo) {
@@ -44,5 +44,13 @@ class MemoAdapter: Encodable {
         case text
         case createdAt
         case updatedAt
+    }
+    
+    // TEST
+    init(number: Int, text: String, createdAt: String = ISO8601DateFormatter().string(from: Date()), updatedAt: String = ISO8601DateFormatter().string(from: Date())) {
+        self.number = number
+        self.text = text
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt
     }
 }

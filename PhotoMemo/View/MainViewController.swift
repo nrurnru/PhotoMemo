@@ -111,11 +111,11 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
 
 extension MainViewController {
     func syncData() {
-//        let newMemos: [MemoAdapter]
-//        let updatedMemos: []
-//        let deletedMemoIDs: ["1","2","3"]
-//        let syncData = SyncData(newMemos: newMemos, updatedMemos: updatedMemos, deletedMemoIDs: deletedMemoIDs)
-//        NetworkManager.shared.upSync(syncData: SyncData)
-//        NetworkManager.shared.downSync()
+        let newMemos = [MemoAdapter(number: 1, text: "newMemo1")]
+        let updatedMemos: [MemoAdapter] = []
+        let deletedMemoIDs = ["1","2","3"]
+        let syncData = SyncData(newMemos: newMemos, updatedMemos: updatedMemos, deletedMemoIDs: deletedMemoIDs)
+        NetworkManager.shared.upSync(syncData: syncData)
+        NetworkManager.shared.downSync()
     }
 }

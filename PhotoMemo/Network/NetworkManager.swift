@@ -46,8 +46,8 @@ class NetworkManager {
         }
     }
     
-    func upSync(syncdata: SyncData) {
-        AF.request(baseURL, method: .post, parameters: syncdata, encoder: JSONParameterEncoder.default).responseData { response in
+    func upSync(syncData: SyncData) {
+        AF.request(baseURL, method: .post, parameters: syncData, encoder: JSONParameterEncoder.default).responseData { response in
             switch response.result {
             case .success:
                 break
