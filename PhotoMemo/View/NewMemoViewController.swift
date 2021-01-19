@@ -29,9 +29,9 @@ class NewMemoViewController: UIViewController, UITextViewDelegate {
     
     @IBAction func saveAction(_ sender: Any) {
         let memo = Memo()
-        let lastId: Int? = realm.objects(Memo.self).max(ofProperty: "id")
+        let lastNumber: Int? = realm.objects(Memo.self).max(ofProperty: "number")
 
-        memo.id = (lastId ?? 0) + 1
+        memo.number = (lastNumber ?? 0) + 1
         memo.text = memoTextView.text
         
         RealmManager.shared.saveData(data: memo)

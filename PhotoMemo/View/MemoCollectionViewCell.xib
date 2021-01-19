@@ -42,7 +42,7 @@
     </objects>
     <resources>
         <namedColor name="memoBase">
-            <color red="1" green="1" blue="0.70960390567779541" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="1" blue="0.70999997854232788" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

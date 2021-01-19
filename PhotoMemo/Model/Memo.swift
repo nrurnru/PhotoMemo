@@ -8,15 +8,17 @@
 import RealmSwift
 
 
-class Memo: Object {
-    @objc dynamic var id: Int = Int()
+class Memo: Object, Codable {
+    @objc dynamic var number: Int = Int()
     @objc dynamic var text: String = ""
     @objc dynamic var createdAt: Date = Date()
     @objc dynamic var updatedAt: Date = Date()
+    @objc dynamic var isAdded: Bool = true
+    @objc dynamic var isUpdated: Bool = false
     @objc dynamic var isDeleted: Bool = false
-    @objc dynamic var isSynced: Bool = false
     
     override static func primaryKey() -> String? {
-        return "id"
+        return "number"
     }
 }
+

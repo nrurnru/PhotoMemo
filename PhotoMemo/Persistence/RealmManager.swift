@@ -31,6 +31,9 @@ class RealmManager {
         try! realm.write {
             memo.text = text
             memo.updatedAt = Date()
+            if memo.isAdded == false { // 메모를 새로 작성하는 경우가 먼저 동기화되기 때문에 불필요함
+                memo.isUpdated = true
+            }
             realm.add(_ : memo, update: .error)
         }
     }
