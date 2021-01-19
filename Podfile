@@ -8,9 +8,11 @@ target 'PhotoMemo' do
   pod 'RxSwift'
   pod 'RxCocoa'
   pod 'RealmSwift'
+  pod 'Alamofire'
   pod 'Kingfisher'
   pod 'SwiftyJSON'
-  pod 'SwiftKeychainWrapper'
+  pod 'SwiftKeychainWrapper'  
+  pod 'CryptoSwift'
 
   # Pods for PhotoMemo
 
