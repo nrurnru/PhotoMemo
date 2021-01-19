@@ -35,6 +35,7 @@ class NewMemoViewController: UIViewController, UITextViewDelegate {
         memo.text = memoTextView.text
         
         RealmManager.shared.saveData(data: memo)
+        NetworkManager.shared.post(memo: memo)
         navigationController?.popViewController(animated: true)
     }
 }
