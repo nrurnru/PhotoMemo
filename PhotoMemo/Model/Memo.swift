@@ -32,14 +32,14 @@ class MemoAdapter: Encodable {
         self.updatedAt = formatter.string(from: memo.updatedAt)
     }
     
-    let user_id = 1
+    let userID = 1
     let number: Int
     let text: String
     let createdAt: String
     let updatedAt: String
     
     enum CodingKeys: String, CodingKey {
-        case user_id
+        case userID = "user_id"
         case number = "memo_number"
         case text
         case createdAt

@@ -44,6 +44,29 @@ class NetworkManager {
                 print(error.localizedDescription)
             }
         }
-        
+    }
+    
+    func upSync(syncdata: SyncData) {
+        AF.request(baseURL, method: .post, parameters: syncdata, encoder: JSONParameterEncoder.default).responseData { response in
+            switch response.result {
+            case .success:
+                break
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func downSync() {
+        AF.request(baseURL).responseString { response in
+            switch response.result {
+            case .success:
+                let data = try! response.result.get()
+                print(data)
+                //return data, start DB sync
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 }

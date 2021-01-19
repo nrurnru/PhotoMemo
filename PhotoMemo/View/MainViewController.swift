@@ -29,6 +29,11 @@ class MainViewController: UIViewController {
         memoCollectionView.reloadData()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        syncData()
+    }
+    
     private func setupUI() {
         memoCollectionView.delegate = self
         memoCollectionView.dataSource = self
@@ -101,5 +106,16 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let memo = data[indexPath.row]
         guard let index = selectedItem.firstIndex(of: memo) else { return }
         selectedItem.remove(at: index)
+    }
+}
+
+extension MainViewController {
+    func syncData() {
+//        let newMemos: [MemoAdapter]
+//        let updatedMemos: []
+//        let deletedMemoIDs: ["1","2","3"]
+//        let syncData = SyncData(newMemos: newMemos, updatedMemos: updatedMemos, deletedMemoIDs: deletedMemoIDs)
+//        NetworkManager.shared.upSync(syncData: SyncData)
+//        NetworkManager.shared.downSync()
     }
 }
