@@ -29,9 +29,10 @@ class NewMemoViewController: UIViewController, UITextViewDelegate {
     
     @IBAction func saveAction(_ sender: Any) {
         let memo = Memo()
-        let lastNumber: Int? = realm.objects(Memo.self).max(ofProperty: "number")
 
-        memo.number = (lastNumber ?? 0) + 1
+        
+        memo.id = Int.random(in: 1...1000)
+        memo.number = "blabla"
         memo.text = memoTextView.text
         
         RealmManager.shared.saveData(data: memo)

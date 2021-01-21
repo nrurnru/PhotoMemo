@@ -8,9 +8,9 @@
 import Foundation
 
 class SyncData: Codable {
-    private let createdMemos: [MemoAdapter]
-    private let updatedMemos: [MemoAdapter]
-    private let deletedMemoIDs: [String]
+    let createdMemos: [MemoAdapter]
+    let updatedMemos: [MemoAdapter]
+    let deletedMemoIDs: [String]
     private let lastSynced = UserDefaults.standard.string(forKey: "lastSynced") ?? ISO8601DateFormatter().string(from: Date(timeIntervalSince1970: 0))
     
     init(createdMemos: [MemoAdapter], updatedMemos: [MemoAdapter], deletedMemoIDs: [String]) {

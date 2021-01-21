@@ -9,7 +9,8 @@ import RealmSwift
 
 
 class Memo: Object {
-    @objc dynamic var number: Int = Int()
+    @objc dynamic var id: Int = Int.random(in: 1...10000)
+    @objc dynamic var number: String = ""
     @objc dynamic var text: String = ""
     @objc dynamic var createdAt: Date = Date()
     @objc dynamic var updatedAt: Date = Date()
@@ -18,7 +19,7 @@ class Memo: Object {
     @objc dynamic var isDeleted: Bool = false
     
     override static func primaryKey() -> String? {
-        return "number"
+        return "id"
     }
 }
 
@@ -32,9 +33,9 @@ class MemoAdapter: Codable {
         self.updatedAt = formatter.string(from: memo.updatedAt)
     }
     
-    let id = Int.random(in: 1...100)
+    let id = Int.random(in: 1...1000)
     let userID = 1
-    let number: Int
+    let number: String
     let text: String
     let createdAt: String
     let updatedAt: String
@@ -44,15 +45,17 @@ class MemoAdapter: Codable {
         case userID = "user_id"
         case number = "memo_number"
         case text
-        case createdAt
-        case updatedAt
+        case createdAt = "created_at"
+        case updatedAt = "updated_at"
     }
     
-    // TEST
-    init(number: Int, text: String, createdAt: String = ISO8601DateFormatter().string(from: Date()), updatedAt: String = ISO8601DateFormatter().string(from: Date())) {
-        self.number = number
-        self.text = text
-        self.createdAt = createdAt
-        self.updatedAt = updatedAt
+    func toMemo() -> Memo {
+        let memo = Memo()
+        memo.number = self.number
+        memo.text = self.text
+        memo.createdAt = ISO8601DateFormatter().date(from: self.createdAt) ?? Date()
+        memo.updatedAt = ISO8601DateFormatter().date(from: self.updatedAt) ?? Date()
+
+        return memo
     }
 }

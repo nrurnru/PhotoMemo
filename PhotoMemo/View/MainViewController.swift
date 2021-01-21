@@ -118,8 +118,14 @@ extension MainViewController {
         
         let syncData = SyncData(createdMemos: createdMemos, updatedMemos: updatedMemos, deletedMemoIDs: deletedMemoIDs)
         NetworkManager.shared.upSync(syncData: syncData)
-        NetworkManager.shared.downSync { json in
-            print("get: \(json)")
+        NetworkManager.shared.downSync { syncData in
+            syncData.createdMemos.map { createdMemo in
+                RealmManager.shared.saveData(data: createdMemo.toMemo())
+            }
+            syncData.createdMemos.map { updatedMemo in
+                RealmManager.shared.saveData(data: updatedMemo.toMemo())
+            }
+            UserDefaults.standard.set(ISO8601DateFormatter().string(from: Date()), forKey: "lastSynced")
         }
     }
 }

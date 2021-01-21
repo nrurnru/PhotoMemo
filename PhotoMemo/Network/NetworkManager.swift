@@ -20,14 +20,17 @@ class NetworkManager {
         "Accept": "application/json"
         ]
     
-    func downSync(completed: @escaping (_ json: JSON) -> Void) {
+    func downSync(completed: @escaping (_ syncData: SyncData) -> Void) {
         let lastSynced: String = UserDefaults.standard.string(forKey: "lastSynced") ?? ISO8601DateFormatter().string(from: Date(timeIntervalSince1970: 0))
-        AF.request("http://localhost:8000/users/sync/last_synced=\(lastSynced)").validate().responseJSON { response in
+        AF.request("http://localhost:8000/users/sync/last_synced=\(lastSynced)", encoding: JSONEncoding.default).responseData { response in
             switch response.result {
             case .success(let value):
-                let json = JSON(value)
-                //return data, start DB sync
-                completed(json)
+                do {
+                    let syncData = try JSONDecoder().decode(SyncData.self, from: value)
+                    completed(syncData)
+                } catch (let error){
+                    print(error.localizedDescription)
+                }
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -38,7 +41,7 @@ class NetworkManager {
         AF.request("http://localhost:8000/users/sync/", method: .post, parameters: syncData, encoder: JSONParameterEncoder.default).responseData { response in
             switch response.result {
             case .success:
-                UserDefaults.standard.set(ISO8601DateFormatter().string(from: Date()), forKey: "lastSynced")
+                print("success")
             case .failure(let error):
                 print(error.localizedDescription)
             }
