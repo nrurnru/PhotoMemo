@@ -14,7 +14,7 @@ class NetworkManager {
     private init(){}
     static let shared = NetworkManager()
     
-    private let baseURL = "http://localhost:8000/users/memo/"
+    private let baseURL = "http://localhost:8000/users/sync"
     private let headers: HTTPHeaders = [
         //"Authorization": "user1",
         "Accept": "application/json"
@@ -22,14 +22,19 @@ class NetworkManager {
     
     func downSync(completed: @escaping (_ syncData: SyncData) -> Void) {
         let lastSynced: String = UserDefaults.standard.string(forKey: "lastSynced") ?? ISO8601DateFormatter().string(from: Date(timeIntervalSince1970: 0))
-        AF.request("http://localhost:8000/users/sync/last_synced=\(lastSynced)", encoding: JSONEncoding.default).responseData { response in
+        let parameters: Parameters = [
+            "last_synced": lastSynced
+        ]
+        
+        AF.request(baseURL, parameters: parameters, encoding: URLEncoding.queryString).responseJSON { response in
             switch response.result {
             case .success(let value):
                 do {
-                    let syncData = try JSONDecoder().decode(SyncData.self, from: value)
+                    let jsonData = try JSONSerialization.data(withJSONObject: value, options: .prettyPrinted)
+                    let syncData = try JSONDecoder().decode(SyncData.self, from: jsonData)
                     completed(syncData)
                 } catch (let error){
-                    print(error.localizedDescription)
+                    print(error)
                 }
             case .failure(let error):
                 print(error.localizedDescription)
@@ -38,7 +43,7 @@ class NetworkManager {
     }
     
     func upSync(syncData: SyncData) {
-        AF.request("http://localhost:8000/users/sync/", method: .post, parameters: syncData, encoder: JSONParameterEncoder.default).responseData { response in
+        AF.request(baseURL, method: .post, parameters: syncData, encoder: JSONParameterEncoder.default).responseData { response in
             switch response.result {
             case .success:
                 print("success")

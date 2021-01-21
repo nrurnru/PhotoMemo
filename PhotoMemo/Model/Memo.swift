@@ -10,7 +10,6 @@ import RealmSwift
 
 class Memo: Object {
     @objc dynamic var id: String = ""
-    @objc dynamic var number: String = ""
     @objc dynamic var text: String = ""
     @objc dynamic var createdAt: Date = Date()
     @objc dynamic var updatedAt: Date = Date()
@@ -28,7 +27,6 @@ class MemoAdapter: Codable {
     
     init(memo: Memo) {
         self.id = memo.id
-        self.number = memo.number
         self.text = memo.text
         self.createdAt = formatter.string(from: memo.createdAt)
         self.updatedAt = formatter.string(from: memo.updatedAt)
@@ -36,7 +34,6 @@ class MemoAdapter: Codable {
     
     let id: String
     let userID = 1
-    let number: String
     let text: String
     let createdAt: String
     let updatedAt: String
@@ -44,7 +41,6 @@ class MemoAdapter: Codable {
     enum CodingKeys: String, CodingKey {
         case id
         case userID = "user_id"
-        case number = "memo_number"
         case text
         case createdAt = "created_at"
         case updatedAt = "updated_at"
@@ -53,7 +49,6 @@ class MemoAdapter: Codable {
     func toMemo() -> Memo {
         let memo = Memo()
         memo.id = self.id
-        memo.number = self.number
         memo.text = self.text
         memo.createdAt = ISO8601DateFormatter().date(from: self.createdAt) ?? Date()
         memo.updatedAt = ISO8601DateFormatter().date(from: self.updatedAt) ?? Date()

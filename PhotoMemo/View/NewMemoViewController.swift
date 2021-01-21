@@ -6,12 +6,10 @@
 //
 
 import UIKit
-import RealmSwift
 import CryptoSwift
 
 class NewMemoViewController: UIViewController, UITextViewDelegate {
     @IBOutlet var memoTextView: UITextView!
-    let realm = try! Realm()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +30,6 @@ class NewMemoViewController: UIViewController, UITextViewDelegate {
         let memo = Memo()
         
         memo.id = Date().description.sha512()
-        memo.number = ""
         memo.text = memoTextView.text
         
         RealmManager.shared.saveData(data: memo)

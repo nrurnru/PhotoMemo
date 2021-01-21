@@ -18,9 +18,14 @@ class RealmManager {
     private let realm = try! Realm(configuration: configuration)
     
     func saveData<T: Object>(data: T) {
-        try! realm.write {
-            realm.add(data)
+        do {
+            try realm.write {
+                realm.add(data, update: .modified)
+            }
+        } catch (let error) {
+            print(error.localizedDescription)
         }
+        
     }
     
     func loadData<T: Object>(_: T.Type) -> Results<T> {
@@ -28,13 +33,15 @@ class RealmManager {
     }
     
     func updateMemo(memo: Memo, text: String) {
-        try! realm.write {
-            memo.text = text
-            memo.updatedAt = Date()
-            if memo.isAdded == false { // 메모를 새로 작성하는 경우가 먼저 동기화되기 때문에 불필요함
+        do {
+            try realm.write {
+                memo.text = text
+                memo.updatedAt = Date()
                 memo.isUpdated = true
+                realm.add(_ : memo, update: .modified)
             }
-            realm.add(_ : memo, update: .error)
+        } catch (let error) {
+            print(error.localizedDescription)
         }
     }
     
