@@ -20,26 +20,14 @@ class NetworkManager {
         "Accept": "application/json"
         ]
     
-    //TODO: sync로 변경
-    func get() {
-        AF.request(baseURL).responseString { response in
+    func downSync(completed: @escaping (_ json: JSON) -> Void) {
+        let lastSynced: String = UserDefaults.standard.string(forKey: "lastSynced") ?? ISO8601DateFormatter().string(from: Date(timeIntervalSince1970: 0))
+        AF.request("http://localhost:8000/users/sync/last_synced=\(lastSynced)").validate().responseJSON { response in
             switch response.result {
-            case .success:
-                let data = try! response.result.get()
-                print(data)
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
-    }
-    
-    //TODO: sync로 변경
-    func post(memo: Memo) {
-        let testMemo = MemoAdapter(memo: memo)
-        AF.request(baseURL, method: .post, parameters: testMemo, encoder: JSONParameterEncoder.default).responseData { response in
-            switch response.result {
-            case .success:
-                break
+            case .success(let value):
+                let json = JSON(value)
+                //return data, start DB sync
+                completed(json)
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -47,23 +35,10 @@ class NetworkManager {
     }
     
     func upSync(syncData: SyncData) {
-        AF.request(baseURL, method: .post, parameters: syncData, encoder: JSONParameterEncoder.default).responseData { response in
+        AF.request("http://localhost:8000/users/sync/", method: .post, parameters: syncData, encoder: JSONParameterEncoder.default).responseData { response in
             switch response.result {
             case .success:
-                break
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
-    }
-    
-    func downSync() {
-        AF.request(baseURL).responseString { response in
-            switch response.result {
-            case .success:
-                let data = try! response.result.get()
-                print(data)
-                //return data, start DB sync
+                UserDefaults.standard.set(ISO8601DateFormatter().string(from: Date()), forKey: "lastSynced")
             case .failure(let error):
                 print(error.localizedDescription)
             }

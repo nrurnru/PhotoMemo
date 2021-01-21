@@ -32,6 +32,7 @@ class MemoAdapter: Codable {
         self.updatedAt = formatter.string(from: memo.updatedAt)
     }
     
+    let id = Int.random(in: 1...100)
     let userID = 1
     let number: Int
     let text: String
@@ -39,6 +40,7 @@ class MemoAdapter: Codable {
     let updatedAt: String
     
     enum CodingKeys: String, CodingKey {
+        case id
         case userID = "user_id"
         case number = "memo_number"
         case text

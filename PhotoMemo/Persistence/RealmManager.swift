@@ -49,4 +49,24 @@ class RealmManager {
             realm.delete(dataList)
         }
     }
+    
+    func fetchCreatedMemo() -> [Memo] {
+        var lastSyncDate = Date(timeIntervalSince1970: 0)
+        if let lastSyncedString = UserDefaults.standard.string(forKey: "lastSynced") {
+            lastSyncDate = ISO8601DateFormatter().date(from: lastSyncedString) ?? lastSyncDate
+        }
+        
+        let createdMemos = realm.objects(Memo.self).filter("createdAt > %@", lastSyncDate)
+        return Array(createdMemos)
+    }
+    
+    func fetchUpdatedMemo() -> [Memo] {
+        var lastSyncDate = Date(timeIntervalSince1970: 0)
+        if let lastSyncedString = UserDefaults.standard.string(forKey: "lastSynced") {
+            lastSyncDate = ISO8601DateFormatter().date(from: lastSyncedString) ?? lastSyncDate
+        }
+        
+        let updatedMemos = realm.objects(Memo.self).filter("updatedAt > %@", lastSyncDate)
+        return Array(updatedMemos)
+    }
 }
