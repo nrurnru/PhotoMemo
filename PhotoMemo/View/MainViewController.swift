@@ -111,18 +111,13 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
 
 extension MainViewController {
     func syncData() {
-        let createdMemos = RealmManager.shared.fetchCreatedMemo().map { MemoAdapter(memo: $0) }
         let updatedMemos = RealmManager.shared.fetchUpdatedMemo().map { MemoAdapter(memo: $0) }
-        
         let deletedMemoIDs = ["1,2,3,4"]
         
-        let syncData = SyncData(createdMemos: createdMemos, updatedMemos: updatedMemos, deletedMemoIDs: deletedMemoIDs)
+        let syncData = SyncData(updatedMemos: updatedMemos, deletedMemoIDs: deletedMemoIDs)
         NetworkManager.shared.upSync(syncData: syncData)
         NetworkManager.shared.downSync { syncData in
-            syncData.createdMemos.map { createdMemo in
-                RealmManager.shared.saveData(data: createdMemo.toMemo())
-            }
-            syncData.createdMemos.map { updatedMemo in
+            syncData.updatedMemos.map { updatedMemo in
                 RealmManager.shared.saveData(data: updatedMemo.toMemo())
             }
             UserDefaults.standard.set(ISO8601DateFormatter().string(from: Date()), forKey: "lastSynced")
