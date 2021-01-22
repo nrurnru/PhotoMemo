@@ -41,6 +41,9 @@ class MemoDetailViewController: UIViewController {
     
     @IBAction func deleteAction(_ sender: Any) {
         guard let memo = self.memo else { return }
+        var deletedMemoIDs = UserDefaults.standard.array(forKey: "deletedMemoIDs") as! [String]
+        deletedMemoIDs.append(memo.id)
+        UserDefaults.standard.set(deletedMemoIDs, forKey: "deletedMemoIDs")
         RealmManager.shared.deleteData(data: memo)
         self.navigationController?.popViewController(animated: true)
     }

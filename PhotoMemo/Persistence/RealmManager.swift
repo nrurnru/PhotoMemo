@@ -57,6 +57,13 @@ class RealmManager {
         }
     }
     
+    func deleteDataWithIDs<T: Object>(_ type: T.Type, deletedIDs: [String]) {
+        try! realm.write {
+            let deleteObjects = realm.objects(T.self).filter("id in %@", deletedIDs)
+            realm.delete(deleteObjects)
+        }
+    }
+    
     func fetchUpdatedMemo() -> [Memo] {
         var lastSyncDate = Date(timeIntervalSince1970: 0)
         if let lastSyncedString = UserDefaults.standard.string(forKey: "lastSynced") {
