@@ -16,7 +16,7 @@ class NetworkManager {
     
     private let baseURL = "http://localhost:8000/users/sync"
     private let headers: HTTPHeaders = [
-        //"Authorization": "user1",
+        "Authorization": "1", //TODO: 로그인시 유저 토큰 받아오기
         "Accept": "application/json"
         ]
     
@@ -26,7 +26,7 @@ class NetworkManager {
             "last_synced": lastSynced
         ]
         
-        AF.request(baseURL, parameters: parameters, encoding: URLEncoding.queryString).responseJSON { response in
+        AF.request(baseURL, parameters: parameters, encoding: URLEncoding.queryString, headers: headers).responseJSON { response in
             switch response.result {
             case .success(let value):
                 do {
@@ -43,7 +43,7 @@ class NetworkManager {
     }
     
     func upSync(syncData: SyncData) {
-        AF.request(baseURL, method: .post, parameters: syncData, encoder: JSONParameterEncoder.default).responseData { response in
+        AF.request(baseURL, method: .post, parameters: syncData, encoder: JSONParameterEncoder.default, headers: headers).responseData { response in
             switch response.result {
             case .success:
                 print("success")

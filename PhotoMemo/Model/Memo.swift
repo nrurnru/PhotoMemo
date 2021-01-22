@@ -33,14 +33,12 @@ class MemoAdapter: Codable {
     }
     
     let id: String
-    let userID = 1
     let text: String
     let createdAt: String
     let updatedAt: String
     
     enum CodingKeys: String, CodingKey {
         case id
-        case userID = "user_id"
         case text
         case createdAt = "created_at"
         case updatedAt = "updated_at"
