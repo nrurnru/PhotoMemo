@@ -42,11 +42,11 @@ class NetworkManager {
         }
     }
     
-    func upSync(syncData: SyncData) {
-        AF.request(baseURL, method: .post, parameters: syncData, encoder: JSONParameterEncoder.default, headers: headers).responseData { response in
+    func upSync(syncData: SyncData, successed: @escaping () -> Void) {
+        AF.request(baseURL, method: .post, parameters: syncData, encoder: JSONParameterEncoder.default, headers: headers).validate(statusCode:  Array(200..<300)).responseData { response in
             switch response.result {
             case .success:
-                print("success")
+                successed()
             case .failure(let error):
                 print(error.localizedDescription)
             }

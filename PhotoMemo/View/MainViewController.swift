@@ -59,10 +59,10 @@ class MainViewController: UIViewController {
         switch memoCollectionView.isEditing {
         case true: //수정끝
             //TODO: 확인 알림 필요
-            RealmManager.shared.deleteDataList(dataList: selectedItem)
             var deletedMemoIDs = UserDefaults.standard.array(forKey: "deletedMemoIDs") as! [String]
             deletedMemoIDs.append(contentsOf: selectedItem.map { $0.id })
             UserDefaults.standard.set(deletedMemoIDs, forKey: "deletedMemoIDs")
+            RealmManager.shared.deleteDataList(dataList: selectedItem)
             selectedItem.removeAll()
             
             newMemoBarButton.isEnabled = true
@@ -120,15 +120,16 @@ extension MainViewController {
         
         
         let syncData = SyncData(updatedMemos: updatedMemos, deletedMemoIDs: d)
-        NetworkManager.shared.upSync(syncData: syncData)
-        NetworkManager.shared.downSync { syncData in
+        NetworkManager.shared.upSync(syncData: syncData) {
+            UserDefaults.standard.set(ISO8601DateFormatter().string(from: Date()), forKey: "lastSynced")
+        }
+        NetworkManager.shared.downSync { [self] syncData in
             syncData.updatedMemos.forEach { updatedMemo in
                 RealmManager.shared.saveData(data: updatedMemo.toMemo())
             }
             RealmManager.shared.deleteDataWithIDs(Memo.self, deletedIDs: syncData.deletedMemoIDs)
-            UserDefaults.standard.set(ISO8601DateFormatter().string(from: Date()), forKey: "lastSynced")
             UserDefaults.standard.set([], forKey: "deletedMemoIDs")
+            self.memoCollectionView.reloadData()
         }
-        
     }
 }
