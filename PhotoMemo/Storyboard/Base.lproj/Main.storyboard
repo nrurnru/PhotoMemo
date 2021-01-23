@@ -111,12 +111,18 @@
                                     <action selector="deleteAction:" destination="BYZ-38-t0r" id="9K4-hj-4uC"/>
                                 </connections>
                             </barButtonItem>
+                            <barButtonItem systemItem="refresh" id="ewt-cb-9N8">
+                                <connections>
+                                    <action selector="syncAction:" destination="BYZ-38-t0r" id="0Rl-zz-qSX"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="deleteMemoBarButton" destination="OzD-0D-AZ1" id="cme-nI-buJ"/>
                         <outlet property="memoCollectionView" destination="wcT-pe-i2b" id="mst-UT-JR1"/>
                         <outlet property="newMemoBarButton" destination="Sni-gH-aUo" id="E2Q-DR-2iZ"/>
+                        <outlet property="syncBarButton" destination="ewt-cb-9N8" id="JGk-m0-Qcp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

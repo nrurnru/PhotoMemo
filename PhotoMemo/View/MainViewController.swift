@@ -15,6 +15,7 @@ class MainViewController: UIViewController {
     @IBOutlet var memoCollectionView: UICollectionView!
     @IBOutlet var newMemoBarButton: UIBarButtonItem!
     @IBOutlet var deleteMemoBarButton: UIBarButtonItem!
+    @IBOutlet var syncBarButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,6 +77,10 @@ class MainViewController: UIViewController {
             newMemoBarButton.isEnabled = false
         }
     }
+    @IBAction func syncAction(_ sender: UIBarButtonItem) {
+        syncBarButton.tintColor = .red
+        syncData()
+    }
 }
 
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -120,16 +125,20 @@ extension MainViewController {
         
         
         let syncData = SyncData(updatedMemos: updatedMemos, deletedMemoIDs: d)
-        NetworkManager.shared.upSync(syncData: syncData) {
-            UserDefaults.standard.set(ISO8601DateFormatter().string(from: Date()), forKey: "lastSynced")
-        }
-        NetworkManager.shared.downSync { [self] syncData in
-            syncData.updatedMemos.forEach { updatedMemo in
-                RealmManager.shared.saveData(data: updatedMemo.toMemo())
+        
+        NetworkManager.shared.upSync(syncData: syncData) { [weak self] in
+            NetworkManager.shared.downSync { syncData in
+                syncData.updatedMemos.forEach { updatedMemo in
+                    RealmManager.shared.saveData(data: updatedMemo.toMemo())
+                }
+                RealmManager.shared.deleteDataWithIDs(Memo.self, deletedIDs: syncData.deletedMemoIDs)
+                UserDefaults.standard.set([], forKey: "deletedMemoIDs")
+                UserDefaults.standard.set(ISO8601DateFormatter().string(from: Date()), forKey: "lastSynced")
+                self?.memoCollectionView.reloadData()
+                DispatchQueue.main.async {
+                    self?.syncBarButton.tintColor = .systemBlue
+                }
             }
-            RealmManager.shared.deleteDataWithIDs(Memo.self, deletedIDs: syncData.deletedMemoIDs)
-            UserDefaults.standard.set([], forKey: "deletedMemoIDs")
-            self.memoCollectionView.reloadData()
         }
     }
 }

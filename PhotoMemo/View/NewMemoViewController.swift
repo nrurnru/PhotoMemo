@@ -29,7 +29,7 @@ class NewMemoViewController: UIViewController, UITextViewDelegate {
     @IBAction func saveAction(_ sender: Any) {
         let memo = Memo()
         
-        memo.id = Date().description.sha512()
+        memo.id = Date().description.sha256()
         memo.text = memoTextView.text
         
         RealmManager.shared.saveData(data: memo)
