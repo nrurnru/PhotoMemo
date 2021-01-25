@@ -18,5 +18,11 @@ class RegisterViewController: UIViewController {
     }
 
     @IBAction func registerAction(_ sender: UIButton) {
+        guard let id = idTextField.text, let password = passwordTextField.text else { return }
+        NetworkManager.shared.register(id: id, password: password) {[weak self] in
+            // TODO: 로그인 화면 처리
+            print("login success")
+            self?.navigationController?.popViewController(animated: true)
+        }
     }
 }
