@@ -8,6 +8,7 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
+import SwiftKeychainWrapper
 
 class NetworkManager {
     
@@ -15,10 +16,24 @@ class NetworkManager {
     static let shared = NetworkManager()
     
     private let baseURL = "http://localhost:8000/users/sync"
-    private let headers: HTTPHeaders = [
-        "Authorization": "1", //TODO: 로그인시 유저 토큰 받아오기
-        "Accept": "application/json"
-        ]
+    
+    private func headers() -> HTTPHeaders {
+        guard let jwt = KeychainWrapper.standard.string(forKey: "jwt") else { return [:] }
+        let headers: HTTPHeaders = [
+            "Accept": "application/json",
+            "jwt": jwt
+            ]
+        return headers
+    }
+    
+    private func headers(id: String, password: String) -> HTTPHeaders {
+        let headers: HTTPHeaders = [
+            "Accept": "application/json",
+            "Userid" : id,
+            "Userpassword": password
+            ]
+        return headers
+    }
     
     func downSync(completed: @escaping (_ syncData: SyncData) -> Void) {
         let lastSynced: String = UserDefaults.standard.string(forKey: "lastSynced") ?? ISO8601DateFormatter().string(from: Date(timeIntervalSince1970: 0))
@@ -26,7 +41,8 @@ class NetworkManager {
             "last_synced": lastSynced
         ]
         
-        AF.request(baseURL, parameters: parameters, encoding: URLEncoding.queryString, headers: headers).responseJSON { response in
+
+        AF.request(baseURL, parameters: parameters, encoding: URLEncoding.queryString, headers: headers()).responseJSON { response in
             switch response.result {
             case .success(let value):
                 do {
@@ -43,7 +59,32 @@ class NetworkManager {
     }
     
     func upSync(syncData: SyncData, successed: @escaping () -> Void) {
-        AF.request(baseURL, method: .post, parameters: syncData, encoder: JSONParameterEncoder.default, headers: headers).validate(statusCode:  Array(200..<300)).responseData { response in
+        AF.request(baseURL, method: .post, parameters: syncData, encoder: JSONParameterEncoder.default, headers: headers()).validate(statusCode:  Array(200..<300)).responseData { response in
+            switch response.result {
+            case .success:
+                successed()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func login(id: String, password: String, recievedValue: @escaping (String?) -> Void) {
+        AF.request("http://localhost:8000/users/login", headers: headers(id: id, password: password)).validate(statusCode:  Array(200..<300)).responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+                let jwt = json["token"].stringValue
+                recievedValue(jwt)
+            case .failure:
+                recievedValue(nil)
+            }
+        }
+        
+    }
+    
+    func register(id: String, password: String, successed: @escaping () -> Void) {
+        AF.request("http://localhost:8000/users/login", method: .post, headers: headers(id: id, password: password)).validate(statusCode:  Array(200..<300)).responseData { response in
             switch response.result {
             case .success:
                 successed()

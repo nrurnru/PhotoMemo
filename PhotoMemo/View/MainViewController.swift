@@ -6,7 +6,8 @@
 //
 
 import UIKit
-import RealmSwift
+//import RealmSwift
+import SwiftKeychainWrapper
 
 class MainViewController: UIViewController {
     var data = RealmManager.shared.loadData(Memo.self).sorted(byKeyPath: "createdAt", ascending: false)
@@ -19,6 +20,9 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        navigationItem.hidesBackButton = true
+
         
         setupUI()
         configureFlowLayout()
@@ -79,6 +83,12 @@ class MainViewController: UIViewController {
     @IBAction func syncAction(_ sender: UIBarButtonItem) {
         syncBarButton.tintColor = .red
         syncData()
+    }
+    @IBAction func logoutAction(_ sender: Any) {
+        UserDefaults.standard.removeObject(forKey: "lastSynced")
+        KeychainWrapper.standard.remove(forKey: "jwt")
+        RealmManager.shared.deleteAllData(Memo.self)
+        self.navigationController?.popViewController(animated: true)
     }
 }
 

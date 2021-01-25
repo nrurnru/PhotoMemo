@@ -164,6 +164,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="메모 목록" id="Xfu-rp-ZAZ">
+                        <barButtonItem key="leftBarButtonItem" image="lock.slash" catalog="system" id="Kve-Tg-15h">
+                            <connections>
+                                <action selector="logoutAction:" destination="BYZ-38-t0r" id="vpc-Ph-uLb"/>
+                            </connections>
+                        </barButtonItem>
                         <rightBarButtonItems>
                             <barButtonItem title="Item" image="square.and.pencil" catalog="system" id="Sni-gH-aUo">
                                 <connections>
@@ -176,7 +181,7 @@
                                     <action selector="deleteAction:" destination="BYZ-38-t0r" id="9K4-hj-4uC"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem systemItem="refresh" id="ewt-cb-9N8">
+                            <barButtonItem image="arrow.clockwise.icloud" catalog="system" id="ewt-cb-9N8">
                                 <connections>
                                     <action selector="syncAction:" destination="BYZ-38-t0r" id="0Rl-zz-qSX"/>
                                 </connections>
@@ -354,7 +359,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrow.clockwise.icloud" catalog="system" width="128" height="88"/>
         <image name="gearshape.fill" catalog="system" width="128" height="121"/>
+        <image name="lock.slash" catalog="system" width="124" height="128"/>
         <image name="pencil.and.outline" catalog="system" width="128" height="128"/>
         <image name="square.and.pencil" catalog="system" width="128" height="115"/>
         <systemColor name="labelColor">
