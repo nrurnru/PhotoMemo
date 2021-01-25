@@ -26,7 +26,6 @@ class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationItem.title = "메모 목록"
         memoCollectionView.reloadData()
     }
     

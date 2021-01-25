@@ -16,12 +16,6 @@ class NewMemoViewController: UIViewController, UITextViewDelegate {
         setup()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationItem.title = "새 메모"
-        
-    }
-    
     func setup() {
         memoTextView.delegate = self
     }

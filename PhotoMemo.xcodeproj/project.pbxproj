@@ -21,6 +21,8 @@
 		DE732BEA25B781D4002C3629 /* SyncData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE732BE925B781D3002C3629 /* SyncData.swift */; };
 		DE77EB2B25B34B990065FA3F /* MemoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE77EB2925B34B990065FA3F /* MemoCollectionViewCell.swift */; };
 		DE77EB2C25B34B990065FA3F /* MemoCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DE77EB2A25B34B990065FA3F /* MemoCollectionViewCell.xib */; };
+		DE8AAFD725BEB16600928359 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8AAFD625BEB16600928359 /* LoginViewController.swift */; };
+		DE8AAFDA25BEC8B700928359 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8AAFD925BEC8B700928359 /* RegisterViewController.swift */; };
 		DEAF2D6325B3A97E00ECAC0C /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAF2D6225B3A97E00ECAC0C /* MainViewModel.swift */; };
 		DEAF2D6625B3A99800ECAC0C /* Memo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAF2D6525B3A99800ECAC0C /* Memo.swift */; };
 		DEAF2D6A25B3AE6E00ECAC0C /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAF2D6925B3AE6E00ECAC0C /* RealmManager.swift */; };
@@ -45,6 +47,8 @@
 		DE732BE925B781D3002C3629 /* SyncData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncData.swift; sourceTree = "<group>"; };
 		DE77EB2925B34B990065FA3F /* MemoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoCollectionViewCell.swift; sourceTree = "<group>"; };
 		DE77EB2A25B34B990065FA3F /* MemoCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MemoCollectionViewCell.xib; sourceTree = "<group>"; };
+		DE8AAFD625BEB16600928359 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		DE8AAFD925BEC8B700928359 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		DEAF2D6225B3A97E00ECAC0C /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		DEAF2D6525B3A99800ECAC0C /* Memo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memo.swift; sourceTree = "<group>"; };
 		DEAF2D6925B3AE6E00ECAC0C /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
@@ -157,6 +161,8 @@
 				DE3C0D8325B3482400F33612 /* MemoDetailViewController.swift */,
 				DE77EB2925B34B990065FA3F /* MemoCollectionViewCell.swift */,
 				DE77EB2A25B34B990065FA3F /* MemoCollectionViewCell.xib */,
+				DE8AAFD625BEB16600928359 /* LoginViewController.swift */,
+				DE8AAFD925BEC8B700928359 /* RegisterViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -301,8 +307,10 @@
 				DE3C0D8125B347FC00F33612 /* NewMemoViewController.swift in Sources */,
 				DEAF2D6625B3A99800ECAC0C /* Memo.swift in Sources */,
 				DE732BEA25B781D4002C3629 /* SyncData.swift in Sources */,
+				DE8AAFDA25BEC8B700928359 /* RegisterViewController.swift in Sources */,
 				DEAF2D6A25B3AE6E00ECAC0C /* RealmManager.swift in Sources */,
 				DE3C0D7D25B3453E00F33612 /* SettingViewController.swift in Sources */,
+				DE8AAFD725BEB16600928359 /* LoginViewController.swift in Sources */,
 				DEAF2D6325B3A97E00ECAC0C /* MainViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
