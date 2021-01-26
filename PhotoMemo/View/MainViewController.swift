@@ -6,7 +6,6 @@
 //
 
 import UIKit
-//import RealmSwift
 import SwiftKeychainWrapper
 
 class MainViewController: UIViewController {

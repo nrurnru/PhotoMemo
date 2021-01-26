@@ -301,9 +301,6 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iOo-HP-0Rn">
                                 <rect key="frame" x="67" y="448" width="38" height="30"/>
                                 <state key="normal" title="Login"/>
-                                <connections>
-                                    <action selector="loginAction:" destination="fP2-2m-rBT" eventType="touchUpInside" id="8fK-th-4wS"/>
-                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Inv-33-okm"/>
@@ -330,6 +327,7 @@
                     <navigationItem key="navigationItem" id="pj1-5P-hkx"/>
                     <connections>
                         <outlet property="idTextField" destination="bxW-W4-SYk" id="0iG-Zt-et2"/>
+                        <outlet property="loginButton" destination="iOo-HP-0Rn" id="BFE-hh-WPl"/>
                         <outlet property="passwordTextField" destination="ogx-XH-Eyu" id="uKx-KX-81V"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="loginSuccess" id="c7F-I2-X1F"/>
                     </connections>

@@ -26,6 +26,7 @@
 		DEAF2D6325B3A97E00ECAC0C /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAF2D6225B3A97E00ECAC0C /* MainViewModel.swift */; };
 		DEAF2D6625B3A99800ECAC0C /* Memo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAF2D6525B3A99800ECAC0C /* Memo.swift */; };
 		DEAF2D6A25B3AE6E00ECAC0C /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAF2D6925B3AE6E00ECAC0C /* RealmManager.swift */; };
+		DED9D66525C02DA500F1FD75 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED9D66425C02DA500F1FD75 /* LoginViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		DEAF2D6225B3A97E00ECAC0C /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		DEAF2D6525B3A99800ECAC0C /* Memo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memo.swift; sourceTree = "<group>"; };
 		DEAF2D6925B3AE6E00ECAC0C /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
+		DED9D66425C02DA500F1FD75 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				DEAF2D6225B3A97E00ECAC0C /* MainViewModel.swift */,
+				DED9D66425C02DA500F1FD75 /* LoginViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -306,6 +309,7 @@
 				DE3C0D5225B3353A00F33612 /* SceneDelegate.swift in Sources */,
 				DE3C0D8125B347FC00F33612 /* NewMemoViewController.swift in Sources */,
 				DEAF2D6625B3A99800ECAC0C /* Memo.swift in Sources */,
+				DED9D66525C02DA500F1FD75 /* LoginViewModel.swift in Sources */,
 				DE732BEA25B781D4002C3629 /* SyncData.swift in Sources */,
 				DE8AAFDA25BEC8B700928359 /* RegisterViewController.swift in Sources */,
 				DEAF2D6A25B3AE6E00ECAC0C /* RealmManager.swift in Sources */,

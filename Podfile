@@ -1,4 +1,4 @@
-# Uncomment the next line to define a global platform for your project
+#Uncomment the next line to define a global platform for your project
 # platform :ios, '9.0'
 
 target 'PhotoMemo' do
@@ -7,6 +7,7 @@ target 'PhotoMemo' do
 
   pod 'RxSwift'
   pod 'RxCocoa'
+  pod 'RxAlamofire'
   pod 'RealmSwift'
   pod 'Alamofire'
   pod 'Kingfisher'
