@@ -22,25 +22,31 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        bindUI()
+        bindInput()
+        bindOutput()
     }
     
-    private func bindUI() {
-        loginButton.rx.tap.bind {[weak self] in
-            self?.tabButton()
-        }.disposed(by: disposeBag)
+    private func bindInput() {
+        loginButton.rx.tap
+            .bind(to: viewModel.loginButtonTouched)
+            .disposed(by: disposeBag)
+        
+        idTextField.rx.text.orEmpty
+            .bind(to: viewModel.idField)
+            .disposed(by: disposeBag)
+        
+        passwordTextField.rx.text.orEmpty
+            .bind(to: viewModel.pwField)
+            .disposed(by: disposeBag)
     }
     
-    private func tabButton() {
-        guard let id = idTextField.text, let pw = passwordTextField.text else { return }
-        viewModel.myLogin(id: id, pw: pw).subscribe (
-            onNext:  { success in
-                if success {
+    private func bindOutput() {
+        viewModel.gotLoginToken
+            .asDriver(onErrorJustReturn: true)
+            .drive { value in
+                if value {
                     self.performSegue(withIdentifier: "loginSuccess", sender: nil)
                 }
-            }, onError: { error in
-                print(error.localizedDescription)
-            }
-        ).disposed(by: disposeBag)
+            }.disposed(by: disposeBag)
     }
 }
