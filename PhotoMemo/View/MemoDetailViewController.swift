@@ -6,16 +6,24 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 import RealmSwift
 
 class MemoDetailViewController: UIViewController {
 
     @IBOutlet var memoTextView: UITextView!
-    var memo: Memo? = nil
+    @IBOutlet var deleteButton: UIBarButtonItem!
+    @IBOutlet var saveButton: UIBarButtonItem!
+    
+    
+    var viewModel = MemoDetailViewModel(memo: Memo())
+    private var disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUp()
+        bindInput()
+        bindOutput()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -23,32 +31,38 @@ class MemoDetailViewController: UIViewController {
         navigationItem.title = "메모 보기"
     }
     
-    private func setUp() {
-        memoTextView.delegate = self
-        memoTextView.text = memo?.text
+    private func bindInput(){
+        deleteButton.rx.tap
+            .bind(to: viewModel.deleteButtonTapped)
+            .disposed(by: disposeBag)
+        
+        saveButton.rx.tap
+            .bind(to: viewModel.saveButtonTapped)
+            .disposed(by: disposeBag)
+        
+        memoTextView.rx.text.orEmpty
+            .bind(to: viewModel.memoText)
+            .disposed(by: disposeBag)
     }
     
-    private func setupUI() {
+    private func bindOutput() {
+        viewModel.memoRelay
+            .asDriver()
+            .drive { memo in
+                self.memoTextView.text = memo.text
+            }.disposed(by: disposeBag)
 
+        
+        viewModel.memoSaved
+            .asDriver(onErrorJustReturn: ())
+            .drive { _ in
+                self.navigationController?.popViewController(animated: true)
+            }.disposed(by: disposeBag)
+        
+        viewModel.memoDeleted
+            .asDriver(onErrorJustReturn: ())
+            .drive { _ in
+                self.navigationController?.popViewController(animated: true)
+            }.disposed(by: disposeBag)
     }
-
-    @IBAction func saveAction(_ sender: Any) {
-        guard let memo = self.memo else { return }
-        guard let text = memoTextView.text else { return }
-        RealmManager.shared.updateMemo(memo: memo, text: text)
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    @IBAction func deleteAction(_ sender: Any) {
-        guard let memo = self.memo else { return }
-        var deletedMemoIDs = UserDefaults.standard.array(forKey: "deletedMemoIDs") as! [String]
-        deletedMemoIDs.append(memo.id)
-        UserDefaults.standard.set(deletedMemoIDs, forKey: "deletedMemoIDs")
-        RealmManager.shared.deleteData(data: memo)
-        self.navigationController?.popViewController(animated: true)
-    }
-}
-
-extension MemoDetailViewController: UITextViewDelegate {
-    //
 }

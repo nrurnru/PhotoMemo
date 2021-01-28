@@ -112,7 +112,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             self.selectedItem.append(memo)
         case false:
             guard let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "MemoDetailViewController") as? MemoDetailViewController else { return }
-            vc.memo = data[indexPath.row]
+            vc.viewModel = MemoDetailViewModel(memo: data[indexPath.row])
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

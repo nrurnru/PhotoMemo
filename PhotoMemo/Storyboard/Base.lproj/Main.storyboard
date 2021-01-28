@@ -113,21 +113,16 @@
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="wOh-VI-BFe">
                         <rightBarButtonItems>
-                            <barButtonItem systemItem="save" id="noN-TB-GAm">
-                                <connections>
-                                    <action selector="saveAction:" destination="uJS-FO-dO5" id="sZG-VF-Czn"/>
-                                </connections>
-                            </barButtonItem>
+                            <barButtonItem systemItem="save" id="noN-TB-GAm"/>
                             <barButtonItem style="plain" systemItem="trash" id="Ydj-Br-ngD">
                                 <color key="tintColor" systemColor="systemRedColor"/>
-                                <connections>
-                                    <action selector="deleteAction:" destination="uJS-FO-dO5" id="mbQ-g1-Sbe"/>
-                                </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="deleteButton" destination="Ydj-Br-ngD" id="K9G-mv-XVJ"/>
                         <outlet property="memoTextView" destination="IA6-Gj-RSo" id="uJd-dD-AyK"/>
+                        <outlet property="saveButton" destination="noN-TB-GAm" id="rwe-QN-8Tg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vTX-Rv-UIk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
