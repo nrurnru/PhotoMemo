@@ -7,26 +7,38 @@
 
 import UIKit
 import CryptoSwift
+import RxSwift
+import RxCocoa
+import RxRealm
+import RealmSwift
 
-class NewMemoViewController: UIViewController, UITextViewDelegate {
+class NewMemoViewController: UIViewController {
     @IBOutlet var memoTextView: UITextView!
+    @IBOutlet var saveButton: UIBarButtonItem!
     
+    private let viewModel = NewMemoViewModel()
+    private var disposeBag = DisposeBag()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
+        bindInput()
+        bindOutput()
     }
     
-    func setup() {
-        memoTextView.delegate = self
+    private func bindInput() {
+        memoTextView.rx.text.orEmpty
+            .bind(to: viewModel.textViewField)
+            .disposed(by: disposeBag)
+        
+        saveButton.rx.tap
+            .bind(to: viewModel.saveButtonTapped)
+            .disposed(by: disposeBag)
     }
     
-    @IBAction func saveAction(_ sender: Any) {
-        let memo = Memo()
-        
-        memo.id = Date().description.sha256()
-        memo.text = memoTextView.text
-        
-        RealmManager.shared.saveData(data: memo)
-        navigationController?.popViewController(animated: true)
+    private func bindOutput() {
+        viewModel.memoSaved
+            .bind { [weak self] _ in
+                self?.navigationController?.popViewController(animated: true)
+            }.disposed(by: disposeBag)
     }
 }

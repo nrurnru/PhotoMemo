@@ -38,6 +38,7 @@ class LoginViewController: UIViewController {
         passwordTextField.rx.text.orEmpty
             .bind(to: viewModel.pwField)
             .disposed(by: disposeBag)
+        
     }
     
     private func bindOutput() {

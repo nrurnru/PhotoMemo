@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		26AE1FD492FDD86481BB738B /* Pods_PhotoMemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F7E57A2DC9024B2873FFD2A /* Pods_PhotoMemo.framework */; };
+		DE2ACC9325C20B7400A1F703 /* NewMemoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2ACC9225C20B7400A1F703 /* NewMemoViewModel.swift */; };
 		DE3C0D5025B3353A00F33612 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3C0D4F25B3353A00F33612 /* AppDelegate.swift */; };
 		DE3C0D5225B3353A00F33612 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3C0D5125B3353A00F33612 /* SceneDelegate.swift */; };
 		DE3C0D5425B3353A00F33612 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3C0D5325B3353A00F33612 /* MainViewController.swift */; };
@@ -33,6 +34,7 @@
 		1962D6CD770D5C870255E823 /* Pods-PhotoMemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoMemo.debug.xcconfig"; path = "Target Support Files/Pods-PhotoMemo/Pods-PhotoMemo.debug.xcconfig"; sourceTree = "<group>"; };
 		379DFDF62B4362B0D4C6AA91 /* Pods-PhotoMemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoMemo.release.xcconfig"; path = "Target Support Files/Pods-PhotoMemo/Pods-PhotoMemo.release.xcconfig"; sourceTree = "<group>"; };
 		3F7E57A2DC9024B2873FFD2A /* Pods_PhotoMemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PhotoMemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DE2ACC9225C20B7400A1F703 /* NewMemoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMemoViewModel.swift; sourceTree = "<group>"; };
 		DE3C0D4C25B3353A00F33612 /* PhotoMemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoMemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE3C0D4F25B3353A00F33612 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE3C0D5125B3353A00F33612 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 			children = (
 				DEAF2D6225B3A97E00ECAC0C /* MainViewModel.swift */,
 				DED9D66425C02DA500F1FD75 /* LoginViewModel.swift */,
+				DE2ACC9225C20B7400A1F703 /* NewMemoViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -306,6 +309,7 @@
 				DE3C0D5025B3353A00F33612 /* AppDelegate.swift in Sources */,
 				DE77EB2B25B34B990065FA3F /* MemoCollectionViewCell.swift in Sources */,
 				DE732BE625B754E3002C3629 /* NetworkManager.swift in Sources */,
+				DE2ACC9325C20B7400A1F703 /* NewMemoViewModel.swift in Sources */,
 				DE3C0D5225B3353A00F33612 /* SceneDelegate.swift in Sources */,
 				DE3C0D8125B347FC00F33612 /* NewMemoViewController.swift in Sources */,
 				DEAF2D6625B3A99800ECAC0C /* Memo.swift in Sources */,

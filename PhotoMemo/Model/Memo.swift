@@ -6,10 +6,11 @@
 //
 
 import RealmSwift
+import SwiftKeychainWrapper
 
 
 class Memo: Object {
-    @objc dynamic var id: String = ""
+    @objc dynamic var id: String = Date().description.sha256()
     @objc dynamic var text: String = ""
     @objc dynamic var createdAt: Date = Date()
     @objc dynamic var updatedAt: Date = Date()

@@ -225,14 +225,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="메모 작성" id="P3w-a0-wHr">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="jFF-ua-gBC">
-                            <connections>
-                                <action selector="saveAction:" destination="4D7-AF-rTs" id="CFr-PY-NLg"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="jFF-ua-gBC"/>
                     </navigationItem>
                     <connections>
                         <outlet property="memoTextView" destination="44h-Es-A7H" id="Ot7-Wg-hHk"/>
+                        <outlet property="saveButton" destination="jFF-ua-gBC" id="laY-wV-xDH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HC2-5v-CS4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
