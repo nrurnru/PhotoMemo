@@ -15,7 +15,7 @@ class NetworkManager {
     private init(){}
     static let shared = NetworkManager()
     
-    private let baseURL = "http://localhost:8000/users/sync"
+    private let baseURL = "http://nrurnru.pythonanywhere.com/memo/sync"
     
     private func headers() -> HTTPHeaders {
         guard let jwt = KeychainWrapper.standard.string(forKey: "jwt") else { return [:] }
@@ -69,22 +69,8 @@ class NetworkManager {
         }
     }
     
-    func login(id: String, password: String, recievedValue: @escaping (String?) -> Void) {
-        AF.request("http://localhost:8000/users/login", headers: headers(id: id, password: password)).validate(statusCode:  Array(200..<300)).responseJSON { response in
-            switch response.result {
-            case .success(let value):
-                let json = JSON(value)
-                let jwt = json["token"].stringValue
-                recievedValue(jwt)
-            case .failure:
-                recievedValue(nil)
-            }
-        }
-        
-    }
-    
     func register(id: String, password: String, successed: @escaping () -> Void) {
-        AF.request("http://localhost:8000/users/login", method: .post, headers: headers(id: id, password: password)).validate(statusCode:  Array(200..<300)).responseData { response in
+        AF.request("http://nrurnru.pythonanywhere.com/memo/login", method: .post, headers: headers(id: id, password: password)).validate(statusCode:  Array(200..<300)).responseData { response in
             switch response.result {
             case .success:
                 successed()

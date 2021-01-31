@@ -6,7 +6,34 @@
 //
 
 import Foundation
+import RxSwift
+import RxRelay
 
-class MainViewModel {
+final class MainViewModel {
     
+    //view -> vm
+    let newMemoButtonTapped = PublishRelay<Void>()
+    let deleteMemoButtonTapped = PublishRelay<Void>()
+    let syncButtonTapped = PublishRelay<Void>()
+    let logoutButtonTapped = PublishRelay<Void>()
+    
+    //vm -> view
+    let data = PublishRelay<[Memo]>()
+    
+    
+    init() {
+        //Observable<[Memo]>.create
+    }
+    
+    private func saveAction() {
+        
+    }
+    
+    private func deleteAction() {
+        
+    }
+    
+    private func logoutAction() {
+        
+    }
 }

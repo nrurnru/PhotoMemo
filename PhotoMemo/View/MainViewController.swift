@@ -6,22 +6,28 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 import SwiftKeychainWrapper
+import RealmSwift
 
 class MainViewController: UIViewController {
-    var data = RealmManager.shared.loadData(Memo.self).sorted(byKeyPath: "createdAt", ascending: false)
     var selectedItem: [Memo] = []
+    let viewModel = MainViewModel()
+    
+    private var disposeBag = DisposeBag()
     
     @IBOutlet var memoCollectionView: UICollectionView!
     @IBOutlet var newMemoBarButton: UIBarButtonItem!
     @IBOutlet var deleteMemoBarButton: UIBarButtonItem!
     @IBOutlet var syncBarButton: UIBarButtonItem!
+    @IBOutlet var logoutBarButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         navigationItem.hidesBackButton = true
-
+        bindCollectionView()
         
         setupUI()
         configureFlowLayout()
@@ -37,9 +43,45 @@ class MainViewController: UIViewController {
         syncData()
     }
     
+    private func bindInput() {
+        newMemoBarButton.rx.tap
+            .bind(to: viewModel.newMemoButtonTapped)
+            .disposed(by: disposeBag)
+        
+        deleteMemoBarButton.rx.tap
+            .bind(to: viewModel.deleteMemoButtonTapped)
+            .disposed(by: disposeBag)
+        
+        syncBarButton.rx.tap
+            .bind(to: viewModel.syncButtonTapped)
+            .disposed(by: disposeBag)
+        
+        logoutBarButton.rx.tap
+            .bind(to: viewModel.logoutButtonTapped)
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindOutput() {
+        
+//        memoCollectionView.rx.dataSource
+
+    }
+    
+    private func bindCollectionView() {
+        let realm = try! Realm()
+        let result = realm.objects(Memo.self).sorted(byKeyPath: "createdAt", ascending: false)
+        
+        Observable.collection(from: result)
+            .bind(to: memoCollectionView.rx.items(cellIdentifier: "memoCell", cellType: MemoCollectionViewCell.self)) { index, memo, cell in
+                cell.text?.text = memo.text
+                cell.layer.borderWidth = 1
+                cell.layer.borderColor = self.view.backgroundColor?.cgColor
+            }.disposed(by: disposeBag)
+        
+        
+    }
+
     private func setupUI() {
-        memoCollectionView.delegate = self
-        memoCollectionView.dataSource = self
         
         memoCollectionView.allowsMultipleSelectionDuringEditing = true
         
@@ -91,39 +133,27 @@ class MainViewController: UIViewController {
     }
 }
 
-extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return data.count
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "memoCell", for: indexPath) as! MemoCollectionViewCell
-        cell.text?.text = data[indexPath.row].text
-        cell.layer.borderWidth = 1
-        cell.layer.borderColor = view.backgroundColor?.cgColor
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        switch memoCollectionView.isEditing {
-        case true:
-            let memo = data[indexPath.row]
-            self.selectedItem.append(memo)
-        case false:
-            guard let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "MemoDetailViewController") as? MemoDetailViewController else { return }
-            vc.viewModel = MemoDetailViewModel(memo: data[indexPath.row])
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        guard memoCollectionView.isEditing == true else { return }
-        let memo = data[indexPath.row]
-        guard let index = selectedItem.firstIndex(of: memo) else { return }
-        selectedItem.remove(at: index)
-    }
-}
+//extension MainViewController: {
+//
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        switch memoCollectionView.isEditing {
+//        case true:
+//            let memo = data[indexPath.row]
+//            self.selectedItem.append(memo)
+//        case false:
+//            guard let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "MemoDetailViewController") as? MemoDetailViewController else { return }
+//            vc.viewModel = MemoDetailViewModel(memo: data[indexPath.row])
+//            self.navigationController?.pushViewController(vc, animated: true)
+//        }
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+//        guard memoCollectionView.isEditing == true else { return }
+//        let memo = data[indexPath.row]
+//        guard let index = selectedItem.firstIndex(of: memo) else { return }
+//        selectedItem.remove(at: index)
+//    }
+//}
 
 extension MainViewController {
     func syncData() {

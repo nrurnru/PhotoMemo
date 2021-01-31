@@ -36,6 +36,7 @@ final class LoginViewModel {
     private func headers() -> HTTPHeaders {
         let headers: HTTPHeaders = [
             "Accept": "application/json",
+            "Content-Type" :"application/json",
             "Userid" : idField.value,
             "Userpassword": pwField.value
         ]
@@ -43,7 +44,7 @@ final class LoginViewModel {
     }
     
     private func loginSuccessed() -> Observable<Bool> {
-        return json(.get, "http://localhost:8000/users/login", headers: headers())
+        return json(.get, "http://nrurnru.pythonanywhere.com/memo/login", headers: headers())
             .map({ json -> Bool in
                 let token = JSON(json)["token"].stringValue
                 KeychainWrapper.standard.set(token, forKey: "jwt")
