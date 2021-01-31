@@ -8,8 +8,11 @@
 import Foundation
 import RxSwift
 import RxRelay
+import RealmSwift
+import SwiftKeychainWrapper
 
 final class MainViewModel {
+    private var disposeBag = DisposeBag()
     
     //view -> vm
     let newMemoButtonTapped = PublishRelay<Void>()
@@ -18,22 +21,46 @@ final class MainViewModel {
     let logoutButtonTapped = PublishRelay<Void>()
     
     //vm -> view
-    let data = PublishRelay<[Memo]>()
-    
+    let data = ReplayRelay<Results<Memo>>.create(bufferSize: 1)
+    let logoutSuccessed = PublishRelay<Bool>()
+    let deleteCompleted = PublishRelay<Bool>()
+    let syncCompleted = PublishRelay<Bool>()
+    let newMemo = PublishRelay<Bool>()
     
     init() {
-        //Observable<[Memo]>.create
-    }
-    
-    private func saveAction() {
+        self.fetchMemo().bind(to: data)
+            .disposed(by: disposeBag)
+        
+        logoutButtonTapped.bind { _ in
+            self.cleanData()
+            self.logoutSuccessed.accept(true)
+        }.disposed(by: disposeBag)
+
+        newMemoButtonTapped.bind { _ in
+            self.newMemo.accept(true)
+        }.disposed(by: disposeBag)
+        
+        deleteMemoButtonTapped.bind { _ in
+            
+            self.deleteCompleted.accept(true)
+        }.disposed(by: disposeBag)
+        
+        syncButtonTapped.bind { _ in
+            
+            self.deleteCompleted.accept(true)
+        }.disposed(by: disposeBag)
         
     }
     
-    private func deleteAction() {
-        
+    private func cleanData() {
+        UserDefaults.standard.removeObject(forKey: "lastSynced")
+        KeychainWrapper.standard.remove(forKey: "jwt")
+        RealmManager.shared.deleteAllData(Memo.self)
     }
     
-    private func logoutAction() {
-        
+    func fetchMemo() ->  Observable<Results<Memo>> {
+        let realm = try! Realm()
+        let result = realm.objects(Memo.self).sorted(byKeyPath: "createdAt", ascending: false)
+        return Observable.collection(from: result)
     }
 }

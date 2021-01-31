@@ -31,6 +31,9 @@ class MainViewController: UIViewController {
         
         setupUI()
         configureFlowLayout()
+        
+        bindInput()
+        bindOutput()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -47,14 +50,14 @@ class MainViewController: UIViewController {
         newMemoBarButton.rx.tap
             .bind(to: viewModel.newMemoButtonTapped)
             .disposed(by: disposeBag)
-        
-        deleteMemoBarButton.rx.tap
-            .bind(to: viewModel.deleteMemoButtonTapped)
-            .disposed(by: disposeBag)
-        
-        syncBarButton.rx.tap
-            .bind(to: viewModel.syncButtonTapped)
-            .disposed(by: disposeBag)
+//
+//        deleteMemoBarButton.rx.tap
+//            .bind(to: viewModel.deleteMemoButtonTapped)
+//            .disposed(by: disposeBag)
+//
+//        syncBarButton.rx.tap
+//            .bind(to: viewModel.syncButtonTapped)
+//            .disposed(by: disposeBag)
         
         logoutBarButton.rx.tap
             .bind(to: viewModel.logoutButtonTapped)
@@ -62,27 +65,46 @@ class MainViewController: UIViewController {
     }
     
     private func bindOutput() {
+        viewModel.logoutSuccessed
+            .bind { result in
+                if result {
+                    self.navigationController?.popViewController(animated: true)
+                }
+                else {
+                    print("logout failed..")
+                }
+            }.disposed(by: disposeBag)
         
-//        memoCollectionView.rx.dataSource
-
+        viewModel.newMemo
+            .bind { _ in
+                self.performSegue(withIdentifier: "newMemo", sender: nil)
+            }.disposed(by: disposeBag)
+        
+        viewModel.deleteCompleted
+            .bind { result in
+                if result {
+                    //delete
+                }
+            }.disposed(by: disposeBag)
+        
+        viewModel.syncCompleted
+            .bind { result in
+                if result {
+                    //sync
+                }
+            }.disposed(by: disposeBag)
     }
     
     private func bindCollectionView() {
-        let realm = try! Realm()
-        let result = realm.objects(Memo.self).sorted(byKeyPath: "createdAt", ascending: false)
-        
-        Observable.collection(from: result)
+        viewModel.data
             .bind(to: memoCollectionView.rx.items(cellIdentifier: "memoCell", cellType: MemoCollectionViewCell.self)) { index, memo, cell in
                 cell.text?.text = memo.text
                 cell.layer.borderWidth = 1
                 cell.layer.borderColor = self.view.backgroundColor?.cgColor
             }.disposed(by: disposeBag)
-        
-        
     }
 
     private func setupUI() {
-        
         memoCollectionView.allowsMultipleSelectionDuringEditing = true
         
         let nib = UINib(nibName: "MemoCollectionViewCell", bundle: nil)
@@ -124,12 +146,6 @@ class MainViewController: UIViewController {
     @IBAction func syncAction(_ sender: UIBarButtonItem) {
         syncBarButton.tintColor = .red
         syncData()
-    }
-    @IBAction func logoutAction(_ sender: Any) {
-        UserDefaults.standard.removeObject(forKey: "lastSynced")
-        KeychainWrapper.standard.remove(forKey: "jwt")
-        RealmManager.shared.deleteAllData(Memo.self)
-        self.navigationController?.popViewController(animated: true)
     }
 }
 

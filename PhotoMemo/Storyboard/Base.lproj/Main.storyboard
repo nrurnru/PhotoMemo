@@ -159,15 +159,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="메모 목록" id="Xfu-rp-ZAZ">
-                        <barButtonItem key="leftBarButtonItem" image="lock.slash" catalog="system" id="Kve-Tg-15h">
-                            <connections>
-                                <action selector="logoutAction:" destination="BYZ-38-t0r" id="vpc-Ph-uLb"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="leftBarButtonItem" image="lock.slash" catalog="system" id="Kve-Tg-15h"/>
                         <rightBarButtonItems>
                             <barButtonItem title="Item" image="square.and.pencil" catalog="system" id="Sni-gH-aUo">
                                 <connections>
-                                    <segue destination="4D7-AF-rTs" kind="show" id="qPP-VW-Jtw"/>
+                                    <segue destination="4D7-AF-rTs" kind="show" identifier="newMemo" id="LrN-e7-n4k"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem systemItem="trash" id="OzD-0D-AZ1">
@@ -185,6 +181,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="deleteMemoBarButton" destination="OzD-0D-AZ1" id="cme-nI-buJ"/>
+                        <outlet property="logoutBarButton" destination="Kve-Tg-15h" id="eHQ-0J-vwX"/>
                         <outlet property="memoCollectionView" destination="wcT-pe-i2b" id="mst-UT-JR1"/>
                         <outlet property="newMemoBarButton" destination="Sni-gH-aUo" id="E2Q-DR-2iZ"/>
                         <outlet property="syncBarButton" destination="ewt-cb-9N8" id="JGk-m0-Qcp"/>
