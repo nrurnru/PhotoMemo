@@ -93,7 +93,7 @@
                                 </items>
                             </toolbar>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Memo" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="IA6-Gj-RSo">
-                                <rect key="frame" x="0.0" y="44" width="414" height="175"/>
+                                <rect key="frame" x="0.0" y="140" width="414" height="175"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="175" id="E5b-ZL-Qcp"/>
@@ -168,9 +168,6 @@
                             </barButtonItem>
                             <barButtonItem systemItem="trash" id="OzD-0D-AZ1">
                                 <color key="tintColor" systemColor="systemRedColor"/>
-                                <connections>
-                                    <action selector="deleteAction:" destination="BYZ-38-t0r" id="9K4-hj-4uC"/>
-                                </connections>
                             </barButtonItem>
                             <barButtonItem image="arrow.clockwise.icloud" catalog="system" id="ewt-cb-9N8">
                                 <connections>
@@ -185,6 +182,7 @@
                         <outlet property="memoCollectionView" destination="wcT-pe-i2b" id="mst-UT-JR1"/>
                         <outlet property="newMemoBarButton" destination="Sni-gH-aUo" id="E2Q-DR-2iZ"/>
                         <outlet property="syncBarButton" destination="ewt-cb-9N8" id="JGk-m0-Qcp"/>
+                        <segue destination="uJS-FO-dO5" kind="show" identifier="memoDetail" id="9AR-Zi-Pso"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

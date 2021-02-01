@@ -50,10 +50,11 @@ class MainViewController: UIViewController {
         newMemoBarButton.rx.tap
             .bind(to: viewModel.newMemoButtonTapped)
             .disposed(by: disposeBag)
-//
-//        deleteMemoBarButton.rx.tap
-//            .bind(to: viewModel.deleteMemoButtonTapped)
-//            .disposed(by: disposeBag)
+
+        deleteMemoBarButton.rx.tap.bind(onNext: { _ in
+            self.memoCollectionView.isEditing.toggle()
+            self.viewModel.isEditmode.accept(self.memoCollectionView.isEditing)
+        }).disposed(by: disposeBag)
 //
 //        syncBarButton.rx.tap
 //            .bind(to: viewModel.syncButtonTapped)
@@ -102,8 +103,30 @@ class MainViewController: UIViewController {
                 cell.layer.borderWidth = 1
                 cell.layer.borderColor = self.view.backgroundColor?.cgColor
             }.disposed(by: disposeBag)
+        
+        
+        memoCollectionView.rx.modelSelected(Memo.self).bind { memo in
+            if self.memoCollectionView.isEditing {
+                self.viewModel.selectedMemoForDelete.accept(memo)
+            } else {
+                self.performSegue(withIdentifier: "memoDetail", sender: memo)
+            }
+            
+            
+        }.disposed(by: disposeBag)
+        
+        memoCollectionView.rx.modelDeselected(Memo.self).bind { memo in
+            self.viewModel.deselectedMemoForDelete.accept(memo)
+        }.disposed(by: disposeBag)
+        
+        
     }
-
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let destination = segue.destination as? MemoDetailViewController, let memo = sender as? Memo else { return }
+        destination.viewModel = MemoDetailViewModel(memo: memo)
+    }
+    
     private func setupUI() {
         memoCollectionView.allowsMultipleSelectionDuringEditing = true
         
@@ -122,54 +145,11 @@ class MainViewController: UIViewController {
         memoCollectionView.reloadData()
     }
     
-    @IBAction func deleteAction(_ sender: UIBarButtonItem) {
-        switch memoCollectionView.isEditing {
-        case true: //수정끝
-            //TODO: 확인 알림 필요
-            var deletedMemoIDs = UserDefaults.standard.array(forKey: "deletedMemoIDs") as! [String]
-            deletedMemoIDs.append(contentsOf: selectedItem.map { $0.id })
-            UserDefaults.standard.set(deletedMemoIDs, forKey: "deletedMemoIDs")
-            RealmManager.shared.deleteDataList(dataList: selectedItem)
-            selectedItem.removeAll()
-            
-            newMemoBarButton.isEnabled = true
-            deleteMemoBarButton.tintColor = .systemBlue
-            memoCollectionView.isEditing = false
-            memoCollectionView.reloadData()
-            
-        case false: //수정시작
-            memoCollectionView.isEditing = true
-            deleteMemoBarButton.tintColor = .systemRed
-            newMemoBarButton.isEnabled = false
-        }
-    }
     @IBAction func syncAction(_ sender: UIBarButtonItem) {
         syncBarButton.tintColor = .red
         syncData()
     }
 }
-
-//extension MainViewController: {
-//
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        switch memoCollectionView.isEditing {
-//        case true:
-//            let memo = data[indexPath.row]
-//            self.selectedItem.append(memo)
-//        case false:
-//            guard let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "MemoDetailViewController") as? MemoDetailViewController else { return }
-//            vc.viewModel = MemoDetailViewModel(memo: data[indexPath.row])
-//            self.navigationController?.pushViewController(vc, animated: true)
-//        }
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-//        guard memoCollectionView.isEditing == true else { return }
-//        let memo = data[indexPath.row]
-//        guard let index = selectedItem.firstIndex(of: memo) else { return }
-//        selectedItem.remove(at: index)
-//    }
-//}
 
 extension MainViewController {
     func syncData() {

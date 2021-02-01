@@ -16,9 +16,12 @@ final class MainViewModel {
     
     //view -> vm
     let newMemoButtonTapped = PublishRelay<Void>()
-    let deleteMemoButtonTapped = PublishRelay<Void>()
+    let isEditmode = PublishRelay<Bool>()
     let syncButtonTapped = PublishRelay<Void>()
     let logoutButtonTapped = PublishRelay<Void>()
+    
+    let selectedMemoForDelete = PublishRelay<Memo>()
+    let deselectedMemoForDelete = PublishRelay<Memo>()
     
     //vm -> view
     let data = ReplayRelay<Results<Memo>>.create(bufferSize: 1)
@@ -26,6 +29,10 @@ final class MainViewModel {
     let deleteCompleted = PublishRelay<Bool>()
     let syncCompleted = PublishRelay<Bool>()
     let newMemo = PublishRelay<Bool>()
+    
+    //?
+    var selectedMemo = [Memo]()
+    
     
     init() {
         self.fetchMemo().bind(to: data)
@@ -39,15 +46,30 @@ final class MainViewModel {
         newMemoButtonTapped.bind { _ in
             self.newMemo.accept(true)
         }.disposed(by: disposeBag)
-        
-        deleteMemoButtonTapped.bind { _ in
+
+        isEditmode.bind { isEditing in
+            if isEditing {
+                //do nothing?
+            } else {
+                // 삭제처리 실행
+                self.deleteMemo()
+            }
             
-            self.deleteCompleted.accept(true)
         }.disposed(by: disposeBag)
         
         syncButtonTapped.bind { _ in
             
             self.deleteCompleted.accept(true)
+        }.disposed(by: disposeBag)
+        
+        //추가 제거
+        selectedMemoForDelete.bind { memo in
+            self.selectedMemo.append(memo)
+        }.disposed(by: disposeBag)
+        
+        deselectedMemoForDelete.bind { memo in
+            let index = self.selectedMemo.firstIndex(of: memo)
+            self.selectedMemo.remove(at: index!)
         }.disposed(by: disposeBag)
         
     }
@@ -62,5 +84,13 @@ final class MainViewModel {
         let realm = try! Realm()
         let result = realm.objects(Memo.self).sorted(byKeyPath: "createdAt", ascending: false)
         return Observable.collection(from: result)
+    }
+    
+    private func deleteMemo() {
+        var deletedMemoIDs = UserDefaults.standard.array(forKey: "deletedMemoIDs") as? [String] ?? []
+        deletedMemoIDs.append(contentsOf: selectedMemo.map { $0.id })
+        UserDefaults.standard.set(deletedMemoIDs, forKey: "deletedMemoIDs")
+        RealmManager.shared.deleteDataList(dataList: selectedMemo)
+        selectedMemo.removeAll()
     }
 }
