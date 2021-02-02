@@ -169,11 +169,7 @@
                             <barButtonItem systemItem="trash" id="OzD-0D-AZ1">
                                 <color key="tintColor" systemColor="systemRedColor"/>
                             </barButtonItem>
-                            <barButtonItem image="arrow.clockwise.icloud" catalog="system" id="ewt-cb-9N8">
-                                <connections>
-                                    <action selector="syncAction:" destination="BYZ-38-t0r" id="0Rl-zz-qSX"/>
-                                </connections>
-                            </barButtonItem>
+                            <barButtonItem image="arrow.clockwise.icloud" catalog="system" id="ewt-cb-9N8"/>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>

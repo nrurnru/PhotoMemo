@@ -36,16 +36,6 @@ class MainViewController: UIViewController {
         bindOutput()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        memoCollectionView.reloadData()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        syncData()
-    }
-    
     private func bindInput() {
         newMemoBarButton.rx.tap
             .bind(to: viewModel.newMemoButtonTapped)
@@ -55,10 +45,10 @@ class MainViewController: UIViewController {
             self.memoCollectionView.isEditing.toggle()
             self.viewModel.isEditmode.accept(self.memoCollectionView.isEditing)
         }).disposed(by: disposeBag)
-//
-//        syncBarButton.rx.tap
-//            .bind(to: viewModel.syncButtonTapped)
-//            .disposed(by: disposeBag)
+
+        syncBarButton.rx.tap
+            .bind(to: viewModel.syncButtonTapped)
+            .disposed(by: disposeBag)
         
         logoutBarButton.rx.tap
             .bind(to: viewModel.logoutButtonTapped)
@@ -143,36 +133,5 @@ class MainViewController: UIViewController {
         layout.minimumLineSpacing = 0
         memoCollectionView.setCollectionViewLayout(layout, animated: false)
         memoCollectionView.reloadData()
-    }
-    
-    @IBAction func syncAction(_ sender: UIBarButtonItem) {
-        syncBarButton.tintColor = .red
-        syncData()
-    }
-}
-
-extension MainViewController {
-    func syncData() {
-        let updatedMemos = RealmManager.shared.fetchUpdatedMemo().map { MemoAdapter(memo: $0) }
-        let deletedMemoIDs = UserDefaults.standard.array(forKey: "deletedMemoIDs") ?? []
-        guard let d = deletedMemoIDs as? [String] else { return }
-        
-        
-        let syncData = SyncData(updatedMemos: updatedMemos, deletedMemoIDs: d)
-        
-        NetworkManager.shared.upSync(syncData: syncData) { [weak self] in
-            NetworkManager.shared.downSync { syncData in
-                syncData.updatedMemos.forEach { updatedMemo in
-                    RealmManager.shared.saveData(data: updatedMemo.toMemo())
-                }
-                RealmManager.shared.deleteDataWithIDs(Memo.self, deletedIDs: syncData.deletedMemoIDs)
-                UserDefaults.standard.set([], forKey: "deletedMemoIDs")
-                UserDefaults.standard.set(ISO8601DateFormatter().string(from: Date()), forKey: "lastSynced")
-                self?.memoCollectionView.reloadData()
-                DispatchQueue.main.async {
-                    self?.syncBarButton.tintColor = .systemBlue
-                }
-            }
-        }
     }
 }
