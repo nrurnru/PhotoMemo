@@ -10,6 +10,7 @@ import RxSwift
 import RxRelay
 import RealmSwift
 import SwiftKeychainWrapper
+import Kingfisher
 
 final class MainViewModel {
     private var disposeBag = DisposeBag()
@@ -76,6 +77,7 @@ final class MainViewModel {
         UserDefaults.standard.removeObject(forKey: "lastSynced")
         KeychainWrapper.standard.remove(forKey: "jwt")
         RealmManager.shared.deleteAllData(Memo.self)
+        KingfisherManager.shared.cache.clearCache()
     }
     
     func fetchMemo() ->  Observable<Results<Memo>> {

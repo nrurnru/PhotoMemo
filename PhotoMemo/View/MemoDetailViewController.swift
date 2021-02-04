@@ -15,7 +15,7 @@ class MemoDetailViewController: UIViewController {
     @IBOutlet var memoTextView: UITextView!
     @IBOutlet var deleteButton: UIBarButtonItem!
     @IBOutlet var saveButton: UIBarButtonItem!
-    
+    @IBOutlet var memoImage: UIImageView!
     
     var viewModel = MemoDetailViewModel(memo: Memo())
     private var disposeBag = DisposeBag()
@@ -28,7 +28,6 @@ class MemoDetailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationItem.title = "메모 보기"
     }
     
     private func bindInput(){
@@ -63,6 +62,13 @@ class MemoDetailViewController: UIViewController {
             .asDriver(onErrorJustReturn: ())
             .drive { _ in
                 self.navigationController?.popViewController(animated: true)
+            }.disposed(by: disposeBag)
+        
+        viewModel.memoRelay
+            .asDriver()
+            .drive { memo in
+                let url = URL(string: "https://i.imgur.com/E7zh51q.png")
+                self.memoImage.kf.setImage(with: url)
             }.disposed(by: disposeBag)
     }
 }

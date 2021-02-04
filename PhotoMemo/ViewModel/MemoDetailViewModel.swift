@@ -10,6 +10,7 @@ import RxSwift
 import RxRelay
 import RxRealm
 import RealmSwift
+import Kingfisher
 
 final class MemoDetailViewModel {
         

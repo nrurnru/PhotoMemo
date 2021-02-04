@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -73,7 +74,7 @@
             </objects>
             <point key="canvasLocation" x="822" y="-581"/>
         </scene>
-        <!--Title-->
+        <!--메모 보기-->
         <scene sceneID="uZv-mK-tdd">
             <objects>
                 <viewController storyboardIdentifier="MemoDetailViewController" id="uJS-FO-dO5" customClass="MemoDetailViewController" customModule="PhotoMemo" customModuleProvider="target" sceneMemberID="viewController">
@@ -81,10 +82,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c2d-O8-5MV">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c2d-O8-5MV">
                                 <rect key="frame" x="0.0" y="812" width="414" height="50"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="TsQ-Ek-Rw2"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="fBE-VU-gD5"/>
                                 </constraints>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="NUZ-f1-8kB"/>
@@ -92,12 +93,13 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="dFW-5Q-zT6"/>
                                 </items>
                             </toolbar>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WSN-61-7f6">
+                                <rect key="frame" x="0.0" y="141" width="414" height="267"/>
+                                <imageReference key="image" image="circles.hexagonpath.fill" catalog="system" symbolScale="default"/>
+                            </imageView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Memo" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="IA6-Gj-RSo">
-                                <rect key="frame" x="0.0" y="140" width="414" height="175"/>
+                                <rect key="frame" x="0.0" y="409" width="414" height="403"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="175" id="E5b-ZL-Qcp"/>
-                                </constraints>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -106,12 +108,20 @@
                         <viewLayoutGuide key="safeArea" id="O9J-x7-JZR"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="O9J-x7-JZR" firstAttribute="trailing" secondItem="IA6-Gj-RSo" secondAttribute="trailing" id="3Ix-nZ-J49"/>
-                            <constraint firstItem="IA6-Gj-RSo" firstAttribute="leading" secondItem="O9J-x7-JZR" secondAttribute="leading" id="Zn1-nW-58O"/>
-                            <constraint firstItem="IA6-Gj-RSo" firstAttribute="top" secondItem="O9J-x7-JZR" secondAttribute="top" id="jen-sV-sjq"/>
+                            <constraint firstItem="WSN-61-7f6" firstAttribute="height" secondItem="adY-UJ-KdG" secondAttribute="height" multiplier="0.3" id="CbE-ag-emt"/>
+                            <constraint firstItem="WSN-61-7f6" firstAttribute="trailing" secondItem="O9J-x7-JZR" secondAttribute="trailing" id="M0v-ID-Ebv"/>
+                            <constraint firstItem="c2d-O8-5MV" firstAttribute="leading" secondItem="O9J-x7-JZR" secondAttribute="leading" id="T17-zA-vdc"/>
+                            <constraint firstItem="c2d-O8-5MV" firstAttribute="trailing" secondItem="O9J-x7-JZR" secondAttribute="trailing" id="TxQ-1M-lmy"/>
+                            <constraint firstItem="c2d-O8-5MV" firstAttribute="bottom" secondItem="O9J-x7-JZR" secondAttribute="bottom" id="aRh-Cj-mih"/>
+                            <constraint firstItem="c2d-O8-5MV" firstAttribute="top" secondItem="IA6-Gj-RSo" secondAttribute="bottom" id="j70-nm-Voo"/>
+                            <constraint firstItem="WSN-61-7f6" firstAttribute="top" secondItem="O9J-x7-JZR" secondAttribute="top" id="kNg-GP-Ino"/>
+                            <constraint firstItem="WSN-61-7f6" firstAttribute="leading" secondItem="O9J-x7-JZR" secondAttribute="leading" id="mFy-XW-LvJ"/>
+                            <constraint firstItem="IA6-Gj-RSo" firstAttribute="leading" secondItem="O9J-x7-JZR" secondAttribute="leading" id="nHL-Jq-XQL"/>
+                            <constraint firstItem="IA6-Gj-RSo" firstAttribute="top" secondItem="WSN-61-7f6" secondAttribute="bottom" id="obR-ez-Evs"/>
+                            <constraint firstItem="IA6-Gj-RSo" firstAttribute="trailing" secondItem="O9J-x7-JZR" secondAttribute="trailing" id="ovn-2m-hBe"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Title" id="wOh-VI-BFe">
+                    <navigationItem key="navigationItem" title="메모 보기" id="wOh-VI-BFe">
                         <rightBarButtonItems>
                             <barButtonItem systemItem="save" id="noN-TB-GAm"/>
                             <barButtonItem style="plain" systemItem="trash" id="Ydj-Br-ngD">
@@ -121,6 +131,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="deleteButton" destination="Ydj-Br-ngD" id="K9G-mv-XVJ"/>
+                        <outlet property="memoImage" destination="WSN-61-7f6" id="CDg-UN-BBd"/>
                         <outlet property="memoTextView" destination="IA6-Gj-RSo" id="uJd-dD-AyK"/>
                         <outlet property="saveButton" destination="noN-TB-GAm" id="rwe-QN-8Tg"/>
                     </connections>
@@ -341,6 +352,7 @@
     </scenes>
     <resources>
         <image name="arrow.clockwise.icloud" catalog="system" width="128" height="88"/>
+        <image name="circles.hexagonpath.fill" catalog="system" width="128" height="112"/>
         <image name="gearshape.fill" catalog="system" width="128" height="121"/>
         <image name="lock.slash" catalog="system" width="124" height="128"/>
         <image name="pencil.and.outline" catalog="system" width="128" height="128"/>
