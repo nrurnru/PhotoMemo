@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		26AE1FD492FDD86481BB738B /* Pods_PhotoMemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F7E57A2DC9024B2873FFD2A /* Pods_PhotoMemo.framework */; };
 		DE2ACC9325C20B7400A1F703 /* NewMemoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2ACC9225C20B7400A1F703 /* NewMemoViewModel.swift */; };
+		DE2BD1A525C9E0D7000799CD /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2BD1A425C9E0D7000799CD /* Network.swift */; };
 		DE3C0D5025B3353A00F33612 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3C0D4F25B3353A00F33612 /* AppDelegate.swift */; };
 		DE3C0D5225B3353A00F33612 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3C0D5125B3353A00F33612 /* SceneDelegate.swift */; };
 		DE3C0D5425B3353A00F33612 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3C0D5325B3353A00F33612 /* MainViewController.swift */; };
@@ -36,6 +37,7 @@
 		379DFDF62B4362B0D4C6AA91 /* Pods-PhotoMemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoMemo.release.xcconfig"; path = "Target Support Files/Pods-PhotoMemo/Pods-PhotoMemo.release.xcconfig"; sourceTree = "<group>"; };
 		3F7E57A2DC9024B2873FFD2A /* Pods_PhotoMemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PhotoMemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE2ACC9225C20B7400A1F703 /* NewMemoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMemoViewModel.swift; sourceTree = "<group>"; };
+		DE2BD1A425C9E0D7000799CD /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		DE3C0D4C25B3353A00F33612 /* PhotoMemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoMemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE3C0D4F25B3353A00F33612 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE3C0D5125B3353A00F33612 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 			isa = PBXGroup;
 			children = (
 				DE732BE525B754E3002C3629 /* NetworkManager.swift */,
+				DE2BD1A425C9E0D7000799CD /* Network.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -321,6 +324,7 @@
 				DE73C58E25C24D4D008A15FC /* MemoDetailViewModel.swift in Sources */,
 				DE8AAFDA25BEC8B700928359 /* RegisterViewController.swift in Sources */,
 				DEAF2D6A25B3AE6E00ECAC0C /* RealmManager.swift in Sources */,
+				DE2BD1A525C9E0D7000799CD /* Network.swift in Sources */,
 				DE3C0D7D25B3453E00F33612 /* SettingViewController.swift in Sources */,
 				DE8AAFD725BEB16600928359 /* LoginViewController.swift in Sources */,
 				DEAF2D6325B3A97E00ECAC0C /* MainViewModel.swift in Sources */,

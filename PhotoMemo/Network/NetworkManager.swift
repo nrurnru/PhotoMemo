@@ -42,7 +42,6 @@ class NetworkManager {
             "last_synced": lastSynced
         ]
         
-
         AF.request(baseURL, parameters: parameters, encoding: URLEncoding.queryString, headers: headers()).responseJSON { response in
             switch response.result {
             case .success(let value):

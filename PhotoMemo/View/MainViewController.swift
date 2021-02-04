@@ -36,6 +36,17 @@ class MainViewController: UIViewController {
         bindOutput()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        memoCollectionView.allowsSelection = true
+        viewModel.startSync()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        memoCollectionView.allowsSelection = false
+    }
+    
     private func bindInput() {
         newMemoBarButton.rx.tap
             .bind(to: viewModel.newMemoButtonTapped)
@@ -101,12 +112,12 @@ class MainViewController: UIViewController {
             } else {
                 self.performSegue(withIdentifier: "memoDetail", sender: memo)
             }
-            
-            
         }.disposed(by: disposeBag)
         
         memoCollectionView.rx.modelDeselected(Memo.self).bind { memo in
-            self.viewModel.deselectedMemoForDelete.accept(memo)
+            if self.memoCollectionView.isEditing {
+                self.viewModel.deselectedMemoForDelete.accept(memo)
+            }
         }.disposed(by: disposeBag)
         
         
