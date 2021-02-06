@@ -205,33 +205,46 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="메모를 입력하세요" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="44h-Es-A7H">
-                                <rect key="frame" x="0.0" y="140" width="414" height="722"/>
+                                <rect key="frame" x="0.0" y="409" width="414" height="453"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="e6V-Ak-Ec4">
+                                <rect key="frame" x="0.0" y="140" width="414" height="269"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="I8i-vg-9Ul" appends="YES" id="zaT-6t-qvG"/>
+                                </connections>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="QS3-1M-fYw"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="44h-Es-A7H" firstAttribute="leading" secondItem="QS3-1M-fYw" secondAttribute="leading" id="OhV-to-MER"/>
-                            <constraint firstItem="QS3-1M-fYw" firstAttribute="trailing" secondItem="44h-Es-A7H" secondAttribute="trailing" id="kt7-wE-RhV"/>
-                            <constraint firstItem="QS3-1M-fYw" firstAttribute="bottom" secondItem="44h-Es-A7H" secondAttribute="bottom" id="oI0-0B-eNa"/>
-                            <constraint firstItem="44h-Es-A7H" firstAttribute="top" secondItem="QS3-1M-fYw" secondAttribute="top" id="sfT-Bs-Ve6"/>
+                            <constraint firstItem="e6V-Ak-Ec4" firstAttribute="top" secondItem="QS3-1M-fYw" secondAttribute="top" id="5aa-Lc-WNa"/>
+                            <constraint firstItem="e6V-Ak-Ec4" firstAttribute="height" secondItem="WXf-Zx-eYR" secondAttribute="height" multiplier="0.3" id="6NY-iE-kWS"/>
+                            <constraint firstItem="QS3-1M-fYw" firstAttribute="trailing" secondItem="e6V-Ak-Ec4" secondAttribute="trailing" id="JRA-Zz-dqF"/>
+                            <constraint firstItem="e6V-Ak-Ec4" firstAttribute="leading" secondItem="QS3-1M-fYw" secondAttribute="leading" id="KfE-Rn-g6U"/>
+                            <constraint firstItem="44h-Es-A7H" firstAttribute="trailing" secondItem="QS3-1M-fYw" secondAttribute="trailing" id="RzW-f8-O2c"/>
+                            <constraint firstItem="44h-Es-A7H" firstAttribute="bottom" secondItem="QS3-1M-fYw" secondAttribute="bottom" id="WzG-ov-6k0"/>
+                            <constraint firstItem="44h-Es-A7H" firstAttribute="leading" secondItem="QS3-1M-fYw" secondAttribute="leading" id="ZS5-nx-x57"/>
+                            <constraint firstItem="44h-Es-A7H" firstAttribute="top" secondItem="e6V-Ak-Ec4" secondAttribute="bottom" id="bYZ-Td-rZN"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="메모 작성" id="P3w-a0-wHr">
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="jFF-ua-gBC"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="memoImageView" destination="e6V-Ak-Ec4" id="9CQ-77-Jd2"/>
                         <outlet property="memoTextView" destination="44h-Es-A7H" id="Ot7-Wg-hHk"/>
                         <outlet property="saveButton" destination="jFF-ua-gBC" id="laY-wV-xDH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HC2-5v-CS4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="I8i-vg-9Ul"/>
             </objects>
-            <point key="canvasLocation" x="2816" y="114"/>
+            <point key="canvasLocation" x="2815.9420289855075" y="113.83928571428571"/>
         </scene>
         <!--Settings-->
         <scene sceneID="wDR-aX-tfx">

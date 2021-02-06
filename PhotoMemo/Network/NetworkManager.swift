@@ -112,22 +112,6 @@ class NetworkManager {
         return observer
     }
     
-    
-    func asd(syncData: SyncData) -> Observable<Bool> {
-        let ob = Observable<Bool>.create { (observer) -> Disposable in
-            AF.request(self.baseURL, method: .post, parameters: syncData, encoder: JSONParameterEncoder.default, headers: self.headers()).validate(statusCode:  Array(200..<300)).responseData { response in
-                switch response.result {
-                case .success:
-                    observer.on(.next(true))
-                case .failure:
-                    observer.on(.next(false))
-                }
-            }
-            return Disposables.create()
-        }
-        return ob
-    }
-    
     func register(id: String, password: String, successed: @escaping () -> Void) {
         AF.request("http://nrurnru.pythonanywhere.com/memo/login", method: .post, headers: headers(id: id, password: password)).validate(statusCode:  Array(200..<300)).responseData { response in
             switch response.result {
