@@ -15,6 +15,7 @@ import RxRealm
 final class NewMemoViewModel {
     
     private var disposeBag = DisposeBag()
+    let network = Network()
     
     let textViewField = BehaviorRelay<String?>(value: "")
     let saveButtonTapped = PublishRelay<Void>()

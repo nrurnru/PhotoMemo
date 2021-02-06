@@ -10,22 +10,35 @@ import RxRelay
 import RxSwift
 import Alamofire
 import SwiftKeychainWrapper
+import SwiftyJSON
 
 class Network {
     let upSyncRelay = PublishRelay<SyncData>()
     let downSyncRelay = PublishRelay<Bool>()
     let downloadSuccessed = PublishRelay<Bool>()
+    let imageUpload = PublishRelay<UIImage>()
+    let uploadedImageURL = PublishSubject<String>()
     
     private var disposeBag = DisposeBag()
     private let baseURL = "http://nrurnru.pythonanywhere.com/memo/sync"
+    private let imageServerURL = "https://api.imgur.com/3/image"
+    private let imageServerClientID = "65c533ea40c6a79"
     
-    private func headers() -> HTTPHeaders {
-        guard let jwt = KeychainWrapper.standard.string(forKey: "jwt") else { return [:] }
-        let headers: HTTPHeaders = [
-            "Accept": "application/json",
-            "jwt": jwt
+    private func headers(type: HTTPHeaderType) -> HTTPHeaders {
+        switch type {
+        case .memo:
+            let headers: HTTPHeaders = [
+                "Accept": "application/json",
+                "jwt": KeychainWrapper.standard.string(forKey: "jwt") ?? ""
+                ]
+            return headers
+        case .image:
+            let imageHeaders: HTTPHeaders = [
+                "Authorization": "Client-ID \(imageServerClientID)",
+                "Content-Type": "multipart/form-data"
             ]
-        return headers
+            return imageHeaders
+        }
     }
     
     init(){
@@ -34,7 +47,7 @@ class Network {
     
     private func bindSync() {
         upSyncRelay.bind { syncData in
-            AF.request(self.baseURL, method: .post, parameters: syncData, encoder: JSONParameterEncoder.default, headers: self.headers()).validate(statusCode:  Array(200..<300)).responseData { response in
+            AF.request(self.baseURL, method: .post, parameters: syncData, encoder: JSONParameterEncoder.default, headers: self.headers(type: .memo)).validate(statusCode:  Array(200..<300)).responseData { response in
                 switch response.result {
                 case .success:
                     self.downSyncRelay.accept(true)
@@ -51,7 +64,7 @@ class Network {
                 "last_synced": lastSynced
             ]
             
-            AF.request(self.baseURL, parameters: parameters, encoding: URLEncoding.queryString, headers: self.headers()).responseJSON { response in
+            AF.request(self.baseURL, parameters: parameters, encoding: URLEncoding.queryString, headers: self.headers(type: .memo)).responseJSON { response in
                 switch response.result {
                 case .success(let value):
                     do {
@@ -69,6 +82,30 @@ class Network {
         }.disposed(by: disposeBag)
     }
     
+    private func bindImageUpload() {
+        imageUpload.bind { image in
+            let imageData = image.pngData()
+            let base64Image = imageData?.base64EncodedString(options: .lineLength64Characters)
+            guard let utf8EncodedImage = base64Image?.data(using: .utf8) else { return }
+            
+            let multipartFormData = MultipartFormData()
+            multipartFormData.append(utf8EncodedImage, withName: "image")
+            
+            AF.upload(multipartFormData: multipartFormData, to: self.imageServerURL, method: .post, headers: self.headers(type: .image)).response { response in
+                switch response.result {
+                case .success(let data):
+                    guard let data = data, let uploadedURL = JSON(data)["data"]["link"].rawString() else {
+                        self.uploadedImageURL.onError(NetworkError.parsingError)
+                        return
+                    }
+                    self.uploadedImageURL.onNext(uploadedURL)
+                case .failure(let error):
+                    self.uploadedImageURL.onError(error)
+                }
+            }
+        }.disposed(by: disposeBag)
+    }
+    
     private func saveSyncedData(syncData: SyncData) {
         syncData.updatedMemos.forEach { updatedMemo in
             RealmManager.shared.saveData(data: updatedMemo.toMemo())
@@ -77,4 +114,14 @@ class Network {
         UserDefaults.standard.set([], forKey: "deletedMemoIDs")
         UserDefaults.standard.set(ISO8601DateFormatter().string(from: Date()), forKey: "lastSynced")
     }
+}
+
+enum HTTPHeaderType {
+    case memo
+    case image
+}
+
+enum NetworkError: Error {
+    case parsingError
+    case serverError
 }
