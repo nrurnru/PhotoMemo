@@ -81,7 +81,8 @@ final class MainViewModel {
     }
     
     func fetchMemo() ->  Observable<Results<Memo>> {
-        let realm = try! Realm()
+        let configure = Realm.Configuration.init(deleteRealmIfMigrationNeeded: true)
+        let realm = try! Realm(configuration: configure)
         let result = realm.objects(Memo.self).sorted(byKeyPath: "createdAt", ascending: false)
         return Observable.collection(from: result)
     }

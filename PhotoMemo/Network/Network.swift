@@ -43,6 +43,7 @@ class Network {
     
     init(){
         bindSync()
+        bindImageUpload()
     }
     
     private func bindSync() {

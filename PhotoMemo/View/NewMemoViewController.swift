@@ -30,14 +30,11 @@ class NewMemoViewController: UIViewController {
     }
     
     private func bindInput() {
-        memoTextView.rx.text.orEmpty
-            .bind(to: viewModel.textViewField)
-            .disposed(by: disposeBag)
-        
         saveButton.rx.tap
-            .bind(to: viewModel.saveButtonTapped)
-            .disposed(by: disposeBag)
-        
+            .bind {
+                self.viewModel.textViewField.accept(self.memoTextView.text)
+                self.viewModel.saveButtonTapped.accept(())
+            }.disposed(by: disposeBag)
     }
     
     private func bindOutput() {
@@ -45,6 +42,10 @@ class NewMemoViewController: UIViewController {
             .bind { [weak self] _ in
                 self?.navigationController?.popViewController(animated: true)
             }.disposed(by: disposeBag)
+        
+        viewModel.addedMemoImage
+            .bind(to: self.memoImageView.rx.image)
+            .disposed(by: disposeBag)
     }
     
     private func setGesture() {
@@ -66,7 +67,8 @@ extension NewMemoViewController: UIImagePickerControllerDelegate, UINavigationCo
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage  else { return }
-        viewModel.network.imageUpload.accept(image)
+        viewModel.addedMemoImage.accept(image)
+        memoImageView.image = image
         dismiss(animated: true)
     }
 }

@@ -67,7 +67,7 @@ class MemoDetailViewController: UIViewController {
         viewModel.memoRelay
             .asDriver()
             .drive { memo in
-                let url = URL(string: "https://i.imgur.com/E7zh51q.png")
+                let url = URL(string: memo.imageURL)
                 self.memoImage.kf.setImage(with: url)
             }.disposed(by: disposeBag)
     }

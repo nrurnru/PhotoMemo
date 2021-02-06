@@ -17,6 +17,7 @@ class Memo: Object {
     @objc dynamic var isAdded: Bool = true
     @objc dynamic var isUpdated: Bool = false
     @objc dynamic var isDeleted: Bool = false
+    @objc dynamic var imageURL: String = ""
     
     override static func primaryKey() -> String? {
         return "id"
@@ -31,18 +32,21 @@ class MemoAdapter: Codable {
         self.text = memo.text
         self.createdAt = formatter.string(from: memo.createdAt)
         self.updatedAt = formatter.string(from: memo.updatedAt)
+        self.imageURL = memo.imageURL
     }
     
     let id: String
     let text: String
     let createdAt: String
     let updatedAt: String
+    let imageURL: String
     
     enum CodingKeys: String, CodingKey {
         case id
         case text
         case createdAt = "created_at"
         case updatedAt = "updated_at"
+        case imageURL = "image_url"
     }
     
     func toMemo() -> Memo {
@@ -51,6 +55,7 @@ class MemoAdapter: Codable {
         memo.text = self.text
         memo.createdAt = ISO8601DateFormatter().date(from: self.createdAt) ?? Date()
         memo.updatedAt = ISO8601DateFormatter().date(from: self.updatedAt) ?? Date()
+        memo.imageURL = self.imageURL
 
         return memo
     }
