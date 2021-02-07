@@ -13,7 +13,7 @@ import RealmSwift
 
 class MainViewController: UIViewController {
     var selectedItem: [Memo] = []
-    let viewModel = MainViewModel()
+    var viewModel = MainViewModel()
     
     private var disposeBag = DisposeBag()
     

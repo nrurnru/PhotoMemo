@@ -17,7 +17,7 @@ class NewMemoViewController: UIViewController {
     @IBOutlet var saveButton: UIBarButtonItem!
     @IBOutlet var memoImageView: UIImageView!
     
-    private let viewModel = NewMemoViewModel()
+    var viewModel = NewMemoViewModel()
     private var disposeBag = DisposeBag()
     let picker = UIImagePickerController()
 

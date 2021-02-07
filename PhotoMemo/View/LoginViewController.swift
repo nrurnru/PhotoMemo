@@ -18,7 +18,7 @@ class LoginViewController: UIViewController {
     @IBOutlet var loginButton: UIButton!
     
     private let disposeBag = DisposeBag()
-    private let viewModel = LoginViewModel()
+    var viewModel = LoginViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
