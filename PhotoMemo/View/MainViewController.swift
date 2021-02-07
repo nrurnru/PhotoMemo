@@ -101,6 +101,7 @@ class MainViewController: UIViewController {
         viewModel.data
             .bind(to: memoCollectionView.rx.items(cellIdentifier: "memoCell", cellType: MemoCollectionViewCell.self)) { index, memo, cell in
                 cell.text?.text = memo.text
+                cell.memoImageView.kf.setImage(with: URL(string: memo.imageURL))
                 cell.layer.borderWidth = 1
                 cell.layer.borderColor = self.view.backgroundColor?.cgColor
             }.disposed(by: disposeBag)
