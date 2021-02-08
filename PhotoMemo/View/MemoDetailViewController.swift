@@ -16,8 +16,9 @@ class MemoDetailViewController: UIViewController {
     @IBOutlet var deleteButton: UIBarButtonItem!
     @IBOutlet var saveButton: UIBarButtonItem!
     @IBOutlet var memoImage: UIImageView!
+    @IBOutlet var cancelButton: UIBarButtonItem!
     
-    var viewModel = MemoDetailViewModel(memo: Memo())
+    var viewModel: MemoDetailViewModel!
     private var disposeBag = DisposeBag()
     
     override func viewDidLoad() {
@@ -41,6 +42,10 @@ class MemoDetailViewController: UIViewController {
         
         memoTextView.rx.text.orEmpty
             .bind(to: viewModel.memoText)
+            .disposed(by: disposeBag)
+        
+        cancelButton.rx.tap
+            .bind(to: viewModel.cancelButtonTapped)
             .disposed(by: disposeBag)
     }
     

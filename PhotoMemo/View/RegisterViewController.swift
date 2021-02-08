@@ -11,6 +11,7 @@ class RegisterViewController: UIViewController {
 
     @IBOutlet var idTextField: UITextField!
     @IBOutlet var passwordTextField: UITextField!
+    @IBOutlet var cancelButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -15,10 +15,12 @@ import RealmSwift
 class NewMemoViewController: UIViewController {
     @IBOutlet var memoTextView: UITextView!
     @IBOutlet var saveButton: UIBarButtonItem!
+    @IBOutlet var cancelButton: UIBarButtonItem!
     @IBOutlet var memoImageView: UIImageView!
     
-    var viewModel = NewMemoViewModel()
+    var viewModel: NewMemoViewModel!
     private var disposeBag = DisposeBag()
+    
     let picker = UIImagePickerController()
 
     override func viewDidLoad() {
@@ -35,6 +37,10 @@ class NewMemoViewController: UIViewController {
                 self.viewModel.textViewField.accept(self.memoTextView.text)
                 self.viewModel.saveButtonTapped.accept(())
             }.disposed(by: disposeBag)
+        
+        cancelButton.rx.tap
+            .bind(to: self.viewModel.cancelButtonTapped)
+            .disposed(by: disposeBag)
     }
     
     private func bindOutput() {

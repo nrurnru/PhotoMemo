@@ -13,7 +13,7 @@ import RealmSwift
 
 class MainViewController: UIViewController {
     var selectedItem: [Memo] = []
-    var viewModel = MainViewModel()
+    var viewModel: MainViewModel!
     
     private var disposeBag = DisposeBag()
     
@@ -67,21 +67,6 @@ class MainViewController: UIViewController {
     }
     
     private func bindOutput() {
-        viewModel.logoutSuccessed
-            .bind { result in
-                if result {
-                    self.navigationController?.popViewController(animated: true)
-                }
-                else {
-                    print("logout failed..")
-                }
-            }.disposed(by: disposeBag)
-        
-        viewModel.newMemo
-            .bind { _ in
-                self.performSegue(withIdentifier: "newMemo", sender: nil)
-            }.disposed(by: disposeBag)
-        
         viewModel.deleteCompleted
             .bind { result in
                 if result {
@@ -111,7 +96,7 @@ class MainViewController: UIViewController {
             if self.memoCollectionView.isEditing {
                 self.viewModel.selectedMemoForDelete.accept(memo)
             } else {
-                self.performSegue(withIdentifier: "memoDetail", sender: memo)
+                self.viewModel.selectMemoForDetail.accept(memo)
             }
         }.disposed(by: disposeBag)
         
@@ -120,13 +105,6 @@ class MainViewController: UIViewController {
                 self.viewModel.deselectedMemoForDelete.accept(memo)
             }
         }.disposed(by: disposeBag)
-        
-        
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let destination = segue.destination as? MemoDetailViewController, let memo = sender as? Memo else { return }
-        destination.viewModel = MemoDetailViewModel(memo: memo)
     }
     
     private func setupUI() {

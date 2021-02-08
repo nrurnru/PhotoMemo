@@ -21,11 +21,11 @@ extension Scene {
         
         switch self {
         case .login(let viewModel):
-            guard let nav = storyboard.instantiateViewController(identifier: "") as? UINavigationController else {
+            guard let nav = storyboard.instantiateViewController(identifier: "RootVC") as? UINavigationController else {
                 print("it's not UINavigationController")
                 return UIViewController()
             }
-            guard var loginVC = nav.viewControllers.first as? LoginViewController else {
+            guard let loginVC = nav.viewControllers.first as? LoginViewController else {
                 print("it's not LoginViewController")
                 return UIViewController()
             }
@@ -33,7 +33,7 @@ extension Scene {
             return nav
             
         case .memoList(let viewModel):
-            guard var memoListVC = storyboard.instantiateViewController(identifier: "") as? MainViewController else {
+            guard let memoListVC = storyboard.instantiateViewController(identifier: "MemoListVC") as? MainViewController else {
                 print("it's not MainViewController")
                 return UIViewController()
             }
@@ -41,7 +41,7 @@ extension Scene {
             return memoListVC
             
         case .detail(let viewModel):
-            guard var detailVC = storyboard.instantiateViewController(identifier: "") as? MemoDetailViewController else {
+            guard let detailVC = storyboard.instantiateViewController(identifier: "MemoDetailVC") as? MemoDetailViewController else {
                 print("it's not DetailViewController")
                 return UIViewController()
             }
@@ -49,7 +49,7 @@ extension Scene {
             return detailVC
             
         case .newMemo(let viewModel):
-            guard var newMemoVC = storyboard.instantiateViewController(identifier: "") as? NewMemoViewController else {
+            guard let newMemoVC = storyboard.instantiateViewController(identifier: "NewMemoVC") as? NewMemoViewController else {
                 print("it's not NewMemoViewController")
                 return UIViewController()
             }

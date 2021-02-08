@@ -14,22 +14,22 @@ import SwiftyJSON
 import RxRelay
 
 final class LoginViewModel {
+    let coordinator: SceneCoordinatorType
     private var disposeBag = DisposeBag()
     
     // 뷰 -> 뷰모델
     let idField = BehaviorRelay<String>(value: "")
     let pwField = BehaviorRelay<String>(value: "")
-    
-    // 뷰모델 -> 뷰
     let loginButtonTouched = PublishRelay<Void>()
-    let gotLoginToken = PublishRelay<Bool>()
     
-    init() {
+    init(coordinator: SceneCoordinatorType) {
+        self.coordinator = coordinator
+        
         loginButtonTouched
             .flatMapLatest { [weak self] _ -> Observable<Bool> in
                 return self?.loginSuccessed() ?? Observable.empty()
-            }.subscribe { [weak self] value in
-                self?.gotLoginToken.accept(value)
+            }.subscribe { value in
+                coordinator.transition(to: .memoList(.init(coordinator: coordinator)), using: .push, animate: true).subscribe().disposed(by: self.disposeBag)
             }.disposed(by: disposeBag)
     }
     

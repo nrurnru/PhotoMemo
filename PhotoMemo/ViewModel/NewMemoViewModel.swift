@@ -16,18 +16,27 @@ final class NewMemoViewModel {
     
     private var disposeBag = DisposeBag()
     let network = Network()
+    let coordinator: SceneCoordinatorType
+
     
     let textViewField = PublishRelay<String?>()
     let saveButtonTapped = PublishRelay<Void>()
+    let cancelButtonTapped = PublishRelay<Void>()
     let memoSaved = PublishRelay<Void>()
     let addedMemoImage = BehaviorRelay<UIImage>(value: UIImage())
     let imageURL = PublishRelay<String>()
     
-    init(){
+    init(coordinator: SceneCoordinatorType) {
+        self.coordinator = coordinator
         saveButtonTapped
             .bind { _ in
                 self.network.imageUpload.accept(self.addedMemoImage.value)
             }.disposed(by: disposeBag)
+        
+        cancelButtonTapped.subscribe { _ in
+            coordinator.close(animated: true).subscribe().disposed(by: self.disposeBag)
+        }.disposed(by: disposeBag)
+
         
         network.uploadedImageURL
             .bind(to: self.imageURL)

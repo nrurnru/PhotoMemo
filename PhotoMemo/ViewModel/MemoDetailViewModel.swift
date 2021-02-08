@@ -15,18 +15,21 @@ import Kingfisher
 final class MemoDetailViewModel {
         
     private var disposeBag = DisposeBag()
+    let coordinator: SceneCoordinatorType
+    
     let memoRelay = BehaviorRelay<Memo>(value: Memo())
     let memoText = BehaviorRelay<String?>(value: "")
     
     let saveButtonTapped = PublishRelay<Void>()
     let deleteButtonTapped = PublishRelay<Void>()
+    let cancelButtonTapped = PublishRelay<Void>()
     let memoSaved = PublishRelay<Void>()
     let memoDeleted = PublishRelay<Void>()
     let realm = try! Realm()
     
-    init(memo: Memo) {
+    init(memo: Memo, coordinator: SceneCoordinatorType) {
         memoRelay.accept(memo)
-        
+        self.coordinator = coordinator
         saveButtonTapped.map {[weak self] _ -> Memo in
             return (self?.memoRelay.value ?? Memo())
         }.subscribe(onNext: { [weak self] nextMemo in
@@ -41,6 +44,12 @@ final class MemoDetailViewModel {
             self?.realm.rx.delete().onNext(nextMemo)
             self?.memoDeleted.accept(())
         }).disposed(by: disposeBag)
+        
+        cancelButtonTapped.subscribe { _ in
+            coordinator.close(animated: true)
+                .subscribe()
+                .disposed(by: self.disposeBag)
+        }.disposed(by: disposeBag)
     }
     
     func modifyMemo(memo: Memo) {

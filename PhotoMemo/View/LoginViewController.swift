@@ -18,12 +18,11 @@ class LoginViewController: UIViewController {
     @IBOutlet var loginButton: UIButton!
     
     private let disposeBag = DisposeBag()
-    var viewModel = LoginViewModel()
+    var viewModel: LoginViewModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         bindInput()
-        bindOutput()
     }
     
     private func bindInput() {
@@ -38,16 +37,5 @@ class LoginViewController: UIViewController {
         passwordTextField.rx.text.orEmpty
             .bind(to: viewModel.pwField)
             .disposed(by: disposeBag)
-        
-    }
-    
-    private func bindOutput() {
-        viewModel.gotLoginToken
-            .asDriver(onErrorJustReturn: true)
-            .drive { value in
-                if value {
-                    self.performSegue(withIdentifier: "loginSuccess", sender: nil)
-                }
-            }.disposed(by: disposeBag)
     }
 }

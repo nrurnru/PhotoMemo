@@ -14,6 +14,7 @@ import Kingfisher
 
 final class MainViewModel {
     private var disposeBag = DisposeBag()
+    private let coordinator: SceneCoordinatorType
     private let networkManager: Network
     
     //view -> vm
@@ -21,20 +22,20 @@ final class MainViewModel {
     let isEditmode = PublishRelay<Bool>()
     let syncButtonTapped = PublishRelay<Void>()
     let logoutButtonTapped = PublishRelay<Void>()
+    let selectMemoForDetail = PublishRelay<Memo>()
     
     let selectedMemoForDelete = PublishRelay<Memo>()
     let deselectedMemoForDelete = PublishRelay<Memo>()
     
     //vm -> view
     let data = ReplayRelay<Results<Memo>>.create(bufferSize: 1)
-    let logoutSuccessed = PublishRelay<Bool>()
     let deleteCompleted = PublishRelay<Bool>()
     let syncCompleted = PublishRelay<Bool>()
-    let newMemo = PublishRelay<Bool>()
     
     var memoListForDelete = [Memo]()
     
-    init() {
+    init(coordinator: SceneCoordinatorType) {
+        self.coordinator = coordinator
         self.networkManager = Network()
         
         self.fetchMemo().bind(to: data)
@@ -42,17 +43,27 @@ final class MainViewModel {
         
         logoutButtonTapped.bind { _ in
             self.cleanData()
-            self.logoutSuccessed.accept(true)
+            self.coordinator.close(animated: true)
+                .subscribe()
+                .disposed(by: self.disposeBag)
         }.disposed(by: disposeBag)
 
-        newMemoButtonTapped.bind { _ in
-            self.newMemo.accept(true)
+        newMemoButtonTapped.subscribe { _ in
+            self.coordinator.transition(to: .newMemo(.init(coordinator: coordinator)), using: .push, animate: true)
+                .subscribe()
+                .disposed(by: self.disposeBag)
         }.disposed(by: disposeBag)
 
         isEditmode.bind { isEditing in
             if !isEditing {
                 self.deleteMemo()
             }
+        }.disposed(by: disposeBag)
+        
+        selectMemoForDetail.subscribe { memo in
+            coordinator.transition(to: .detail(.init(memo: memo, coordinator: coordinator)), using: .push, animate: true)
+                .subscribe()
+                .disposed(by: self.disposeBag)
         }.disposed(by: disposeBag)
         
         selectedMemoForDelete.bind { memo in

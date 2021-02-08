@@ -27,7 +27,13 @@ class SceneCoordinator: SceneCoordinatorType {
             switch style {
             case .root:
                 self.window.rootViewController = target
-                self.currentVC = target
+                if let nav = target as? UINavigationController {
+                    self.currentVC = nav.viewControllers.first!
+                } else {
+                    self.currentVC = target // 일반 뷰 컨트롤러를 루트 뷰로 사용할 경우
+                }
+                completable(.completed)
+                
             case .push:
                 guard let nav = self.currentVC.navigationController else {
                     completable(.error(TransitionError.navigationControllerMissing))
@@ -36,6 +42,7 @@ class SceneCoordinator: SceneCoordinatorType {
                 nav.pushViewController(target, animated: animate)
                 self.currentVC = target
                 completable(.completed)
+                
             case .modal:
                 self.currentVC.present(target, animated: animate) {
                     completable(.completed)
@@ -54,11 +61,11 @@ class SceneCoordinator: SceneCoordinatorType {
                     completable(.completed)
                 }
             } else if let nav = self.currentVC.navigationController { // 네비게이션인 경우
-                guard let lastVC = nav.popViewController(animated: animated) else {
+                guard nav.popViewController(animated: animated) != nil else {
                     completable(.error(TransitionError.cannotPop))
                     return Disposables.create()
                 }
-                self.currentVC = lastVC
+                self.currentVC = nav.viewControllers.last!
                 completable(.completed)
                 
             } else { // 루트뷰인데 닫을수 없음

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="NIm-Oi-9VU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="q9p-dV-jFp">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
@@ -64,8 +64,11 @@
                             <constraint firstItem="bMV-n2-Ld6" firstAttribute="leading" secondItem="Ztz-2F-pMs" secondAttribute="leading" constant="20" id="xSW-08-eL3"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="회원가입" id="9f9-8a-NiT"/>
+                    <navigationItem key="navigationItem" title="회원가입" id="9f9-8a-NiT">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="DgZ-E5-2gP"/>
+                    </navigationItem>
                     <connections>
+                        <outlet property="cancelButton" destination="DgZ-E5-2gP" id="3LW-qV-Wdp"/>
                         <outlet property="idTextField" destination="6tY-hn-Pdd" id="9oV-kj-yVX"/>
                         <outlet property="passwordTextField" destination="p6w-0v-StG" id="Dyn-Ri-vhr"/>
                     </connections>
@@ -77,7 +80,7 @@
         <!--메모 보기-->
         <scene sceneID="uZv-mK-tdd">
             <objects>
-                <viewController storyboardIdentifier="MemoDetailViewController" id="uJS-FO-dO5" customClass="MemoDetailViewController" customModule="PhotoMemo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="MemoDetailVC" storyboardIdentifier="MemoDetailVC" id="uJS-FO-dO5" customClass="MemoDetailViewController" customModule="PhotoMemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="adY-UJ-KdG">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -122,6 +125,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="메모 보기" id="wOh-VI-BFe">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="kqo-YX-8LB"/>
                         <rightBarButtonItems>
                             <barButtonItem systemItem="save" id="noN-TB-GAm"/>
                             <barButtonItem style="plain" systemItem="trash" id="Ydj-Br-ngD">
@@ -130,6 +134,7 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="cancelButton" destination="kqo-YX-8LB" id="wZa-gl-fqo"/>
                         <outlet property="deleteButton" destination="Ydj-Br-ngD" id="K9G-mv-XVJ"/>
                         <outlet property="memoImage" destination="WSN-61-7f6" id="CDg-UN-BBd"/>
                         <outlet property="memoTextView" destination="IA6-Gj-RSo" id="uJd-dD-AyK"/>
@@ -143,7 +148,7 @@
         <!--메모 목록-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="MainViewController" customModule="PhotoMemo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MemoListVC" id="BYZ-38-t0r" customClass="MainViewController" customModule="PhotoMemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -199,7 +204,7 @@
         <!--메모 작성-->
         <scene sceneID="65U-Qb-qKB">
             <objects>
-                <viewController id="4D7-AF-rTs" customClass="NewMemoViewController" customModule="PhotoMemo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NewMemoVC" id="4D7-AF-rTs" customClass="NewMemoViewController" customModule="PhotoMemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="WXf-Zx-eYR">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -211,7 +216,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="e6V-Ak-Ec4">
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="e6V-Ak-Ec4">
                                 <rect key="frame" x="0.0" y="140" width="414" height="269"/>
                                 <gestureRecognizers/>
                                 <connections>
@@ -233,9 +238,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="메모 작성" id="P3w-a0-wHr">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="aci-WT-mRV"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="jFF-ua-gBC"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="cancelButton" destination="aci-WT-mRV" id="xsZ-bb-1rp"/>
                         <outlet property="memoImageView" destination="e6V-Ak-Ec4" id="9CQ-77-Jd2"/>
                         <outlet property="memoTextView" destination="44h-Es-A7H" id="Ot7-Wg-hHk"/>
                         <outlet property="saveButton" destination="jFF-ua-gBC" id="laY-wV-xDH"/>
@@ -249,7 +256,7 @@
         <!--Settings-->
         <scene sceneID="wDR-aX-tfx">
             <objects>
-                <viewController id="q9p-dV-jFp" customClass="SettingViewController" customModule="PhotoMemo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SettingVC" id="q9p-dV-jFp" customClass="SettingViewController" customModule="PhotoMemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hdB-oy-Tfq">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -265,7 +272,7 @@
         <!--Login View Controller-->
         <scene sceneID="lvV-vh-D60">
             <objects>
-                <viewController id="fP2-2m-rBT" customClass="LoginViewController" customModule="PhotoMemo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginVC" id="fP2-2m-rBT" customClass="LoginViewController" customModule="PhotoMemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="EdL-Mf-5RV">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -346,7 +353,7 @@
         <!--Memo-->
         <scene sceneID="6s4-Qd-VKz">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="NIm-Oi-9VU" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="RootVC" automaticallyAdjustsScrollViewInsets="NO" id="NIm-Oi-9VU" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Memo" image="pencil.and.outline" catalog="system" id="eZG-CW-psw"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="WwE-F6-ptX">
@@ -355,7 +362,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="fP2-2m-rBT" kind="relationship" relationship="rootViewController" id="Hm2-cy-HhK"/>
+                        <segue destination="fP2-2m-rBT" kind="relationship" relationship="rootViewController" id="nKy-yd-tC4"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gBk-Kd-f9m" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
