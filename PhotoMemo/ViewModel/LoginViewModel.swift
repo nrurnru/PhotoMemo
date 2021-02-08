@@ -21,6 +21,7 @@ final class LoginViewModel {
     let idField = BehaviorRelay<String>(value: "")
     let pwField = BehaviorRelay<String>(value: "")
     let loginButtonTouched = PublishRelay<Void>()
+    let registerButtonTapped = PublishRelay<Void>()
     
     init(coordinator: SceneCoordinatorType) {
         self.coordinator = coordinator
@@ -31,6 +32,12 @@ final class LoginViewModel {
             }.subscribe { value in
                 coordinator.transition(to: .memoList(.init(coordinator: coordinator)), using: .push, animate: true).subscribe().disposed(by: self.disposeBag)
             }.disposed(by: disposeBag)
+        
+        registerButtonTapped
+            .subscribe { _ in
+                coordinator.transition(to: .register(.init(coordinator: coordinator)) , using: .push, animate: true).subscribe().disposed(by: self.disposeBag)
+            }.disposed(by: disposeBag)
+
     }
     
     private func headers() -> HTTPHeaders {

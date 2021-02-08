@@ -12,37 +12,34 @@
         <!--회원가입-->
         <scene sceneID="EDp-oA-954">
             <objects>
-                <viewController id="EtL-XS-qn3" customClass="RegisterViewController" customModule="PhotoMemo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RegisterVC" id="EtL-XS-qn3" customClass="RegisterViewController" customModule="PhotoMemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="sjO-Pc-xd5">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bMV-n2-Ld6">
-                                <rect key="frame" x="20" y="190" width="17" height="21"/>
+                                <rect key="frame" x="20" y="94" width="17" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PW" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5ZD-PD-8li">
-                                <rect key="frame" x="20" y="246" width="27" height="21"/>
+                                <rect key="frame" x="20" y="150" width="27" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="p6w-0v-StG">
-                                <rect key="frame" x="92" y="239.5" width="256" height="34"/>
+                                <rect key="frame" x="92" y="143.5" width="256" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SUY-88-ANT">
-                                <rect key="frame" x="178.5" y="324" width="57" height="30"/>
+                                <rect key="frame" x="178.5" y="228" width="57" height="30"/>
                                 <state key="normal" title="Register"/>
-                                <connections>
-                                    <action selector="registerAction:" destination="EtL-XS-qn3" eventType="touchUpInside" id="3UT-no-tDl"/>
-                                </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6tY-hn-Pdd">
-                                <rect key="frame" x="92" y="183.5" width="256" height="34"/>
+                                <rect key="frame" x="92" y="87.5" width="256" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
@@ -71,6 +68,7 @@
                         <outlet property="cancelButton" destination="DgZ-E5-2gP" id="3LW-qV-Wdp"/>
                         <outlet property="idTextField" destination="6tY-hn-Pdd" id="9oV-kj-yVX"/>
                         <outlet property="passwordTextField" destination="p6w-0v-StG" id="Dyn-Ri-vhr"/>
+                        <outlet property="registerButton" destination="SUY-88-ANT" id="I40-9s-CkQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rrc-vY-yTu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -308,9 +306,6 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aHO-q2-F2n">
                                 <rect key="frame" x="307" y="448" width="57" height="30"/>
                                 <state key="normal" title="Register"/>
-                                <connections>
-                                    <segue destination="EtL-XS-qn3" kind="show" id="u9F-Yg-A7G"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iOo-HP-0Rn">
                                 <rect key="frame" x="67" y="448" width="38" height="30"/>
@@ -343,6 +338,7 @@
                         <outlet property="idTextField" destination="bxW-W4-SYk" id="0iG-Zt-et2"/>
                         <outlet property="loginButton" destination="iOo-HP-0Rn" id="BFE-hh-WPl"/>
                         <outlet property="passwordTextField" destination="ogx-XH-Eyu" id="uKx-KX-81V"/>
+                        <outlet property="registerButton" destination="aHO-q2-F2n" id="5GJ-uK-sse"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="loginSuccess" id="c7F-I2-X1F"/>
                     </connections>
                 </viewController>

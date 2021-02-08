@@ -34,6 +34,7 @@
 		DEC2880025D006D000BBFF8D /* SceneCoordinatorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC287FF25D006D000BBFF8D /* SceneCoordinatorType.swift */; };
 		DEC2880325D0072100BBFF8D /* TransitionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC2880225D0072100BBFF8D /* TransitionModel.swift */; };
 		DED9D66525C02DA500F1FD75 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED9D66425C02DA500F1FD75 /* LoginViewModel.swift */; };
+		DEE82E0B25D1259700562D18 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE82E0A25D1259700562D18 /* RegisterViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +69,7 @@
 		DEC287FF25D006D000BBFF8D /* SceneCoordinatorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCoordinatorType.swift; sourceTree = "<group>"; };
 		DEC2880225D0072100BBFF8D /* TransitionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionModel.swift; sourceTree = "<group>"; };
 		DED9D66425C02DA500F1FD75 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		DEE82E0A25D1259700562D18 /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +148,7 @@
 		DE3C0D7825B3423700F33612 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				DEE82E0A25D1259700562D18 /* RegisterViewModel.swift */,
 				DEAF2D6225B3A97E00ECAC0C /* MainViewModel.swift */,
 				DED9D66425C02DA500F1FD75 /* LoginViewModel.swift */,
 				DE2ACC9225C20B7400A1F703 /* NewMemoViewModel.swift */,
@@ -352,6 +355,7 @@
 				DE3C0D7D25B3453E00F33612 /* SettingViewController.swift in Sources */,
 				DE8AAFD725BEB16600928359 /* LoginViewController.swift in Sources */,
 				DEAF2D6325B3A97E00ECAC0C /* MainViewModel.swift in Sources */,
+				DEE82E0B25D1259700562D18 /* RegisterViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

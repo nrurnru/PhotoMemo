@@ -16,6 +16,7 @@ class LoginViewController: UIViewController {
     @IBOutlet var idTextField: UITextField!
     @IBOutlet var passwordTextField: UITextField!
     @IBOutlet var loginButton: UIButton!
+    @IBOutlet var registerButton: UIButton!
     
     private let disposeBag = DisposeBag()
     var viewModel: LoginViewModel!
@@ -36,6 +37,10 @@ class LoginViewController: UIViewController {
         
         passwordTextField.rx.text.orEmpty
             .bind(to: viewModel.pwField)
+            .disposed(by: disposeBag)
+        
+        registerButton.rx.tap
+            .bind(to: viewModel.registerButtonTapped)
             .disposed(by: disposeBag)
     }
 }

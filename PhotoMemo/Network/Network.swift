@@ -18,13 +18,15 @@ class Network {
     let downloadSuccessed = PublishRelay<Bool>()
     let imageUpload = PublishRelay<UIImage>()
     let uploadedImageURL = PublishSubject<String>()
+    let register = PublishRelay<(String, String)>()
+    let registerSuccessed = PublishRelay<Bool>()
     
     private var disposeBag = DisposeBag()
     private let baseURL = "http://nrurnru.pythonanywhere.com/memo/sync"
     private let imageServerURL = "https://api.imgur.com/3/image"
     private let imageServerClientID = "65c533ea40c6a79"
     
-    private func headers(type: HTTPHeaderType) -> HTTPHeaders {
+    private func headers(type: HTTPHeaderType, id: String = "", pw: String = "") -> HTTPHeaders {
         switch type {
         case .memo:
             let headers: HTTPHeaders = [
@@ -38,12 +40,33 @@ class Network {
                 "Content-Type": "multipart/form-data"
             ]
             return imageHeaders
+        case .login:
+            let loginHeaders: HTTPHeaders = [
+                "Accept": "application/json",
+                "Userid" : id,
+                "Userpassword": pw
+            ]
+            return loginHeaders
         }
     }
     
-    init(){
+    init() {
         bindSync()
+        bindRegister()
         bindImageUpload()
+    }
+    
+    private func bindRegister() {
+        register.bind { (id, pw) in
+            AF.request("http://nrurnru.pythonanywhere.com/memo/login", method: .post, headers: self.headers(type: .login, id: id, pw: pw)).validate(statusCode:  Array(200..<300)).responseData { response in
+                switch response.result {
+                case .success:
+                    self.registerSuccessed.accept(true)
+                case .failure(_):
+                    self.registerSuccessed.accept(false)
+                }
+            }
+        }.disposed(by: disposeBag)
     }
     
     private func bindSync() {
@@ -120,6 +143,7 @@ class Network {
 enum HTTPHeaderType {
     case memo
     case image
+    case login
 }
 
 enum NetworkError: Error {

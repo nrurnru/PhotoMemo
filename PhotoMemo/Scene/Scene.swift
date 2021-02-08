@@ -13,6 +13,7 @@ enum Scene {
     case memoList(MainViewModel)
     case detail(MemoDetailViewModel)
     case newMemo(NewMemoViewModel)
+    case register(RegisterViewModel)
 }
 
 extension Scene {
@@ -55,7 +56,14 @@ extension Scene {
             }
             newMemoVC.viewModel = viewModel
             return newMemoVC
+            
+        case .register(let viewModel):
+            guard let registerVC = storyboard.instantiateViewController(identifier: "RegisterVC") as? RegisterViewController else {
+                print("it's not RegisterViewConteroller")
+                return UIViewController()
+            }
+            registerVC.viewModel = viewModel
+            return registerVC
         }
-        
     }
 }
