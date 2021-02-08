@@ -22,7 +22,6 @@ final class NewMemoViewModel {
     let textViewField = PublishRelay<String?>()
     let saveButtonTapped = PublishRelay<Void>()
     let cancelButtonTapped = PublishRelay<Void>()
-    let memoSaved = PublishRelay<Void>()
     let addedMemoImage = BehaviorRelay<UIImage>(value: UIImage())
     let imageURL = PublishRelay<String>()
     
@@ -34,7 +33,9 @@ final class NewMemoViewModel {
             }.disposed(by: disposeBag)
         
         cancelButtonTapped.subscribe { _ in
-            coordinator.close(animated: true).subscribe().disposed(by: self.disposeBag)
+            coordinator.close(animated: true)
+                .subscribe()
+                .disposed(by: self.disposeBag)
         }.disposed(by: disposeBag)
 
         
@@ -44,7 +45,9 @@ final class NewMemoViewModel {
         
         Observable.zip(saveButtonTapped, textViewField, imageURL).subscribe { (_, text, url) in
             self.saveMemo(text: text, url: url)
-            self.memoSaved.accept(())
+            coordinator.close(animated: true)
+                .subscribe()
+                .disposed(by: self.disposeBag)
         }.disposed(by: disposeBag)
     }
     

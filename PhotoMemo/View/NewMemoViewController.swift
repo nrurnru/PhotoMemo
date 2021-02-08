@@ -44,11 +44,6 @@ class NewMemoViewController: UIViewController {
     }
     
     private func bindOutput() {
-        viewModel.memoSaved
-            .bind { [weak self] _ in
-                self?.navigationController?.popViewController(animated: true)
-            }.disposed(by: disposeBag)
-        
         viewModel.addedMemoImage
             .bind(to: self.memoImageView.rx.image)
             .disposed(by: disposeBag)
