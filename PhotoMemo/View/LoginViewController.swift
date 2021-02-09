@@ -9,7 +9,6 @@ import UIKit
 import SwiftKeychainWrapper
 import RxCocoa
 import RxSwift
-import RxAlamofire
 
 class LoginViewController: UIViewController {
 
@@ -24,6 +23,7 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bindInput()
+        bindOutput()
     }
     
     private func bindInput() {
@@ -42,5 +42,31 @@ class LoginViewController: UIViewController {
         registerButton.rx.tap
             .bind(to: viewModel.registerButtonTapped)
             .disposed(by: disposeBag)
+    }
+    
+    private func bindOutput() {
+        viewModel.isLoginSuccessed.subscribe { value in
+            self.loginAlert().subscribe().disposed(by: self.disposeBag)
+        }.disposed(by: disposeBag)
+
+    }
+}
+
+extension LoginViewController {
+    private func loginAlert() -> Observable<AlertType> {
+        return Observable.create { observer -> Disposable in
+            let alert = UIAlertController(title: "로그인 실패", message: "아이디와 비밀번호를 확인해주세요.", preferredStyle: .alert)
+            let okAction =  UIAlertAction(title: "확인", style: .default) { _ in
+                observer.onNext(.ok)
+                observer.onCompleted()
+            }
+            alert.addAction(okAction)
+            
+            self.present(alert, animated: true, completion: nil)
+            
+            return Disposables.create {
+                alert.dismiss(animated: true, completion: nil)
+            }
+        }
     }
 }

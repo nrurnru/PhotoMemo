@@ -9,7 +9,6 @@ import Foundation
 import RxSwift
 import RxRelay
 import RealmSwift
-import SwiftKeychainWrapper
 import RxRealm
 
 final class NewMemoViewModel {

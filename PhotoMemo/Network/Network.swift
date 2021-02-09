@@ -16,7 +16,7 @@ class Network {
     let upSyncRelay = PublishRelay<SyncData>()
     let downSyncRelay = PublishRelay<Bool>()
     let loginRelay = PublishRelay<(String, String)>()
-    let loginSuccessed = PublishRelay<String>()
+    let loginToken = PublishRelay<String?>()
     let downloadSuccessed = PublishRelay<Bool>()
     let imageUpload = PublishRelay<UIImage>()
     let uploadedImageURL = PublishSubject<String>()
@@ -87,9 +87,9 @@ class Network {
                 switch response.result {
                 case .success(let json):
                     let token = JSON(json)["token"].stringValue
-                    self.loginSuccessed.accept(token)
+                    self.loginToken.accept(token)
                 case .failure(_):
-                    self.loginSuccessed.accept("") //서버문제
+                    self.loginToken.accept(nil) //서버문제
                 }
             }
         }.disposed(by: disposeBag)
