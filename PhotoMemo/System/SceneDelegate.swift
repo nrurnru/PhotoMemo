@@ -15,8 +15,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let _ = (scene as? UIWindowScene) else { return }
         
+        let network = Network()
         let coordinator = SceneCoordinator(window: window!)
-        let loginScene = Scene.login(.init(coordinator: coordinator))
+        let loginScene = Scene.login(.init(coordinator: coordinator, network: network))
         coordinator.transition(to: loginScene, using: .root, animate: false).subscribe()
     }
 

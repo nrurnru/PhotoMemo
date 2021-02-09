@@ -15,9 +15,8 @@ import RxRealm
 final class NewMemoViewModel {
     
     private var disposeBag = DisposeBag()
-    let network = Network()
     let coordinator: SceneCoordinatorType
-
+    let network: Network
     
     let textViewField = PublishRelay<String?>()
     let saveButtonTapped = PublishRelay<Void>()
@@ -25,8 +24,10 @@ final class NewMemoViewModel {
     let addedMemoImage = BehaviorRelay<UIImage>(value: UIImage())
     let imageURL = PublishRelay<String>()
     
-    init(coordinator: SceneCoordinatorType) {
+    init(coordinator: SceneCoordinatorType, network: Network) {
         self.coordinator = coordinator
+        self.network = network
+        
         saveButtonTapped
             .bind { _ in
                 self.network.imageUpload.accept(self.addedMemoImage.value)

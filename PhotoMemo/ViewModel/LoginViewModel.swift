@@ -14,9 +14,9 @@ import SwiftyJSON
 import RxRelay
 
 final class LoginViewModel {
-    let coordinator: SceneCoordinatorType
-    let network = Network()
     private var disposeBag = DisposeBag()
+    let coordinator: SceneCoordinatorType
+    let network: Network
     
     // 뷰 -> 뷰모델
     let idField = PublishRelay<String>()
@@ -24,9 +24,10 @@ final class LoginViewModel {
     let loginButtonTapped = PublishRelay<Void>()
     let registerButtonTapped = PublishRelay<Void>()
     
-    init(coordinator: SceneCoordinatorType) {
+    init(coordinator: SceneCoordinatorType, network: Network) {
         self.coordinator = coordinator
-        
+        self.network = network
+
         let loginField = Observable.combineLatest(idField, pwField)
         loginField.subscribe().disposed(by: disposeBag)
         loginButtonTapped.withLatestFrom(loginField).bind { loginInfo in
@@ -35,12 +36,12 @@ final class LoginViewModel {
         
         network.loginSuccessed.bind { token in
             KeychainWrapper.standard.set(token, forKey: "jwt")
-            coordinator.transition(to: .memoList(.init(coordinator: coordinator)), using: .push, animate: true).subscribe().disposed(by: self.disposeBag)
+            coordinator.transition(to: .memoList(.init(coordinator: coordinator, network: network)), using: .push, animate: true).subscribe().disposed(by: self.disposeBag)
         }.disposed(by: disposeBag)
 
         registerButtonTapped
             .subscribe { _ in
-                coordinator.transition(to: .register(.init(coordinator: coordinator)) , using: .push, animate: true).subscribe().disposed(by: self.disposeBag)
+                coordinator.transition(to: .register(.init(coordinator: coordinator, network: network)) , using: .push, animate: true).subscribe().disposed(by: self.disposeBag)
             }.disposed(by: disposeBag)
     }
     

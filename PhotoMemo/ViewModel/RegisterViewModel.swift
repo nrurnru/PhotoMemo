@@ -10,10 +10,9 @@ import RxSwift
 import RxRelay
 
 final class RegisterViewModel {
-    
-    let coordinator: SceneCoordinatorType
-    let network = Network()
     private var disposeBag = DisposeBag()
+    let coordinator: SceneCoordinatorType
+    let network: Network
     
     let registerButtonTapped = PublishRelay<Void>()
     let cancelButtonTapped = PublishRelay<Void>()
@@ -22,8 +21,9 @@ final class RegisterViewModel {
     let idField = PublishRelay<String>()
     let pwField = PublishRelay<String>()
     
-    init(coordinator: SceneCoordinatorType) {
+    init(coordinator: SceneCoordinatorType, network: Network) {
         self.coordinator = coordinator
+        self.network = network
         
         let registerField = Observable.combineLatest(idField, pwField)
         registerField.subscribe().disposed(by: disposeBag)

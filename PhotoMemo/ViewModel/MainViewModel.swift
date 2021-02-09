@@ -15,7 +15,7 @@ import Kingfisher
 final class MainViewModel {
     private var disposeBag = DisposeBag()
     private let coordinator: SceneCoordinatorType
-    private let networkManager: Network
+    private let network: Network
     
     //view -> vm
     let newMemoButtonTapped = PublishRelay<Void>()
@@ -34,9 +34,9 @@ final class MainViewModel {
     
     var memoListForDelete = [Memo]()
     
-    init(coordinator: SceneCoordinatorType) {
+    init(coordinator: SceneCoordinatorType, network: Network) {
         self.coordinator = coordinator
-        self.networkManager = Network()
+        self.network = network
         
         self.fetchMemo().bind(to: data)
             .disposed(by: disposeBag)
@@ -49,7 +49,7 @@ final class MainViewModel {
         }.disposed(by: disposeBag)
 
         newMemoButtonTapped.subscribe { _ in
-            self.coordinator.transition(to: .newMemo(.init(coordinator: coordinator)), using: .push, animate: true)
+            self.coordinator.transition(to: .newMemo(.init(coordinator: coordinator, network: network)), using: .push, animate: true)
                 .subscribe()
                 .disposed(by: self.disposeBag)
         }.disposed(by: disposeBag)
@@ -61,7 +61,7 @@ final class MainViewModel {
         }.disposed(by: disposeBag)
         
         selectMemoForDetail.subscribe { memo in
-            coordinator.transition(to: .detail(.init(memo: memo, coordinator: coordinator)), using: .push, animate: true)
+            coordinator.transition(to: .detail(.init(memo: memo, coordinator: coordinator, network: network)), using: .push, animate: true)
                 .subscribe()
                 .disposed(by: self.disposeBag)
         }.disposed(by: disposeBag)
@@ -79,7 +79,7 @@ final class MainViewModel {
             self.startSync()
         }.disposed(by: disposeBag)
         
-        networkManager.downloadSuccessed.bind { result in
+        network.downloadSuccessed.bind { result in
             self.syncCompleted.accept(result)
         }.disposed(by: disposeBag)
     }
@@ -112,6 +112,6 @@ final class MainViewModel {
         let deletedMemoIDs = UserDefaults.standard.array(forKey: "deletedMemoIDs") ?? []
         guard let d = deletedMemoIDs as? [String] else { return }
         let syncData = SyncData(updatedMemos: updatedMemos, deletedMemoIDs: d)
-        networkManager.upSyncRelay.accept(syncData)
+        network.upSyncRelay.accept(syncData)
     }
 }

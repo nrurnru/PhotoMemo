@@ -10,12 +10,12 @@ import RxSwift
 import RxRelay
 import RxRealm
 import RealmSwift
-import Kingfisher
 
 final class MemoDetailViewModel {
         
     private var disposeBag = DisposeBag()
     let coordinator: SceneCoordinatorType
+    let network: Network
     
     let memoRelay = BehaviorRelay<Memo>(value: Memo())
     let memoText = BehaviorRelay<String?>(value: "")
@@ -27,9 +27,12 @@ final class MemoDetailViewModel {
     let memoDeleted = PublishRelay<Void>()
     let realm = try! Realm()
     
-    init(memo: Memo, coordinator: SceneCoordinatorType) {
+    init(memo: Memo, coordinator: SceneCoordinatorType, network: Network) {
         memoRelay.accept(memo)
+        
         self.coordinator = coordinator
+        self.network = network
+
         saveButtonTapped.map {[weak self] _ -> Memo in
             return (self?.memoRelay.value ?? Memo())
         }.subscribe(onNext: { [weak self] nextMemo in

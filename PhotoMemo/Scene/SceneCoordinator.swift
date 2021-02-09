@@ -19,6 +19,7 @@ class SceneCoordinator: SceneCoordinatorType {
         currentVC = window.rootViewController! //돌아갈 동작
     }
     
+    @discardableResult
     func transition(to scene: Scene, using style: TransitionStyle, animate: Bool) -> Completable {
 
         return Completable.create { completable -> Disposable in
