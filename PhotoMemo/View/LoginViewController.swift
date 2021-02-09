@@ -28,7 +28,7 @@ class LoginViewController: UIViewController {
     
     private func bindInput() {
         loginButton.rx.tap
-            .bind(to: viewModel.loginButtonTouched)
+            .bind(to: viewModel.loginButtonTapped)
             .disposed(by: disposeBag)
         
         idTextField.rx.text.orEmpty

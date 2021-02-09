@@ -15,6 +15,8 @@ import SwiftyJSON
 class Network {
     let upSyncRelay = PublishRelay<SyncData>()
     let downSyncRelay = PublishRelay<Bool>()
+    let loginRelay = PublishRelay<(String, String)>()
+    let loginSuccessed = PublishRelay<String>()
     let downloadSuccessed = PublishRelay<Bool>()
     let imageUpload = PublishRelay<UIImage>()
     let uploadedImageURL = PublishSubject<String>()
@@ -32,7 +34,7 @@ class Network {
             let headers: HTTPHeaders = [
                 "Accept": "application/json",
                 "jwt": KeychainWrapper.standard.string(forKey: "jwt") ?? ""
-                ]
+            ]
             return headers
         case .image:
             let imageHeaders: HTTPHeaders = [
@@ -40,9 +42,17 @@ class Network {
                 "Content-Type": "multipart/form-data"
             ]
             return imageHeaders
+        case .register:
+            let registerHeaders: HTTPHeaders = [
+                "Accept": "application/json",
+                "Userid" : id,
+                "Userpassword": pw
+            ]
+            return registerHeaders
         case .login:
             let loginHeaders: HTTPHeaders = [
                 "Accept": "application/json",
+                "Content-Type" :"application/json",
                 "Userid" : id,
                 "Userpassword": pw
             ]
@@ -58,12 +68,28 @@ class Network {
     
     private func bindRegister() {
         register.bind { (id, pw) in
-            AF.request("http://nrurnru.pythonanywhere.com/memo/login", method: .post, headers: self.headers(type: .login, id: id, pw: pw)).validate(statusCode:  Array(200..<300)).responseData { response in
+            AF.request("http://nrurnru.pythonanywhere.com/memo/login", method: .post, headers: self.headers(type: .register, id: id, pw: pw))
+                .validate(statusCode:  Array(200..<300))
+                .responseData { response in
                 switch response.result {
                 case .success:
                     self.registerSuccessed.accept(true)
                 case .failure(_):
                     self.registerSuccessed.accept(false)
+                }
+            }
+        }.disposed(by: disposeBag)
+        
+        loginRelay.bind { (id, pw) in
+            AF.request("http://nrurnru.pythonanywhere.com/memo/login", method: .get, headers: self.headers(type: .login, id: id, pw: pw))
+                .validate(statusCode:  Array(200..<300))
+                .responseData { response in
+                switch response.result {
+                case .success(let json):
+                    let token = JSON(json)["token"].stringValue
+                    self.loginSuccessed.accept(token)
+                case .failure(_):
+                    self.loginSuccessed.accept("") //서버문제
                 }
             }
         }.disposed(by: disposeBag)
@@ -144,6 +170,7 @@ enum HTTPHeaderType {
     case memo
     case image
     case login
+    case register
 }
 
 enum NetworkError: Error {
