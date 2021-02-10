@@ -15,35 +15,42 @@ final class LoginViewModel {
     let coordinator: SceneCoordinatorType
     let network: Network
     
-    // 뷰 -> 뷰모델
     let idField = PublishRelay<String>()
     let pwField = PublishRelay<String>()
-    let loginButtonTapped = PublishSubject<Void>()
+    let loginButtonTapped = PublishRelay<Void>()
+    let loginResult = PublishSubject<Result<Void, NetworkError>>()
     let registerButtonTapped = PublishRelay<Void>()
-    let isLoginSuccessed = PublishRelay<Bool>()
     
     init(coordinator: SceneCoordinatorType, network: Network) {
         self.coordinator = coordinator
         self.network = network
 
-        let loginField = Observable.combineLatest(idField, pwField)
-        loginField.subscribe().disposed(by: disposeBag)
-        loginButtonTapped.withLatestFrom(loginField).bind(to: network.loginRelay)
+        startLogin().bind(to: network.login)
             .disposed(by: disposeBag)
-        
+
         network.loginToken.bind { token in
-            if let token = token {
+            guard let token = token else {
+                self.loginResult.onNext(Result.failure(NetworkError.serverError))
+                return
+            }
+            if token.count > 0 {
                 KeychainWrapper.standard.set(token, forKey: "jwt")
                 coordinator.transition(to: .memoList(.init(coordinator: coordinator, network: network)), using: .push, animate: true).subscribe().disposed(by: self.disposeBag)
             } else {
-                self.isLoginSuccessed.accept(false)
+                self.loginResult.onNext(Result.failure(NetworkError.unauthorized))
             }
         }.disposed(by: disposeBag)
-    
+
         registerButtonTapped
             .subscribe { _ in
                 coordinator.transition(to: .register(.init(coordinator: coordinator, network: network)) , using: .push, animate: true).subscribe().disposed(by: self.disposeBag)
             }.disposed(by: disposeBag)
+    }
+    
+    private func startLogin() -> Observable<(String ,String)> {
+        let loginField = Observable.combineLatest(idField, pwField)
+        loginField.subscribe().disposed(by: disposeBag)
+        return loginButtonTapped.withLatestFrom(loginField)
     }
     
     // TODO: 로그인 검증 로직 적용

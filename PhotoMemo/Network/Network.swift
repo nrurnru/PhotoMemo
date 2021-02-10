@@ -15,8 +15,8 @@ import SwiftyJSON
 class Network {
     let upSyncRelay = PublishRelay<SyncData>()
     let downSyncRelay = PublishRelay<Bool>()
-    let loginRelay = PublishRelay<(String, String)>()
-    let loginToken = PublishRelay<String?>()
+    let login = PublishSubject<(String, String)>()
+    let loginToken = PublishSubject<String?>()
     let downloadSuccessed = PublishRelay<Bool>()
     let imageUpload = PublishRelay<UIImage>()
     let uploadedImageURL = PublishSubject<String>()
@@ -62,11 +62,11 @@ class Network {
     
     init() {
         bindSync()
-        bindRegister()
+        bindLogin()
         bindImageUpload()
     }
     
-    private func bindRegister() {
+    private func bindLogin() {
         register.bind { (id, pw) in
             AF.request("http://nrurnru.pythonanywhere.com/memo/login", method: .post, headers: self.headers(type: .register, id: id, pw: pw))
                 .validate(statusCode:  Array(200..<300))
@@ -80,16 +80,15 @@ class Network {
             }
         }.disposed(by: disposeBag)
         
-        loginRelay.bind { (id, pw) in
+        login.bind { (id, pw) in
             AF.request("http://nrurnru.pythonanywhere.com/memo/login", method: .get, headers: self.headers(type: .login, id: id, pw: pw))
-                .validate(statusCode:  Array(200..<300))
                 .responseData { response in
                 switch response.result {
                 case .success(let json):
                     let token = JSON(json)["token"].stringValue
-                    self.loginToken.accept(token)
-                case .failure(_):
-                    self.loginToken.accept(nil) //서버문제
+                    self.loginToken.onNext(token)
+                case .failure:
+                    self.loginToken.onNext(nil) //서버문제
                 }
             }
         }.disposed(by: disposeBag)
@@ -174,6 +173,7 @@ enum HTTPHeaderType {
 }
 
 enum NetworkError: Error {
+    case unauthorized
     case parsingError
     case serverError
 }
