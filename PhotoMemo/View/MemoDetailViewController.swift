@@ -66,10 +66,6 @@ class MemoDetailViewController: UIViewController {
         viewModel.deleteButtonTapped.bind(onNext: { _ in
             self.deleteAlert().bind(to: self.viewModel.memoDeleteAction).disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
-        
-        
-        
-        
     }
 }
 

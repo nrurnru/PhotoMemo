@@ -26,6 +26,7 @@ final class MainViewModel {
     
     let selectedMemoForDelete = PublishRelay<Memo>()
     let deselectedMemoForDelete = PublishRelay<Memo>()
+    let logoutAction = PublishRelay<AlertType>()
     
     //vm -> view
     let data = ReplayRelay<Results<Memo>>.create(bufferSize: 1)
@@ -40,12 +41,17 @@ final class MainViewModel {
         
         self.fetchMemo().bind(to: data)
             .disposed(by: disposeBag)
-        
-        logoutButtonTapped.bind { _ in
-            self.cleanData()
-            self.coordinator.close(animated: true)
-                .subscribe()
-                .disposed(by: self.disposeBag)
+
+        logoutAction.bind { action in
+            switch action {
+            case .ok:
+                self.cleanData()
+                self.coordinator.close(animated: true)
+                    .subscribe()
+                    .disposed(by: self.disposeBag)
+            case .cancel:
+                break
+            }
         }.disposed(by: disposeBag)
 
         newMemoButtonTapped.subscribe { _ in
