@@ -23,8 +23,7 @@ final class MemoDetailViewModel {
     let saveButtonTapped = PublishRelay<Void>()
     let deleteButtonTapped = PublishRelay<Void>()
     let cancelButtonTapped = PublishRelay<Void>()
-    let memoSaved = PublishRelay<Void>()
-    let memoDeleted = PublishRelay<Void>()
+    let memoDeleteAction = PublishRelay<AlertType>()
     let realm = try! Realm()
     
     init(memo: Memo, coordinator: SceneCoordinatorType, network: Network) {
@@ -33,25 +32,33 @@ final class MemoDetailViewModel {
         self.coordinator = coordinator
         self.network = network
 
-        saveButtonTapped.map {[weak self] _ -> Memo in
-            return (self?.memoRelay.value ?? Memo())
-        }.subscribe(onNext: { [weak self] nextMemo in
-            self?.modifyMemo(memo: nextMemo)
-            self?.memoSaved.accept(())
-        }).disposed(by: disposeBag)
-        
-        deleteButtonTapped.map {[weak self] _ -> Memo in
-            return self?.memoRelay.value ?? Memo()
-        }.subscribe(onNext: { [weak self] nextMemo in
-            self?.registerDeletedMemo(memo: nextMemo)
-            self?.realm.rx.delete().onNext(nextMemo)
-            self?.memoDeleted.accept(())
+        saveButtonTapped.map { _ -> Memo in
+            return (self.memoRelay.value)
+        }.subscribe(onNext: { nextMemo in
+            self.modifyMemo(memo: nextMemo)
+            self.coordinator.close(animated: true)
+                .subscribe()
+                .disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
         
         cancelButtonTapped.subscribe { _ in
             coordinator.close(animated: true)
                 .subscribe()
                 .disposed(by: self.disposeBag)
+        }.disposed(by: disposeBag)
+        
+        memoDeleteAction.bind { action in
+            switch action {
+            case .ok:
+                let nextMemo = self.memoRelay.value
+                self.registerDeletedMemo(memo: nextMemo)
+                self.realm.rx.delete().onNext(nextMemo)
+                self.coordinator.close(animated: true)
+                    .subscribe()
+                    .disposed(by: self.disposeBag)
+            case .cancel:
+                break
+            }
         }.disposed(by: disposeBag)
     }
     

@@ -55,19 +55,6 @@ class MemoDetailViewController: UIViewController {
             .drive { memo in
                 self.memoTextView.text = memo.text
             }.disposed(by: disposeBag)
-
-        
-        viewModel.memoSaved
-            .asDriver(onErrorJustReturn: ())
-            .drive { _ in
-                self.navigationController?.popViewController(animated: true)
-            }.disposed(by: disposeBag)
-        
-        viewModel.memoDeleted
-            .asDriver(onErrorJustReturn: ())
-            .drive { _ in
-                self.navigationController?.popViewController(animated: true)
-            }.disposed(by: disposeBag)
         
         viewModel.memoRelay
             .asDriver()
@@ -75,5 +62,35 @@ class MemoDetailViewController: UIViewController {
                 let url = URL(string: memo.imageURL)
                 self.memoImage.kf.setImage(with: url)
             }.disposed(by: disposeBag)
+        
+        viewModel.deleteButtonTapped.bind(onNext: { _ in
+            self.deleteAlert().bind(to: self.viewModel.memoDeleteAction).disposed(by: self.disposeBag)
+        }).disposed(by: disposeBag)
+        
+        
+        
+        
+    }
+}
+
+extension MemoDetailViewController {
+    private func deleteAlert() -> Observable<AlertType> {
+        return Observable.create { observer -> Disposable in
+            let alert = UIAlertController(title: "삭제 확인", message: "이 메모를 삭제하시겠습니까?", preferredStyle: .alert)
+            let okAction =  UIAlertAction(title: "확인", style: .default) { _ in
+                observer.onNext(.ok)
+                observer.onCompleted()
+            }
+            let cancelAction =  UIAlertAction(title: "취소", style: .cancel) { _ in
+                observer.onNext(.cancel)
+                observer.onCompleted()
+            }
+            alert.addAction(okAction)
+            alert.addAction(cancelAction)
+            self.present(alert, animated: true, completion: nil)
+            return Disposables.create {
+                alert.dismiss(animated: true, completion: nil)
+            }
+        }
     }
 }
