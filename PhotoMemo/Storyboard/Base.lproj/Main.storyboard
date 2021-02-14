@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="q9p-dV-jFp">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="NIm-Oi-9VU">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
@@ -83,22 +83,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c2d-O8-5MV">
-                                <rect key="frame" x="0.0" y="812" width="414" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="fBE-VU-gD5"/>
-                                </constraints>
-                                <items>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="NUZ-f1-8kB"/>
-                                    <barButtonItem systemItem="trash" id="pIc-7h-MSb"/>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="dFW-5Q-zT6"/>
-                                </items>
-                            </toolbar>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WSN-61-7f6">
                                 <rect key="frame" x="0.0" y="141" width="414" height="267"/>
                                 <imageReference key="image" image="circles.hexagonpath.fill" catalog="system" symbolScale="default"/>
                             </imageView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Memo" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="IA6-Gj-RSo">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" text="Memo" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="IA6-Gj-RSo">
                                 <rect key="frame" x="0.0" y="409" width="414" height="403"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <color key="textColor" systemColor="labelColor"/>
@@ -111,10 +100,6 @@
                         <constraints>
                             <constraint firstItem="WSN-61-7f6" firstAttribute="height" secondItem="adY-UJ-KdG" secondAttribute="height" multiplier="0.3" id="CbE-ag-emt"/>
                             <constraint firstItem="WSN-61-7f6" firstAttribute="trailing" secondItem="O9J-x7-JZR" secondAttribute="trailing" id="M0v-ID-Ebv"/>
-                            <constraint firstItem="c2d-O8-5MV" firstAttribute="leading" secondItem="O9J-x7-JZR" secondAttribute="leading" id="T17-zA-vdc"/>
-                            <constraint firstItem="c2d-O8-5MV" firstAttribute="trailing" secondItem="O9J-x7-JZR" secondAttribute="trailing" id="TxQ-1M-lmy"/>
-                            <constraint firstItem="c2d-O8-5MV" firstAttribute="bottom" secondItem="O9J-x7-JZR" secondAttribute="bottom" id="aRh-Cj-mih"/>
-                            <constraint firstItem="c2d-O8-5MV" firstAttribute="top" secondItem="IA6-Gj-RSo" secondAttribute="bottom" id="j70-nm-Voo"/>
                             <constraint firstItem="WSN-61-7f6" firstAttribute="top" secondItem="O9J-x7-JZR" secondAttribute="top" id="kNg-GP-Ino"/>
                             <constraint firstItem="WSN-61-7f6" firstAttribute="leading" secondItem="O9J-x7-JZR" secondAttribute="leading" id="mFy-XW-LvJ"/>
                             <constraint firstItem="IA6-Gj-RSo" firstAttribute="leading" secondItem="O9J-x7-JZR" secondAttribute="leading" id="nHL-Jq-XQL"/>
