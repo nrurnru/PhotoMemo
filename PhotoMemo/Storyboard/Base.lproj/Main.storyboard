@@ -206,18 +206,35 @@
                                     <outletCollection property="gestureRecognizers" destination="I8i-vg-9Ul" appends="YES" id="zaT-6t-qvG"/>
                                 </connections>
                             </imageView>
+                            <view hidden="YES" userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VtW-8T-a6D">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="0CO-rZ-kaI">
+                                        <rect key="frame" x="188.5" y="429.5" width="37" height="37"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="0CO-rZ-kaI" firstAttribute="centerY" secondItem="VtW-8T-a6D" secondAttribute="centerY" id="LqW-KT-hlm"/>
+                                    <constraint firstItem="0CO-rZ-kaI" firstAttribute="centerX" secondItem="VtW-8T-a6D" secondAttribute="centerX" id="OKE-DR-4hk"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="QS3-1M-fYw"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="e6V-Ak-Ec4" firstAttribute="top" secondItem="QS3-1M-fYw" secondAttribute="top" id="5aa-Lc-WNa"/>
                             <constraint firstItem="e6V-Ak-Ec4" firstAttribute="height" secondItem="WXf-Zx-eYR" secondAttribute="height" multiplier="0.3" id="6NY-iE-kWS"/>
+                            <constraint firstItem="VtW-8T-a6D" firstAttribute="top" secondItem="WXf-Zx-eYR" secondAttribute="top" id="Hz2-lJ-26t"/>
                             <constraint firstItem="QS3-1M-fYw" firstAttribute="trailing" secondItem="e6V-Ak-Ec4" secondAttribute="trailing" id="JRA-Zz-dqF"/>
                             <constraint firstItem="e6V-Ak-Ec4" firstAttribute="leading" secondItem="QS3-1M-fYw" secondAttribute="leading" id="KfE-Rn-g6U"/>
                             <constraint firstItem="44h-Es-A7H" firstAttribute="trailing" secondItem="QS3-1M-fYw" secondAttribute="trailing" id="RzW-f8-O2c"/>
                             <constraint firstItem="44h-Es-A7H" firstAttribute="bottom" secondItem="QS3-1M-fYw" secondAttribute="bottom" id="WzG-ov-6k0"/>
                             <constraint firstItem="44h-Es-A7H" firstAttribute="leading" secondItem="QS3-1M-fYw" secondAttribute="leading" id="ZS5-nx-x57"/>
                             <constraint firstItem="44h-Es-A7H" firstAttribute="top" secondItem="e6V-Ak-Ec4" secondAttribute="bottom" id="bYZ-Td-rZN"/>
+                            <constraint firstItem="VtW-8T-a6D" firstAttribute="leading" secondItem="QS3-1M-fYw" secondAttribute="leading" id="jnK-P9-uVi"/>
+                            <constraint firstAttribute="bottom" secondItem="VtW-8T-a6D" secondAttribute="bottom" id="xfF-nr-ZYw"/>
+                            <constraint firstItem="QS3-1M-fYw" firstAttribute="trailing" secondItem="VtW-8T-a6D" secondAttribute="trailing" id="xl4-R7-GTR"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="메모 작성" id="P3w-a0-wHr">
@@ -226,6 +243,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="cancelButton" destination="aci-WT-mRV" id="xsZ-bb-1rp"/>
+                        <outlet property="loadingIndicatorView" destination="VtW-8T-a6D" id="i5M-5k-1sH"/>
                         <outlet property="memoImageView" destination="e6V-Ak-Ec4" id="9CQ-77-Jd2"/>
                         <outlet property="memoTextView" destination="44h-Es-A7H" id="Ot7-Wg-hHk"/>
                         <outlet property="saveButton" destination="jFF-ua-gBC" id="laY-wV-xDH"/>

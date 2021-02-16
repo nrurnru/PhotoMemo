@@ -78,7 +78,7 @@ final class MainViewModel {
         
         deselectedMemoForDelete.bind { memo in
             guard let index = self.memoListForDelete.firstIndex(of: memo) else { return }
-            self.memoListForDelete.remove(at: index)
+            self.memoListForDelete.remove(at: index) 
         }.disposed(by: disposeBag)
         
         syncButtonTapped.bind { _ in

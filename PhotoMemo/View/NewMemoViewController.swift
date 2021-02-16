@@ -17,6 +17,7 @@ class NewMemoViewController: UIViewController {
     @IBOutlet var saveButton: UIBarButtonItem!
     @IBOutlet var cancelButton: UIBarButtonItem!
     @IBOutlet var memoImageView: UIImageView!
+    @IBOutlet var loadingIndicatorView: UIView!
     
     var viewModel: NewMemoViewModel!
     private var disposeBag = DisposeBag()
@@ -47,6 +48,11 @@ class NewMemoViewController: UIViewController {
         viewModel.addedMemoImage
             .bind(to: self.memoImageView.rx.image)
             .disposed(by: disposeBag)
+        
+        viewModel.saveButtonTapped.subscribe { _ in
+            self.loadingIndicatorView.isHidden = false
+            self.saveButton.isEnabled = false
+        }.disposed(by: disposeBag)
     }
     
     private func setGesture() {
