@@ -162,4 +162,5 @@ enum NetworkError: Error {
     case unauthorized
     case parsingError
     case serverError
+    case idAlreadyExists
 }

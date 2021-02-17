@@ -21,6 +21,9 @@ final class RegisterViewModel {
     let idField = PublishRelay<String>()
     let pwField = PublishRelay<String>()
     
+    let registerComplete = PublishRelay<Bool>()
+    let registerResult = PublishRelay<Result<Void, NetworkError>>()
+    
     init(coordinator: SceneCoordinatorType, network: Network) {
         self.coordinator = coordinator
         self.network = network
@@ -29,14 +32,12 @@ final class RegisterViewModel {
             self.network.register(id: id, pw: pw)
                 .subscribe { isRegisterSuccessed in
                     if isRegisterSuccessed {
-                        coordinator.close(animated: true)
-                            .subscribe()
-                            .disposed(by: self.disposeBag)
+                        self.registerResult.accept(Result.success(()))
                     } else {
-                        print("id already exists")
+                        self.registerResult.accept(Result.failure(NetworkError.idAlreadyExists))
                     }
                 } onFailure: { error in
-                    print("server problem")
+                    self.registerResult.accept(Result.failure(NetworkError.serverError))
                 }.disposed(by: self.disposeBag)
         }.disposed(by: disposeBag)
 
@@ -44,6 +45,14 @@ final class RegisterViewModel {
             coordinator.close(animated: true)
                 .subscribe()
                 .disposed(by: self.disposeBag)
+        }.disposed(by: disposeBag)
+        
+        registerComplete.bind { isCompleted in
+            if isCompleted {
+                coordinator.close(animated: true)
+                    .subscribe()
+                    .disposed(by: self.disposeBag)
+            }
         }.disposed(by: disposeBag)
     }
     
