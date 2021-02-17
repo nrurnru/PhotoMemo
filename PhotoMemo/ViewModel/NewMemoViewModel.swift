@@ -29,7 +29,11 @@ final class NewMemoViewModel {
         
         saveButtonTapped
             .bind { _ in
-                self.network.imageUpload.accept(self.addedMemoImage.value)
+                network.uploadImage(image: self.addedMemoImage.value).subscribe { url in
+                    self.imageURL.accept(url)
+                } onFailure: { error in
+                    print(error.localizedDescription)
+                }.disposed(by: self.disposeBag)
             }.disposed(by: disposeBag)
         
         cancelButtonTapped.subscribe { _ in
@@ -38,11 +42,6 @@ final class NewMemoViewModel {
                 .disposed(by: self.disposeBag)
         }.disposed(by: disposeBag)
 
-        
-        network.uploadedImageURL
-            .bind(to: self.imageURL)
-            .disposed(by: disposeBag)
-        
         Observable.zip(saveButtonTapped, textViewField, imageURL).subscribe { (_, text, url) in
             self.saveMemo(text: text, url: url)
             coordinator.close(animated: true)

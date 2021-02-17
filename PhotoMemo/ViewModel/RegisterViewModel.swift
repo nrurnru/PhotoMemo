@@ -25,10 +25,19 @@ final class RegisterViewModel {
         self.coordinator = coordinator
         self.network = network
         
-        let registerField = Observable.combineLatest(idField, pwField)
-        registerField.subscribe().disposed(by: disposeBag)
-        registerButtonTapped.withLatestFrom(registerField).bind { registerInfo in
-            self.network.register.accept(registerInfo)
+        registerField().bind { (id, pw) in
+            self.network.register(id: id, pw: pw)
+                .subscribe { isRegisterSuccessed in
+                    if isRegisterSuccessed {
+                        coordinator.close(animated: true)
+                            .subscribe()
+                            .disposed(by: self.disposeBag)
+                    } else {
+                        print("id already exists")
+                    }
+                } onFailure: { error in
+                    print("server problem")
+                }.disposed(by: self.disposeBag)
         }.disposed(by: disposeBag)
 
         cancelButtonTapped.subscribe { _ in
@@ -36,15 +45,11 @@ final class RegisterViewModel {
                 .subscribe()
                 .disposed(by: self.disposeBag)
         }.disposed(by: disposeBag)
-        
-        network.registerSuccessed.bind { isRegisterSuccessed in
-            if isRegisterSuccessed {
-                coordinator.close(animated: true)
-                    .subscribe()
-                    .disposed(by: self.disposeBag)
-            } else {
-                print("register failed")
-            }
-        }.disposed(by: disposeBag)
+    }
+    
+    func registerField() -> Observable<(String, String)> {
+        let registerField = Observable.combineLatest(idField, pwField)
+        registerField.subscribe().disposed(by: disposeBag)
+        return registerButtonTapped.withLatestFrom(registerField)
     }
 }

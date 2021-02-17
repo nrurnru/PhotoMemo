@@ -84,10 +84,6 @@ final class MainViewModel {
         syncButtonTapped.bind { _ in
             self.startSync()
         }.disposed(by: disposeBag)
-        
-        network.downloadSuccessed.bind { result in
-            self.syncCompleted.accept(result)
-        }.disposed(by: disposeBag)
     }
     
     private func cleanData() {
@@ -97,7 +93,7 @@ final class MainViewModel {
         KingfisherManager.shared.cache.clearCache()
     }
     
-    func fetchMemo() ->  Observable<Results<Memo>> {
+    private func fetchMemo() ->  Observable<Results<Memo>> {
         let configure = Realm.Configuration.init(deleteRealmIfMigrationNeeded: true)
         let realm = try! Realm(configuration: configure)
         let result = realm.objects(Memo.self).sorted(byKeyPath: "createdAt", ascending: false)
@@ -118,6 +114,26 @@ final class MainViewModel {
         let deletedMemoIDs = UserDefaults.standard.array(forKey: "deletedMemoIDs") ?? []
         guard let d = deletedMemoIDs as? [String] else { return }
         let syncData = SyncData(updatedMemos: updatedMemos, deletedMemoIDs: d)
-        network.upSyncRelay.accept(syncData)
+        network.upSync(syncData: syncData).subscribe { isUpSyncSucceeded in
+            if isUpSyncSucceeded {
+                self.network.downSync().subscribe { syncData in
+                    self.saveSyncedData(syncData: syncData)
+                    self.syncCompleted.accept(true)
+                } onFailure: { error in
+                    print(error.localizedDescription)
+                }.disposed(by: self.disposeBag)
+            }
+        } onFailure: { error in
+            print(error.localizedDescription)
+        }.disposed(by: disposeBag)
+    }
+    
+    private func saveSyncedData(syncData: SyncData) {
+        syncData.updatedMemos.forEach { updatedMemo in
+            RealmManager.shared.saveData(data: updatedMemo.toMemo())
+        }
+        RealmManager.shared.deleteDataWithIDs(Memo.self, deletedIDs: syncData.deletedMemoIDs)
+        UserDefaults.standard.set([], forKey: "deletedMemoIDs")
+        UserDefaults.standard.set(ISO8601DateFormatter().string(from: Date()), forKey: "lastSynced")
     }
 }

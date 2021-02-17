@@ -25,20 +25,19 @@ final class LoginViewModel {
         self.coordinator = coordinator
         self.network = network
 
-        startLogin().bind(to: network.login)
-            .disposed(by: disposeBag)
-
-        network.loginToken.bind { token in
-            guard let token = token else {
-                self.loginResult.onNext(Result.failure(NetworkError.serverError))
-                return
-            }
-            if token.count > 0 {
-                KeychainWrapper.standard.set(token, forKey: "jwt")
-                coordinator.transition(to: .memoList(.init(coordinator: coordinator, network: network)), using: .push, animate: true).subscribe().disposed(by: self.disposeBag)
-            } else {
-                self.loginResult.onNext(Result.failure(NetworkError.unauthorized))
-            }
+        startLogin().subscribe { (id, pw) in
+            network.login(id: id, pw: pw)
+                .subscribe { token in
+                    // 로그인 실패 시에는 빈 문자열이 내려옴
+                    if token.count > 0 {
+                        KeychainWrapper.standard.set(token, forKey: "jwt")
+                        coordinator.transition(to: .memoList(.init(coordinator: coordinator, network: network)), using: .push, animate: true).subscribe().disposed(by: self.disposeBag)
+                    } else {
+                        self.loginResult.onNext(Result.failure(NetworkError.unauthorized))
+                    }
+                } onFailure: { _ in
+                    self.loginResult.onNext(Result.failure(NetworkError.serverError))
+                }.disposed(by: self.disposeBag)
         }.disposed(by: disposeBag)
 
         registerButtonTapped

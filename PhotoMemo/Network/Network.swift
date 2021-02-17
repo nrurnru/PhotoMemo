@@ -13,16 +13,6 @@ import SwiftKeychainWrapper
 import SwiftyJSON
 
 class Network {
-    let upSyncRelay = PublishRelay<SyncData>()
-    let downSyncRelay = PublishRelay<Bool>()
-    let login = PublishSubject<(String, String)>()
-    let loginToken = PublishSubject<String?>()
-    let downloadSuccessed = PublishRelay<Bool>()
-    let imageUpload = PublishRelay<UIImage>()
-    let uploadedImageURL = PublishSubject<String>()
-    let register = PublishRelay<(String, String)>()
-    let registerSuccessed = PublishRelay<Bool>()
-    
     private var disposeBag = DisposeBag()
     private let baseURL = "http://nrurnru.pythonanywhere.com/memo/sync"
     private let imageServerURL = "https://api.imgur.com/3/image"
@@ -60,53 +50,54 @@ class Network {
         }
     }
     
-    init() {
-        bindSync()
-        bindLogin()
-        bindImageUpload()
-    }
-    
-    private func bindLogin() {
-        register.bind { (id, pw) in
+    func register(id: String, pw: String) -> Single<Bool> {
+        return Single<Bool>.create { single -> Disposable in
             AF.request("http://nrurnru.pythonanywhere.com/memo/login", method: .post, headers: self.headers(type: .register, id: id, pw: pw))
                 .validate(statusCode:  Array(200..<300))
                 .responseData { response in
                 switch response.result {
                 case .success:
-                    self.registerSuccessed.accept(true)
+                    single(.success(true))
                 case .failure(_):
-                    self.registerSuccessed.accept(false)
+                    single(.success(false))
                 }
             }
-        }.disposed(by: disposeBag)
-        
-        login.bind { (id, pw) in
+            return Disposables.create()
+        }
+    }
+    
+    func login(id: String, pw: String) -> Single<String> {
+        return Single<String>.create { single -> Disposable in
             AF.request("http://nrurnru.pythonanywhere.com/memo/login", method: .get, headers: self.headers(type: .login, id: id, pw: pw))
                 .responseData { response in
                 switch response.result {
                 case .success(let json):
                     let token = JSON(json)["token"].stringValue
-                    self.loginToken.onNext(token)
+                    single(.success(token))
                 case .failure:
-                    self.loginToken.onNext(nil) //서버문제
+                    single(.failure(NetworkError.serverError)) //서버문제
                 }
             }
-        }.disposed(by: disposeBag)
+            return Disposables.create()
+        }
     }
     
-    private func bindSync() {
-        upSyncRelay.bind { syncData in
-            AF.request(self.baseURL, method: .post, parameters: syncData, encoder: JSONParameterEncoder.default, headers: self.headers(type: .memo)).validate(statusCode:  Array(200..<300)).responseData { response in
+    func upSync(syncData: SyncData) -> Single<Bool> {
+        return Single<Bool>.create { single -> Disposable in
+            AF.request(self.baseURL, method: .post, parameters: syncData, encoder: JSONParameterEncoder.default, headers: self.headers(type: .memo)).validate(statusCode: Array(200..<300)).responseData { response in
                 switch response.result {
                 case .success:
-                    self.downSyncRelay.accept(true)
+                    single(.success(true))
                 case .failure:
-                    print("failed")
+                    single(.failure(NetworkError.serverError))
                 }
             }
-        }.disposed(by: disposeBag)
-        
-        downSyncRelay.bind { _ in
+            return Disposables.create()
+        }
+    }
+    
+    func downSync() -> Single<SyncData> {
+        return Single<SyncData>.create { single -> Disposable in
             let lastSynced: String = UserDefaults.standard.string(forKey: "lastSynced") ?? ISO8601DateFormatter().string(from: Date(timeIntervalSince1970: 0))
             
             let parameters: Parameters = [
@@ -119,23 +110,26 @@ class Network {
                     do {
                         let jsonData = try JSONSerialization.data(withJSONObject: value, options: .prettyPrinted)
                         let syncData = try JSONDecoder().decode(SyncData.self, from: jsonData)
-                        self.saveSyncedData(syncData: syncData)
-                        self.downloadSuccessed.accept(true)
+                        single(.success(syncData))
                     } catch (let error){
-                        print(error.localizedDescription)
+                        single(.failure(error))
                     }
                 case .failure(let error):
-                    print(error.localizedDescription)
+                    single(.failure(error))
                 }
             }
-        }.disposed(by: disposeBag)
+            return Disposables.create()
+        }
     }
     
-    private func bindImageUpload() {
-        imageUpload.bind { image in
+    func uploadImage(image: UIImage) -> Single<String> {
+        Single<String>.create { single -> Disposable in
             let imageData = image.pngData()
             let base64Image = imageData?.base64EncodedString(options: .lineLength64Characters)
-            guard let utf8EncodedImage = base64Image?.data(using: .utf8) else { return }
+            guard let utf8EncodedImage = base64Image?.data(using: .utf8) else {
+                single(.failure(NetworkError.parsingError))
+                return Disposables.create()
+            }
             
             let multipartFormData = MultipartFormData()
             multipartFormData.append(utf8EncodedImage, withName: "image")
@@ -144,24 +138,16 @@ class Network {
                 switch response.result {
                 case .success(let data):
                     guard let data = data, let uploadedURL = JSON(data)["data"]["link"].rawString() else {
-                        self.uploadedImageURL.onError(NetworkError.parsingError)
+                        single(.failure(NetworkError.parsingError))
                         return
                     }
-                    self.uploadedImageURL.onNext(uploadedURL)
+                    single(.success(uploadedURL))
                 case .failure(let error):
-                    self.uploadedImageURL.onError(error)
+                    single(.failure(error))
                 }
             }
-        }.disposed(by: disposeBag)
-    }
-    
-    private func saveSyncedData(syncData: SyncData) {
-        syncData.updatedMemos.forEach { updatedMemo in
-            RealmManager.shared.saveData(data: updatedMemo.toMemo())
+            return Disposables.create()
         }
-        RealmManager.shared.deleteDataWithIDs(Memo.self, deletedIDs: syncData.deletedMemoIDs)
-        UserDefaults.standard.set([], forKey: "deletedMemoIDs")
-        UserDefaults.standard.set(ISO8601DateFormatter().string(from: Date()), forKey: "lastSynced")
     }
 }
 
