@@ -15,16 +15,19 @@ class MemoDetailViewController: UIViewController {
     @IBOutlet var memoTextView: UITextView!
     @IBOutlet var deleteButton: UIBarButtonItem!
     @IBOutlet var saveButton: UIBarButtonItem!
-    @IBOutlet var memoImage: UIImageView!
+    @IBOutlet var memoImageView: UIImageView!
     @IBOutlet var cancelButton: UIBarButtonItem!
     
     var viewModel: MemoDetailViewModel!
     private var disposeBag = DisposeBag()
+    private let picker = UIImagePickerController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         bindInput()
         bindOutput()
+        setGesture()
+        picker.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -60,12 +63,35 @@ class MemoDetailViewController: UIViewController {
             .asDriver()
             .drive { memo in
                 let url = URL(string: memo.imageURL)
-                self.memoImage.kf.setImage(with: url)
+                self.memoImageView.kf.setImage(with: url)
             }.disposed(by: disposeBag)
         
         viewModel.deleteButtonTapped.bind(onNext: { _ in
             self.deleteAlert().bind(to: self.viewModel.memoDeleteAction).disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
+    }
+    
+    private func setGesture() {
+        let tapGesture = UITapGestureRecognizer()
+        memoImageView.addGestureRecognizer(tapGesture)
+        
+        tapGesture.rx.event.bind { recognizer in
+            self.openLibrary()
+        }.disposed(by: disposeBag)
+    }
+}
+
+extension MemoDetailViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func openLibrary() {
+        picker.sourceType = .photoLibrary
+        present(picker, animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
+        viewModel.addedMemoImage.accept(image)
+        memoImageView.image = image
+        dismiss(animated: true)
     }
 }
 

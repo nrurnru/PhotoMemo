@@ -18,12 +18,15 @@ final class MemoDetailViewModel {
     let network: Network
     
     let memoRelay = BehaviorRelay<Memo>(value: Memo())
-    let memoText = BehaviorRelay<String?>(value: "")
+    let memoText = BehaviorRelay<String>(value: "")
     
     let saveButtonTapped = PublishRelay<Void>()
     let deleteButtonTapped = PublishRelay<Void>()
     let cancelButtonTapped = PublishRelay<Void>()
     let memoDeleteAction = PublishRelay<AlertType>()
+    let addedMemoImage = BehaviorRelay<UIImage?>(value: nil)
+    let memoModified = BehaviorSubject<Bool>(value: false)
+    
     let realm = try! Realm()
     
     init(memo: Memo, coordinator: SceneCoordinatorType, network: Network) {
@@ -35,10 +38,21 @@ final class MemoDetailViewModel {
         saveButtonTapped.map { _ -> Memo in
             return (self.memoRelay.value)
         }.subscribe(onNext: { nextMemo in
-            self.modifyMemo(memo: nextMemo)
-            self.coordinator.close(animated: true)
-                .subscribe()
-                .disposed(by: self.disposeBag)
+            guard let image = self.addedMemoImage.value else {
+                self.modifyMemo(memo: nextMemo)
+                self.coordinator.close(animated: true)
+                    .subscribe()
+                    .disposed(by: self.disposeBag)
+                return
+            }
+            self.network.uploadImage(image: image).subscribe { url in
+                self.modifyMemo(memo: nextMemo, imageURL: url)
+                self.coordinator.close(animated: true)
+                    .subscribe()
+                    .disposed(by: self.disposeBag)
+            } onFailure: { error in
+                print(error.localizedDescription)
+            }.disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
         
         cancelButtonTapped.subscribe { _ in
@@ -60,13 +74,24 @@ final class MemoDetailViewModel {
                 break
             }
         }.disposed(by: disposeBag)
+        
+        memoText.subscribe { _ in
+            self.memoModified.onNext(true)
+        }.disposed(by: disposeBag)
+        
+        addedMemoImage.subscribe { _ in
+            self.memoModified.onNext(true)
+        }.disposed(by: disposeBag)
     }
     
-    func modifyMemo(memo: Memo) {
+    func modifyMemo(memo: Memo, imageURL: String? = nil) {
         realm.beginWrite()
-        memo.text = memoText.value ?? ""
+        memo.text = memoText.value
         memo.updatedAt = Date()
         memo.isUpdated = true
+        if let url = imageURL {
+            memo.imageURL = url
+        }
         do {
             try realm.commitWrite()
         } catch {
