@@ -116,7 +116,7 @@
                     <navigationItem key="navigationItem" title="메모 보기" id="wOh-VI-BFe">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="kqo-YX-8LB"/>
                         <rightBarButtonItems>
-                            <barButtonItem systemItem="save" id="noN-TB-GAm"/>
+                            <barButtonItem enabled="NO" systemItem="save" id="noN-TB-GAm"/>
                             <barButtonItem systemItem="trash" id="Ydj-Br-ngD">
                                 <color key="tintColor" systemColor="systemRedColor"/>
                             </barButtonItem>
