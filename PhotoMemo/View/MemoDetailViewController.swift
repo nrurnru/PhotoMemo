@@ -79,7 +79,7 @@ class MemoDetailViewController: UIViewController {
                 .disposed(by: self.disposeBag)
         }.disposed(by: disposeBag)
         
-        viewModel.isMemoEdited
+        viewModel.hasTextOrImageChanged()
             .bind(to: self.saveButton.rx.isEnabled)
             .disposed(by: disposeBag)
     }
