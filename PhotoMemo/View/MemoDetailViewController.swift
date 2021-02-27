@@ -56,16 +56,11 @@ class MemoDetailViewController: UIViewController {
         viewModel.memoRelay
             .asDriver()
             .drive { memo in
-                self.memoTextView.text = memo.text
-            }.disposed(by: disposeBag)
-        
-        viewModel.memoRelay
-            .asDriver()
-            .drive { memo in
                 let url = URL(string: memo.imageURL)
                 self.memoImageView.kf.setImage(with: url)
+                self.memoTextView.text = memo.text
             }.disposed(by: disposeBag)
-        
+
         viewModel.deleteButtonTapped.bind{ _ in
             self.askDeleteAlert()
                 .bind(to: self.viewModel.memoDeleteAction)
@@ -76,6 +71,12 @@ class MemoDetailViewController: UIViewController {
             self.askCancelAfterEditAlert()
                 .bind(to: self.viewModel.memoCancelAction)
             .disposed(by: self.disposeBag)
+        }.disposed(by: disposeBag)
+        
+        viewModel.saveButtonTapped.bind { _ in
+            self.askSaveAfterEditAlert()
+                .bind(to: self.viewModel.memoSaveAction)
+                .disposed(by: self.disposeBag)
         }.disposed(by: disposeBag)
         
         viewModel.isMemoEdited
