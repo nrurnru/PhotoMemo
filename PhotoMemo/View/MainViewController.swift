@@ -52,9 +52,15 @@ class MainViewController: UIViewController {
             .disposed(by: disposeBag)
 
         deleteMemoBarButton.rx.tap.bind(onNext: { _ in
-            self.memoCollectionView.isEditing.toggle()
-            self.updateSizeOfDeleteBanner(30)
-            self.viewModel.isEditmode.accept(self.memoCollectionView.isEditing)
+            if self.memoCollectionView.isEditing {
+                self.deleteAlert().bind { action in
+                    self.viewModel.deleteAction.accept(action)
+                }.disposed(by: self.disposeBag)
+            } else {
+                //일반모드에서 편집모드
+                self.memoCollectionView.isEditing = true
+                self.updateSizeOfDeleteBanner(30)
+            }
         }).disposed(by: disposeBag)
 
         syncBarButton.rx.tap
@@ -68,9 +74,10 @@ class MainViewController: UIViewController {
     
     private func bindOutput() {
         viewModel.deleteCompleted
-            .bind { result in
-                if result {
+            .bind { isDeleteCompleted in
+                if isDeleteCompleted {
                     self.updateSizeOfDeleteBanner(0)
+                    self.memoCollectionView.isEditing = false
                 }
             }.disposed(by: disposeBag)
         
@@ -94,7 +101,6 @@ class MainViewController: UIViewController {
                 cell.layer.borderWidth = 1
                 cell.layer.borderColor = self.view.backgroundColor?.cgColor
             }.disposed(by: disposeBag)
-        
         
         memoCollectionView.rx.modelSelected(Memo.self).bind { memo in
             if self.memoCollectionView.isEditing {
@@ -141,6 +147,26 @@ extension MainViewController {
     private func logoutAlert() -> Observable<AlertType> {
         return Observable.create { observer -> Disposable in
             let alert = UIAlertController(title: "로그아웃", message: "로그아웃 하시겠습니까?", preferredStyle: .alert)
+            let okAction =  UIAlertAction(title: "확인", style: .default) { _ in
+                observer.onNext(.ok)
+                observer.onCompleted()
+            }
+            let cancelAction =  UIAlertAction(title: "취소", style: .cancel) { _ in
+                observer.onNext(.cancel)
+                observer.onCompleted()
+            }
+            alert.addAction(okAction)
+            alert.addAction(cancelAction)
+            self.present(alert, animated: true, completion: nil)
+            return Disposables.create {
+                alert.dismiss(animated: true, completion: nil)
+            }
+        }
+    }
+    
+    private func deleteAlert() -> Observable<AlertType> {
+        return Observable.create { observer -> Disposable in
+            let alert = UIAlertController(title: "삭제 확인", message: "선택한 메모를 삭제하시겠습니까?", preferredStyle: .alert)
             let okAction =  UIAlertAction(title: "확인", style: .default) { _ in
                 observer.onNext(.ok)
                 observer.onCompleted()

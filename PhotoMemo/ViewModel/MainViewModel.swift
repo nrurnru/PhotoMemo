@@ -19,7 +19,6 @@ final class MainViewModel {
     
     //view -> vm
     let newMemoButtonTapped = PublishRelay<Void>()
-    let isEditmode = PublishRelay<Bool>()
     let syncButtonTapped = PublishRelay<Void>()
     let logoutButtonTapped = PublishRelay<Void>()
     let selectMemoForDetail = PublishRelay<Memo>()
@@ -27,6 +26,7 @@ final class MainViewModel {
     let selectedMemoForDelete = PublishRelay<Memo>()
     let deselectedMemoForDelete = PublishRelay<Memo>()
     let logoutAction = PublishRelay<AlertType>()
+    let deleteAction = PublishRelay<AlertType>()
     
     //vm -> view
     let data = ReplayRelay<Results<Memo>>.create(bufferSize: 1)
@@ -60,12 +60,6 @@ final class MainViewModel {
                 .disposed(by: self.disposeBag)
         }.disposed(by: disposeBag)
 
-        isEditmode.bind { isEditing in
-            if !isEditing {
-                self.deleteMemo()
-            }
-        }.disposed(by: disposeBag)
-        
         selectMemoForDetail.subscribe { memo in
             coordinator.transition(to: .detail(.init(memo: memo, coordinator: coordinator, network: network)), using: .push, animate: true)
                 .subscribe()
@@ -83,6 +77,16 @@ final class MainViewModel {
         
         syncButtonTapped.bind { _ in
             self.startSync()
+        }.disposed(by: disposeBag)
+        
+        deleteAction.bind { action in
+            switch action {
+            case .ok:
+                self.deleteMemo()
+                self.deleteCompleted.accept(true)
+            case .cancel:
+                self.deleteCompleted.accept(false)
+            }
         }.disposed(by: disposeBag)
     }
     
