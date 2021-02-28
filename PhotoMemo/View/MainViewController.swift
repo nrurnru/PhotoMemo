@@ -22,6 +22,7 @@ class MainViewController: UIViewController {
     @IBOutlet var deleteMemoBarButton: UIBarButtonItem!
     @IBOutlet var syncBarButton: UIBarButtonItem!
     @IBOutlet var logoutBarButton: UIBarButtonItem!
+    @IBOutlet weak var deleteBannerLabelHeight: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +53,7 @@ class MainViewController: UIViewController {
 
         deleteMemoBarButton.rx.tap.bind(onNext: { _ in
             self.memoCollectionView.isEditing.toggle()
+            self.updateSizeOfDeleteBanner(30)
             self.viewModel.isEditmode.accept(self.memoCollectionView.isEditing)
         }).disposed(by: disposeBag)
 
@@ -68,7 +70,7 @@ class MainViewController: UIViewController {
         viewModel.deleteCompleted
             .bind { result in
                 if result {
-                    //delete
+                    self.updateSizeOfDeleteBanner(0)
                 }
             }.disposed(by: disposeBag)
         
@@ -125,6 +127,13 @@ class MainViewController: UIViewController {
         layout.minimumLineSpacing = 0
         memoCollectionView.setCollectionViewLayout(layout, animated: false)
         memoCollectionView.reloadData()
+    }
+    
+    private func updateSizeOfDeleteBanner(_ size: CGFloat) {
+        UIView.animate(withDuration: 0.3) {
+            self.deleteBannerLabelHeight.constant = size
+            self.view.layoutIfNeeded()
+        }
     }
 }
 

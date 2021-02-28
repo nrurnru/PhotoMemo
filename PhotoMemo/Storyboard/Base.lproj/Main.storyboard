@@ -143,6 +143,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="삭제할 메모를 선택해 주세요." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kFE-YB-dsB">
+                                <rect key="frame" x="0.0" y="140" width="414" height="0.0"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" id="bPF-TD-Bij"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="wcT-pe-i2b">
                                 <rect key="frame" x="0.0" y="140" width="414" height="722"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -158,10 +168,13 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="kFE-YB-dsB" secondAttribute="trailing" id="8JC-le-F4l"/>
                             <constraint firstItem="wcT-pe-i2b" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="9gn-yH-Id7"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="wcT-pe-i2b" secondAttribute="bottom" id="Ckq-LN-l4F"/>
-                            <constraint firstItem="wcT-pe-i2b" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Zes-jK-xiR"/>
+                            <constraint firstItem="kFE-YB-dsB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Tbo-Ax-eap"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="wcT-pe-i2b" secondAttribute="trailing" id="m1I-hO-xxg"/>
+                            <constraint firstItem="kFE-YB-dsB" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="m8h-LD-UnY"/>
+                            <constraint firstItem="wcT-pe-i2b" firstAttribute="top" secondItem="kFE-YB-dsB" secondAttribute="bottom" id="rUQ-iB-N5O"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="메모 목록" id="Xfu-rp-ZAZ">
@@ -179,6 +192,7 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="deleteBannerLabelHeight" destination="bPF-TD-Bij" id="Id3-r3-zl4"/>
                         <outlet property="deleteMemoBarButton" destination="OzD-0D-AZ1" id="cme-nI-buJ"/>
                         <outlet property="logoutBarButton" destination="Kve-Tg-15h" id="eHQ-0J-vwX"/>
                         <outlet property="memoCollectionView" destination="wcT-pe-i2b" id="mst-UT-JR1"/>
