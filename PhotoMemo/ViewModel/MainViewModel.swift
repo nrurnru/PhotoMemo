@@ -21,6 +21,7 @@ final class MainViewModel {
     let newMemoButtonTapped = PublishRelay<Void>()
     let syncButtonTapped = PublishRelay<Void>()
     let logoutButtonTapped = PublishRelay<Void>()
+    let deleteButtonTapped = PublishRelay<Void>()
     let selectMemoForDetail = PublishRelay<Memo>()
     
     let selectedMemoForDelete = PublishRelay<Memo>()
@@ -30,8 +31,8 @@ final class MainViewModel {
     
     //vm -> view
     let data = ReplayRelay<Results<Memo>>.create(bufferSize: 1)
-    let deleteCompleted = PublishRelay<Bool>()
-    let syncCompleted = PublishRelay<Bool>()
+    let askDeleteMemoAlert = PublishRelay<Void>()
+    let memoDeleteMode = BehaviorRelay<Bool>(value: false)
     
     var memoListForDelete = [Memo]()
     
@@ -41,7 +42,7 @@ final class MainViewModel {
         
         self.fetchMemo().bind(to: data)
             .disposed(by: disposeBag)
-
+        
         logoutAction.bind { action in
             switch action {
             case .ok:
@@ -53,13 +54,13 @@ final class MainViewModel {
                 break
             }
         }.disposed(by: disposeBag)
-
+        
         newMemoButtonTapped.subscribe { _ in
             self.coordinator.transition(to: .newMemo(.init(coordinator: coordinator, network: network)), using: .push, animate: true)
                 .subscribe()
                 .disposed(by: self.disposeBag)
         }.disposed(by: disposeBag)
-
+        
         selectMemoForDetail.subscribe { memo in
             coordinator.transition(to: .detail(.init(memo: memo, coordinator: coordinator, network: network)), using: .push, animate: true)
                 .subscribe()
@@ -83,9 +84,23 @@ final class MainViewModel {
             switch action {
             case .ok:
                 self.deleteMemo()
-                self.deleteCompleted.accept(true)
+                self.memoDeleteMode.accept(false)
             case .cancel:
-                self.deleteCompleted.accept(false)
+                break
+            }
+        }.disposed(by: disposeBag)
+        
+        deleteButtonTapped.bind { _ in
+            if self.memoDeleteMode.value {
+                // 삭제처리, 삭제할 메모가 없을 경우는 바로 선택모드 종료
+                if self.memoListForDelete.count > 0 {
+                    self.askDeleteMemoAlert.accept(())
+                } else {
+                    self.memoDeleteMode.accept(false)
+                }
+            } else {
+                // 선택모드로 진입
+                self.memoDeleteMode.accept(true)
             }
         }.disposed(by: disposeBag)
     }
@@ -110,7 +125,6 @@ final class MainViewModel {
         UserDefaults.standard.set(deletedMemoIDs, forKey: "deletedMemoIDs")
         RealmManager.shared.deleteDataList(dataList: memoListForDelete)
         memoListForDelete.removeAll()
-        self.deleteCompleted.accept(true)
     }
     
     func startSync() {
@@ -122,7 +136,6 @@ final class MainViewModel {
             if isUpSyncSucceeded {
                 self.network.downSync().subscribe { syncData in
                     self.saveSyncedData(syncData: syncData)
-                    self.syncCompleted.accept(true)
                 } onFailure: { error in
                     print(error.localizedDescription)
                 }.disposed(by: self.disposeBag)

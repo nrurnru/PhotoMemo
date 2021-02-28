@@ -50,19 +50,11 @@ class MainViewController: UIViewController {
         newMemoBarButton.rx.tap
             .bind(to: viewModel.newMemoButtonTapped)
             .disposed(by: disposeBag)
-
-        deleteMemoBarButton.rx.tap.bind(onNext: { _ in
-            if self.memoCollectionView.isEditing {
-                self.deleteAlert().bind { action in
-                    self.viewModel.deleteAction.accept(action)
-                }.disposed(by: self.disposeBag)
-            } else {
-                //일반모드에서 편집모드
-                self.memoCollectionView.isEditing = true
-                self.updateSizeOfDeleteBanner(30)
-            }
-        }).disposed(by: disposeBag)
-
+        
+        deleteMemoBarButton.rx.tap
+            .bind(to: viewModel.deleteButtonTapped)
+            .disposed(by: disposeBag)
+        
         syncBarButton.rx.tap
             .bind(to: viewModel.syncButtonTapped)
             .disposed(by: disposeBag)
@@ -73,20 +65,23 @@ class MainViewController: UIViewController {
     }
     
     private func bindOutput() {
-        viewModel.deleteCompleted
-            .bind { isDeleteCompleted in
-                if isDeleteCompleted {
-                    self.updateSizeOfDeleteBanner(0)
-                    self.memoCollectionView.isEditing = false
-                }
-            }.disposed(by: disposeBag)
+        viewModel.memoDeleteMode
+            .bind(to: self.memoCollectionView.rx.isEditing)
+            .disposed(by: disposeBag)
         
-        viewModel.syncCompleted
-            .bind { result in
-                if result {
-                    //sync
-                }
-            }.disposed(by: disposeBag)
+        viewModel.askDeleteMemoAlert.bind { _ in
+            self.deleteAlert()
+                .bind(to: self.viewModel.deleteAction)
+                .disposed(by: self.disposeBag)
+        }.disposed(by: disposeBag)
+        
+        viewModel.memoDeleteMode.bind { isBannerShowing in
+            if isBannerShowing {
+                self.updateSizeOfDeleteBanner(30)
+            } else {
+                self.updateSizeOfDeleteBanner(0)
+            }
+        }.disposed(by: disposeBag)
         
         viewModel.logoutButtonTapped.bind { _ in
             self.logoutAlert().bind(to: self.viewModel.logoutAction).disposed(by: self.disposeBag)
