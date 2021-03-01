@@ -48,31 +48,14 @@ class RegisterViewController: UIViewController {
         viewModel.registerResult.bind { result in
             switch result {
             case .success(_):
-                self.RegisterAlert(title: "가입 완료", message: "가입이 완료되었습니다.").bind { _ in
+                self.alertObserver(title: "가입 완료", message: "가입이 완료되었습니다.").bind { _ in
                     self.viewModel.registerComplete.accept(true)
                 }.disposed(by: self.disposeBag)
             case .failure(_):
-                self.RegisterAlert(title:  "오류", message: "이미 존재하는 아이디입니다.").bind { _ in
+                self.alertObserver(title:  "오류", message: "이미 존재하는 아이디입니다.").bind { _ in
                     self.viewModel.registerComplete.accept(false)
                 }.disposed(by: self.disposeBag)
             }
         }.disposed(by: disposeBag)
-    }
-}
-
-extension RegisterViewController {
-    private func RegisterAlert(title: String, message: String) -> Observable<AlertType> {
-        return Observable<AlertType>.create { observer -> Disposable in
-            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "확인", style: .default) { _ in
-                observer.onNext(.ok)
-            }
-            alert.addAction(okAction)
-            self.present(alert, animated: true, completion: nil)
-            
-            return Disposables.create {
-                alert.dismiss(animated: true, completion: nil)
-            }
-        }
     }
 }

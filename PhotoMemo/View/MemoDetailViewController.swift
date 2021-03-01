@@ -62,19 +62,19 @@ class MemoDetailViewController: UIViewController {
             }.disposed(by: disposeBag)
 
         viewModel.deleteButtonTapped.bind{ _ in
-            self.askDeleteAlert()
+            self.alertAskObserver(title: "메모 삭제", message: "이 메모를 삭제하시겠습니까?")
                 .bind(to: self.viewModel.memoDeleteAction)
                 .disposed(by: self.disposeBag)
         }.disposed(by: disposeBag)
         
         viewModel.cancelAfterMemoHasEdited.bind { _ in
-            self.askCancelAfterEditAlert()
+            self.alertAskObserver(title: "수정 취소", message: "메모 수정을 취소하시겠습니까?")
                 .bind(to: self.viewModel.memoCancelAction)
             .disposed(by: self.disposeBag)
         }.disposed(by: disposeBag)
         
         viewModel.saveButtonTapped.bind { _ in
-            self.askSaveAfterEditAlert()
+            self.alertAskObserver(title: "수정 확인", message: "수정된 메모를 저장하시겠습니까?")
                 .bind(to: self.viewModel.memoSaveAction)
                 .disposed(by: self.disposeBag)
         }.disposed(by: disposeBag)
@@ -105,67 +105,5 @@ extension MemoDetailViewController: UIImagePickerControllerDelegate, UINavigatio
         viewModel.addedMemoImage.accept(image)
         memoImageView.image = image
         dismiss(animated: true)
-    }
-}
-
-extension MemoDetailViewController {
-    private func askDeleteAlert() -> Observable<AlertType> {
-        return Observable.create { observer -> Disposable in
-            let alert = UIAlertController(title: "삭제 확인", message: "이 메모를 삭제하시겠습니까?", preferredStyle: .alert)
-            let okAction =  UIAlertAction(title: "확인", style: .default) { _ in
-                observer.onNext(.ok)
-                observer.onCompleted()
-            }
-            let cancelAction =  UIAlertAction(title: "취소", style: .cancel) { _ in
-                observer.onNext(.cancel)
-                observer.onCompleted()
-            }
-            alert.addAction(okAction)
-            alert.addAction(cancelAction)
-            self.present(alert, animated: true, completion: nil)
-            return Disposables.create {
-                alert.dismiss(animated: true, completion: nil)
-            }
-        }
-    }
-    
-    private func askSaveAfterEditAlert() -> Observable<AlertType> {
-        return Observable.create { observer -> Disposable in
-            let alert = UIAlertController(title: "수정 확인", message: "메모를 수정하시겠습니까?", preferredStyle: .alert)
-            let okAction =  UIAlertAction(title: "확인", style: .default) { _ in
-                observer.onNext(.ok)
-                observer.onCompleted()
-            }
-            let cancelAction =  UIAlertAction(title: "취소", style: .cancel) { _ in
-                observer.onNext(.cancel)
-                observer.onCompleted()
-            }
-            alert.addAction(okAction)
-            alert.addAction(cancelAction)
-            self.present(alert, animated: true, completion: nil)
-            return Disposables.create {
-                alert.dismiss(animated: true, completion: nil)
-            }
-        }
-    }
-    
-    private func askCancelAfterEditAlert() -> Observable<AlertType> {
-        return Observable.create { observer -> Disposable in
-            let alert = UIAlertController(title: "취소 확인", message: "메모 수정을 취소하시겠습니까?", preferredStyle: .alert)
-            let okAction =  UIAlertAction(title: "확인", style: .default) { _ in
-                observer.onNext(.ok)
-                observer.onCompleted()
-            }
-            let cancelAction =  UIAlertAction(title: "취소", style: .cancel) { _ in
-                observer.onNext(.cancel)
-                observer.onCompleted()
-            }
-            alert.addAction(okAction)
-            alert.addAction(cancelAction)
-            self.present(alert, animated: true, completion: nil)
-            return Disposables.create {
-                alert.dismiss(animated: true, completion: nil)
-            }
-        }
     }
 }

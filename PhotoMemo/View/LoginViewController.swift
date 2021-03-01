@@ -53,30 +53,16 @@ class LoginViewController: UIViewController {
                 case .failure(let networkError):
                     switch networkError {
                     case .unauthorized:
-                        self.loginAlert(message: "아이디와 비밀번호를 확인해 주세요.").subscribe().disposed(by: self.disposeBag)
+                        self.alertAskObserver(title: "오류", message: "아이디와 비밀번호를 확인해 주세요.")
+                            .subscribe().disposed(by: self.disposeBag)
                     case .serverError:
-                        self.loginAlert(message: "서버와의 연결에 실패했습니다.").subscribe().disposed(by: self.disposeBag)
+                        self.alertAskObserver(title: "오류", message: "이미 존재하는 아이디입니다.")
+                            .subscribe().disposed(by: self.disposeBag)
                     default:
-                        self.loginAlert(message: "알 수 없는 오류가 발생했습니다.").subscribe().disposed(by: self.disposeBag)
+                        self.alertAskObserver(title: "오류", message: "알 수 없는 오류가 발생했습니다.")
+                            .subscribe().disposed(by: self.disposeBag)
                     }
                 }
         }.disposed(by: disposeBag)
-    }
-}
-
-extension LoginViewController {
-    private func loginAlert(message: String) -> Observable<AlertType> {
-        return Observable.create { observer -> Disposable in
-            let alert = UIAlertController(title: "오류", message: message, preferredStyle: .alert)
-            let okAction =  UIAlertAction(title: "확인", style: .default) { _ in
-                observer.onNext(.ok)
-                observer.onCompleted()
-            }
-            alert.addAction(okAction)
-            self.present(alert, animated: true, completion: nil)
-            return Disposables.create {
-                alert.dismiss(animated: true, completion: nil)
-            }
-        }
     }
 }
