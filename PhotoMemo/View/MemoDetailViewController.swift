@@ -79,9 +79,15 @@ class MemoDetailViewController: UIViewController {
                 .disposed(by: self.disposeBag)
         }.disposed(by: disposeBag)
         
-        viewModel.hasTextOrImageChanged()
+        viewModel.hasTextOrImageChanged
             .bind(to: self.saveButton.rx.isEnabled)
             .disposed(by: disposeBag)
+        
+        viewModel.hasTextOrImageChanged
+            .bind { bool in
+                print(bool)
+            }.disposed(by: disposeBag)
+        
     }
     
     private func setGesture() {

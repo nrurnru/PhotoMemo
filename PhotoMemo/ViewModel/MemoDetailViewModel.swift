@@ -56,7 +56,7 @@ final class MemoDetailViewModel {
         }.disposed(by: disposeBag)
         
         cancelButtonTapped
-            .withLatestFrom(hasTextOrImageChanged().startWith(false))
+            .withLatestFrom(hasTextOrImageChanged.startWith(false))
             .bind { hasChanged in
                 if hasChanged {
                     self.cancelAfterMemoHasEdited.accept(())
@@ -80,6 +80,8 @@ final class MemoDetailViewModel {
         }.disposed(by: disposeBag)
         
         bindSaveAction()
+        
+        memoText.debug().subscribe().disposed(by: disposeBag)
     }
     
     func modifyMemo(memo: Memo, text: String? = nil, imageURL: String? = nil) {
@@ -106,17 +108,17 @@ final class MemoDetailViewModel {
     }
     
     // 이미지 또는 텍스트 중 하나라도 방출되었을 때를 감시
-    func hasTextOrImageChanged() -> Observable<(Bool)> {
+    lazy var hasTextOrImageChanged: Observable<Bool> = {
         let text = memoText.skip(2)
-            .map { _ -> Bool in
+            .map { str -> Bool in
                 return true
             }
         let image = addedMemoImage
             .map { _ -> Bool in
                 return true
             }
-        return Observable.merge(text, image)
-    }
+        return Observable.merge(text, image).share()
+    }()
     
     // 이미지, 텍스트가 모두 방출되었을 때 내려보내기
     func editedMemoInfo() -> Observable<(String, UIImage)> {
