@@ -40,7 +40,7 @@ final class MainViewModel {
         self.coordinator = coordinator
         self.network = network
         
-        self.fetchMemo().bind(to: data)
+        self.fetchMemo.bind(to: data)
             .disposed(by: disposeBag)
         
         logoutAction.bind { action in
@@ -105,18 +105,18 @@ final class MainViewModel {
         }.disposed(by: disposeBag)
     }
     
+    lazy var fetchMemo: Observable<Results<Memo>> = {
+        let configure = Realm.Configuration.init(deleteRealmIfMigrationNeeded: true)
+        let realm = try! Realm(configuration: configure)
+        let result = realm.objects(Memo.self).sorted(byKeyPath: "createdAt", ascending: false)
+        return Observable.collection(from: result)
+    }()
+    
     private func cleanData() {
         UserDefaults.standard.removeObject(forKey: "lastSynced")
         KeychainWrapper.standard.remove(forKey: "jwt")
         RealmManager.shared.deleteAllData(Memo.self)
         KingfisherManager.shared.cache.clearCache()
-    }
-    
-    private func fetchMemo() ->  Observable<Results<Memo>> {
-        let configure = Realm.Configuration.init(deleteRealmIfMigrationNeeded: true)
-        let realm = try! Realm(configuration: configure)
-        let result = realm.objects(Memo.self).sorted(byKeyPath: "createdAt", ascending: false)
-        return Observable.collection(from: result)
     }
     
     private func deleteMemo() {

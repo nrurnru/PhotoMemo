@@ -28,7 +28,7 @@ final class RegisterViewModel {
         self.coordinator = coordinator
         self.network = network
         
-        registerField().bind { (id, pw) in
+        registerField.bind { (id, pw) in
             self.network.register(id: id, pw: pw)
                 .subscribe { isRegisterSuccessed in
                     if isRegisterSuccessed {
@@ -56,9 +56,9 @@ final class RegisterViewModel {
         }.disposed(by: disposeBag)
     }
     
-    func registerField() -> Observable<(String, String)> {
+    lazy var registerField: Observable<(String, String)> = {
         let registerField = Observable.combineLatest(idField, pwField)
         registerField.subscribe().disposed(by: disposeBag)
         return registerButtonTapped.withLatestFrom(registerField)
-    }
+    }()
 }

@@ -121,16 +121,16 @@ final class MemoDetailViewModel {
     }()
     
     // 이미지, 텍스트가 모두 방출되었을 때 내려보내기
-    func editedMemoInfo() -> Observable<(String, UIImage)> {
-        return Observable.combineLatest(memoText.skip(2), addedMemoImage)
-    }
+    lazy var editedMemoInfo: Observable<(String, UIImage)> = {
+        return Observable.combineLatest(memoText.skip(2), addedMemoImage).share()
+    }()
     
     func bindSaveAction() {
         // 텍스트만 수정된 경우, 둘 다 수정되면 동작 중지
         memoSaveAction
             .withLatestFrom(memoText.skip(2)) { (action, text) -> (AlertType, String) in
                 return (action, text)
-            }.take(until: editedMemoInfo())
+            }.take(until: editedMemoInfo)
             .bind { (action, text) in
                 switch action {
                 case .ok:
@@ -145,7 +145,7 @@ final class MemoDetailViewModel {
         memoSaveAction
             .withLatestFrom(addedMemoImage) { (action, image) -> (AlertType, UIImage) in
                 return (action, image)
-            }.take(until: editedMemoInfo())
+            }.take(until: editedMemoInfo)
             .bind { (action, image) in
                 switch action {
                 case .ok:
@@ -163,7 +163,7 @@ final class MemoDetailViewModel {
         
         // 둘 다 수정된 경우
         memoSaveAction
-            .withLatestFrom(editedMemoInfo()) { (action, memoInfo) -> (AlertType, (String, UIImage)) in
+            .withLatestFrom(editedMemoInfo) { (action, memoInfo) -> (AlertType, (String, UIImage)) in
                 return (action, memoInfo)
             }.bind { (action, memoInfo) in
                 let (text, image) = memoInfo

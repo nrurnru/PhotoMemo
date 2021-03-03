@@ -20,6 +20,9 @@
 		DE3C0D8125B347FC00F33612 /* NewMemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3C0D8025B347FC00F33612 /* NewMemoViewController.swift */; };
 		DE3C0D8425B3482400F33612 /* MemoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3C0D8325B3482400F33612 /* MemoDetailViewController.swift */; };
 		DE5A94F625ECEFD100FC79BB /* UIViewController+alertObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5A94F525ECEFD100FC79BB /* UIViewController+alertObserver.swift */; };
+		DE5A94F925EF81C200FC79BB /* AlertType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5A94F825EF81C200FC79BB /* AlertType.swift */; };
+		DE5A94FC25EF828F00FC79BB /* HTTPHeaderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5A94FB25EF828F00FC79BB /* HTTPHeaderType.swift */; };
+		DE5A94FF25EF829B00FC79BB /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5A94FE25EF829B00FC79BB /* NetworkError.swift */; };
 		DE732BEA25B781D4002C3629 /* SyncData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE732BE925B781D3002C3629 /* SyncData.swift */; };
 		DE73C58E25C24D4D008A15FC /* MemoDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE73C58D25C24D4D008A15FC /* MemoDetailViewModel.swift */; };
 		DE77EB2B25B34B990065FA3F /* MemoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE77EB2925B34B990065FA3F /* MemoCollectionViewCell.swift */; };
@@ -55,6 +58,9 @@
 		DE3C0D8025B347FC00F33612 /* NewMemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMemoViewController.swift; sourceTree = "<group>"; };
 		DE3C0D8325B3482400F33612 /* MemoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoDetailViewController.swift; sourceTree = "<group>"; };
 		DE5A94F525ECEFD100FC79BB /* UIViewController+alertObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+alertObserver.swift"; sourceTree = "<group>"; };
+		DE5A94F825EF81C200FC79BB /* AlertType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertType.swift; sourceTree = "<group>"; };
+		DE5A94FB25EF828F00FC79BB /* HTTPHeaderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPHeaderType.swift; sourceTree = "<group>"; };
+		DE5A94FE25EF829B00FC79BB /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		DE732BE925B781D3002C3629 /* SyncData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncData.swift; sourceTree = "<group>"; };
 		DE73C58D25C24D4D008A15FC /* MemoDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoDetailViewModel.swift; sourceTree = "<group>"; };
 		DE77EB2925B34B990065FA3F /* MemoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -142,6 +148,9 @@
 			children = (
 				DEAF2D6525B3A99800ECAC0C /* Memo.swift */,
 				DE732BE925B781D3002C3629 /* SyncData.swift */,
+				DE5A94F825EF81C200FC79BB /* AlertType.swift */,
+				DE5A94FB25EF828F00FC79BB /* HTTPHeaderType.swift */,
+				DE5A94FE25EF829B00FC79BB /* NetworkError.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -352,6 +361,7 @@
 				DEC2880025D006D000BBFF8D /* SceneCoordinatorType.swift in Sources */,
 				DE3C0D8125B347FC00F33612 /* NewMemoViewController.swift in Sources */,
 				DEAF2D6625B3A99800ECAC0C /* Memo.swift in Sources */,
+				DE5A94FC25EF828F00FC79BB /* HTTPHeaderType.swift in Sources */,
 				DE5A94F625ECEFD100FC79BB /* UIViewController+alertObserver.swift in Sources */,
 				DED9D66525C02DA500F1FD75 /* LoginViewModel.swift in Sources */,
 				DEC287FD25D006C200BBFF8D /* SceneCoordinator.swift in Sources */,
@@ -361,7 +371,9 @@
 				DEAF2D6A25B3AE6E00ECAC0C /* RealmManager.swift in Sources */,
 				DE2BD1A525C9E0D7000799CD /* Network.swift in Sources */,
 				DE3C0D7D25B3453E00F33612 /* SettingViewController.swift in Sources */,
+				DE5A94F925EF81C200FC79BB /* AlertType.swift in Sources */,
 				DE8AAFD725BEB16600928359 /* LoginViewController.swift in Sources */,
+				DE5A94FF25EF829B00FC79BB /* NetworkError.swift in Sources */,
 				DEAF2D6325B3A97E00ECAC0C /* MainViewModel.swift in Sources */,
 				DEE82E0B25D1259700562D18 /* RegisterViewModel.swift in Sources */,
 			);

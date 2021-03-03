@@ -151,16 +151,4 @@ class Network {
     }
 }
 
-enum HTTPHeaderType {
-    case memo
-    case image
-    case login
-    case register
-}
 
-enum NetworkError: Error {
-    case unauthorized
-    case parsingError
-    case serverError
-    case idAlreadyExists
-}

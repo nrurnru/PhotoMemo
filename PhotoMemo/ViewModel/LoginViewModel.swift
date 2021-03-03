@@ -25,7 +25,7 @@ final class LoginViewModel {
         self.coordinator = coordinator
         self.network = network
 
-        startLogin().subscribe { (id, pw) in
+        startLogin.subscribe { (id, pw) in
             network.login(id: id, pw: pw)
                 .subscribe { token in
                     // 로그인 실패 시에는 빈 문자열이 내려옴
@@ -46,11 +46,11 @@ final class LoginViewModel {
             }.disposed(by: disposeBag)
     }
     
-    private func startLogin() -> Observable<(String ,String)> {
+    lazy var startLogin: Observable<(String ,String)> = {
         let loginField = Observable.combineLatest(idField, pwField)
         loginField.subscribe().disposed(by: disposeBag)
         return loginButtonTapped.withLatestFrom(loginField)
-    }
+    }()
     
     // TODO: 로그인 검증 로직 적용
     private func idValidate(id: String) -> Bool {
@@ -60,9 +60,4 @@ final class LoginViewModel {
     private func pwValidate(pw: String) -> Bool {
         pw.count > 5
     }
-}
-
-enum AlertType {
-    case ok
-    case cancel
 }
