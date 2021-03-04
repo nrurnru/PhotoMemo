@@ -22,7 +22,10 @@ class MainViewController: UIViewController {
     @IBOutlet var deleteMemoBarButton: UIBarButtonItem!
     @IBOutlet var syncBarButton: UIBarButtonItem!
     @IBOutlet var logoutBarButton: UIBarButtonItem!
+    @IBOutlet var searchBarButton: UIBarButtonItem!
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var deleteBannerLabelHeight: NSLayoutConstraint!
+    @IBOutlet weak var searchBarHeight: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,6 +65,10 @@ class MainViewController: UIViewController {
         logoutBarButton.rx.tap
             .bind(to: viewModel.logoutButtonTapped)
             .disposed(by: disposeBag)
+        
+        searchBarButton.rx.tap
+            .bind(to: viewModel.searchButtonTapped)
+            .disposed(by: disposeBag)
     }
     
     private func bindOutput() {
@@ -75,16 +82,28 @@ class MainViewController: UIViewController {
                 .disposed(by: self.disposeBag)
         }.disposed(by: disposeBag)
         
-        viewModel.memoDeleteMode.bind { isBannerShowing in
+        viewModel.memoDeleteMode
+            .subscribe(on: MainScheduler.instance)
+            .bind { isBannerShowing in
             if isBannerShowing {
-                self.updateSizeOfDeleteBanner(30)
+                self.updateConstraintWithAnimation(of: self.deleteBannerLabelHeight, to: 30)
             } else {
-                self.updateSizeOfDeleteBanner(0)
+                self.updateConstraintWithAnimation(of: self.deleteBannerLabelHeight, to: 0)
             }
         }.disposed(by: disposeBag)
         
+        viewModel.isSearchBarShowing
+            .subscribe(on: MainScheduler.instance)
+            .bind { isSearchBarShowing in
+                if isSearchBarShowing {
+                    self.updateConstraintWithAnimation(of: self.searchBarHeight, to: 56)
+                } else {
+                    self.updateConstraintWithAnimation(of: self.searchBarHeight, to: 0)
+                }
+            }.disposed(by: disposeBag)
+        
         viewModel.logoutButtonTapped.bind { _ in
-            self.self.alertAskObserver(title: "로그아웃", message: "로그아웃 하시겠습니까?")
+            self.alertAskObserver(title: "로그아웃", message: "로그아웃 하시겠습니까?")
                 .bind(to: self.viewModel.logoutAction)
                 .disposed(by: self.disposeBag)
         }.disposed(by: disposeBag)
@@ -135,6 +154,13 @@ class MainViewController: UIViewController {
     private func updateSizeOfDeleteBanner(_ size: CGFloat) {
         UIView.animate(withDuration: 0.3) {
             self.deleteBannerLabelHeight.constant = size
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    private func updateConstraintWithAnimation(of constraint: NSLayoutConstraint, to size: CGFloat) {
+        UIView.animate(withDuration: 0.3) {
+            constraint.constant = size
             self.view.layoutIfNeeded()
         }
     }

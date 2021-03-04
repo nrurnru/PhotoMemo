@@ -23,6 +23,7 @@ final class MainViewModel {
     let logoutButtonTapped = PublishRelay<Void>()
     let deleteButtonTapped = PublishRelay<Void>()
     let selectMemoForDetail = PublishRelay<Memo>()
+    let searchButtonTapped = PublishRelay<Void>()
     
     let selectedMemoForDelete = PublishRelay<Memo>()
     let deselectedMemoForDelete = PublishRelay<Memo>()
@@ -33,6 +34,7 @@ final class MainViewModel {
     let data = ReplayRelay<Results<Memo>>.create(bufferSize: 1)
     let askDeleteMemoAlert = PublishRelay<Void>()
     let memoDeleteMode = BehaviorRelay<Bool>(value: false)
+    let isSearchBarShowing = BehaviorRelay<Bool>(value: false)
     
     var memoListForDelete = [Memo]()
     
@@ -102,6 +104,10 @@ final class MainViewModel {
                 // 선택모드로 진입
                 self.memoDeleteMode.accept(true)
             }
+        }.disposed(by: disposeBag)
+        
+        searchButtonTapped.bind { _ in
+            self.isSearchBarShowing.accept(!self.isSearchBarShowing.value)
         }.disposed(by: disposeBag)
     }
     

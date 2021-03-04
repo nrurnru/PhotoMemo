@@ -80,8 +80,6 @@ final class MemoDetailViewModel {
         }.disposed(by: disposeBag)
         
         bindSaveAction()
-        
-        memoText.debug().subscribe().disposed(by: disposeBag)
     }
     
     func modifyMemo(memo: Memo, text: String? = nil, imageURL: String? = nil) {
