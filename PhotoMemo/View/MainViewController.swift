@@ -69,6 +69,11 @@ class MainViewController: UIViewController {
         searchBarButton.rx.tap
             .bind(to: viewModel.searchButtonTapped)
             .disposed(by: disposeBag)
+        
+        searchBar.rx.text.orEmpty
+            .distinctUntilChanged()
+            .bind(to: viewModel.searchText)
+            .disposed(by: disposeBag)
     }
     
     private func bindOutput() {

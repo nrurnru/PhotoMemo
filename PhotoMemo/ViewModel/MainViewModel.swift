@@ -30,6 +30,8 @@ final class MainViewModel {
     let logoutAction = PublishRelay<AlertType>()
     let deleteAction = PublishRelay<AlertType>()
     
+    let searchText = PublishRelay<String>()
+    
     //vm -> view
     let data = ReplayRelay<Results<Memo>>.create(bufferSize: 1)
     let askDeleteMemoAlert = PublishRelay<Void>()
@@ -42,8 +44,9 @@ final class MainViewModel {
         self.coordinator = coordinator
         self.network = network
         
-        self.fetchMemo.bind(to: data)
-            .disposed(by: disposeBag)
+//        초기 데이터 가져오기(모든 메모), 서치바가 없을때 모두 가져오기때문에 중복동작
+//        self.fetchMemo.bind(to: data)
+//            .disposed(by: disposeBag)
         
         logoutAction.bind { action in
             switch action {
@@ -108,6 +111,16 @@ final class MainViewModel {
         
         searchButtonTapped.bind { _ in
             self.isSearchBarShowing.accept(!self.isSearchBarShowing.value)
+        }.disposed(by: disposeBag)
+        
+        Observable.combineLatest(searchText, isSearchBarShowing).bind { (text, isShowing) in
+            if isShowing {
+                let fetched = RealmManager.shared.findWithText(searchText: text)
+                self.data.accept(fetched)
+            } else {
+                let fetched = RealmManager.shared.loadData(Memo.self)
+                self.data.accept(fetched)
+            }
         }.disposed(by: disposeBag)
     }
     

@@ -45,6 +45,10 @@ class RealmManager {
         }
     }
     
+    func findWithText(searchText: String) -> Results<Memo> {
+        return realm.objects(Memo.self).filter("text contains %@", searchText)
+    }
+    
     func deleteData<T: Object>(data: T) {
         try! realm.write {
             realm.delete(data)
