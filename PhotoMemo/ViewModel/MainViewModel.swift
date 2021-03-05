@@ -44,9 +44,8 @@ final class MainViewModel {
         self.coordinator = coordinator
         self.network = network
         
-//        초기 데이터 가져오기(모든 메모), 서치바가 없을때 모두 가져오기때문에 중복동작
-//        self.fetchMemo.bind(to: data)
-//            .disposed(by: disposeBag)
+        self.fetchMemo.bind(to: data)
+            .disposed(by: disposeBag)
         
         logoutAction.bind { action in
             switch action {
@@ -116,9 +115,11 @@ final class MainViewModel {
         Observable.combineLatest(searchText, isSearchBarShowing).bind { (text, isShowing) in
             if isShowing {
                 let fetched = RealmManager.shared.findWithText(searchText: text)
+                    .sorted(byKeyPath: "createdAt", ascending: false)
                 self.data.accept(fetched)
             } else {
                 let fetched = RealmManager.shared.loadData(Memo.self)
+                    .sorted(byKeyPath: "createdAt", ascending: false)
                 self.data.accept(fetched)
             }
         }.disposed(by: disposeBag)
