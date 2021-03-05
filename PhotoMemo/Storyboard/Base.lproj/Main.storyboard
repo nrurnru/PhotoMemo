@@ -84,10 +84,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WSN-61-7f6">
-                                <rect key="frame" x="0.0" y="141" width="414" height="267"/>
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WSN-61-7f6">
+                                <rect key="frame" x="0.0" y="140" width="414" height="269"/>
                                 <gestureRecognizers/>
-                                <imageReference key="image" image="circles.hexagonpath.fill" catalog="system" symbolScale="default"/>
+                                <imageReference key="image" image="AddPhoto_kor" symbolScale="default"/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="cQT-9o-C2e" appends="YES" id="PkL-nJ-865"/>
                                 </connections>
@@ -409,7 +409,6 @@
     <resources>
         <image name="AddPhoto_kor" width="708" height="495"/>
         <image name="arrow.clockwise.icloud" catalog="system" width="128" height="88"/>
-        <image name="circles.hexagonpath.fill" catalog="system" width="128" height="112"/>
         <image name="gearshape.fill" catalog="system" width="128" height="121"/>
         <image name="lock.slash" catalog="system" width="124" height="128"/>
         <image name="pencil.and.outline" catalog="system" width="128" height="128"/>

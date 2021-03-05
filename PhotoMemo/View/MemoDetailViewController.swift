@@ -56,8 +56,9 @@ class MemoDetailViewController: UIViewController {
         viewModel.memoRelay
             .asDriver()
             .drive { memo in
-                let url = URL(string: memo.imageURL)
-                self.memoImageView.kf.setImage(with: url)
+                if let url = URL(string: memo.imageURL) {
+                    self.memoImageView.kf.setImage(with: url)
+                }
                 self.memoTextView.text = memo.text
             }.disposed(by: disposeBag)
 
@@ -82,12 +83,6 @@ class MemoDetailViewController: UIViewController {
         viewModel.hasTextOrImageChanged
             .bind(to: self.saveButton.rx.isEnabled)
             .disposed(by: disposeBag)
-        
-        viewModel.hasTextOrImageChanged
-            .bind { bool in
-                print(bool)
-            }.disposed(by: disposeBag)
-        
     }
     
     private func setGesture() {

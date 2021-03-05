@@ -41,12 +41,16 @@ class MainViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         memoCollectionView.allowsSelection = true
-        viewModel.startSync()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         memoCollectionView.allowsSelection = false
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        viewModel.memoDeleteMode.accept(false)
+        viewModel.isSearchBarShowing.accept(false)
     }
     
     private func bindInput() {
@@ -119,7 +123,7 @@ class MainViewController: UIViewController {
             .bind(to: memoCollectionView.rx.items(cellIdentifier: "memoCell", cellType: MemoCollectionViewCell.self)) { index, memo, cell in
                 cell.text?.text = memo.text
                 cell.memoImageView.kf.setImage(with: URL(string: memo.imageURL))
-                cell.layer.borderWidth = 1
+                cell.layer.borderWidth = 0.5
                 cell.layer.borderColor = self.view.backgroundColor?.cgColor
             }.disposed(by: disposeBag)
         
