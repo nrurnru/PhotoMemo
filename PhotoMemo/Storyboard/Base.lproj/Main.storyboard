@@ -227,7 +227,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="e6V-Ak-Ec4">
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AddPhoto_kor" translatesAutoresizingMaskIntoConstraints="NO" id="e6V-Ak-Ec4">
                                 <rect key="frame" x="0.0" y="140" width="414" height="269"/>
                                 <gestureRecognizers/>
                                 <connections>
@@ -407,6 +407,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="AddPhoto_kor" width="708" height="495"/>
         <image name="arrow.clockwise.icloud" catalog="system" width="128" height="88"/>
         <image name="circles.hexagonpath.fill" catalog="system" width="128" height="112"/>
         <image name="gearshape.fill" catalog="system" width="128" height="121"/>
