@@ -17,6 +17,7 @@ class MemoDetailViewController: UIViewController {
     @IBOutlet var saveButton: UIBarButtonItem!
     @IBOutlet var memoImageView: UIImageView!
     @IBOutlet var cancelButton: UIBarButtonItem!
+    @IBOutlet weak var loadingIndicatorView: UIActivityIndicatorView!
     
     var viewModel: MemoDetailViewModel!
     private var disposeBag = DisposeBag()
@@ -82,6 +83,10 @@ class MemoDetailViewController: UIViewController {
         
         viewModel.hasTextOrImageChanged
             .bind(to: self.saveButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        viewModel.isLoadingIndicatorHidden
+            .bind(to: self.loadingIndicatorView.rx.isHidden)
             .disposed(by: disposeBag)
     }
     

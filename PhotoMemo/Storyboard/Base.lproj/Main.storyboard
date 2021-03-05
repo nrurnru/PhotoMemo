@@ -99,13 +99,21 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <activityIndicatorView opaque="NO" userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="kpZ-No-GpF">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="O9J-x7-JZR"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="O9J-x7-JZR" firstAttribute="trailing" secondItem="kpZ-No-GpF" secondAttribute="trailing" id="1wm-h0-ixa"/>
                             <constraint firstItem="O9J-x7-JZR" firstAttribute="bottom" secondItem="IA6-Gj-RSo" secondAttribute="bottom" id="2ZO-Nz-Xmc"/>
                             <constraint firstItem="WSN-61-7f6" firstAttribute="height" secondItem="adY-UJ-KdG" secondAttribute="height" multiplier="0.3" id="CbE-ag-emt"/>
                             <constraint firstItem="WSN-61-7f6" firstAttribute="trailing" secondItem="O9J-x7-JZR" secondAttribute="trailing" id="M0v-ID-Ebv"/>
+                            <constraint firstAttribute="bottom" secondItem="kpZ-No-GpF" secondAttribute="bottom" id="Szj-qx-Anb"/>
+                            <constraint firstItem="kpZ-No-GpF" firstAttribute="top" secondItem="adY-UJ-KdG" secondAttribute="top" id="V7a-Sr-ebK"/>
+                            <constraint firstItem="kpZ-No-GpF" firstAttribute="leading" secondItem="O9J-x7-JZR" secondAttribute="leading" id="cYi-Sp-Aqv"/>
                             <constraint firstItem="WSN-61-7f6" firstAttribute="top" secondItem="O9J-x7-JZR" secondAttribute="top" id="kNg-GP-Ino"/>
                             <constraint firstItem="WSN-61-7f6" firstAttribute="leading" secondItem="O9J-x7-JZR" secondAttribute="leading" id="mFy-XW-LvJ"/>
                             <constraint firstItem="IA6-Gj-RSo" firstAttribute="leading" secondItem="O9J-x7-JZR" secondAttribute="leading" id="nHL-Jq-XQL"/>
@@ -125,6 +133,7 @@
                     <connections>
                         <outlet property="cancelButton" destination="kqo-YX-8LB" id="wZa-gl-fqo"/>
                         <outlet property="deleteButton" destination="Ydj-Br-ngD" id="K9G-mv-XVJ"/>
+                        <outlet property="loadingIndicatorView" destination="kpZ-No-GpF" id="pS1-WG-mVB"/>
                         <outlet property="memoImageView" destination="WSN-61-7f6" id="CDg-UN-BBd"/>
                         <outlet property="memoTextView" destination="IA6-Gj-RSo" id="uJd-dD-AyK"/>
                         <outlet property="saveButton" destination="noN-TB-GAm" id="rwe-QN-8Tg"/>
@@ -227,13 +236,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AddPhoto_kor" translatesAutoresizingMaskIntoConstraints="NO" id="e6V-Ak-Ec4">
-                                <rect key="frame" x="0.0" y="140" width="414" height="269"/>
-                                <gestureRecognizers/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="I8i-vg-9Ul" appends="YES" id="zaT-6t-qvG"/>
-                                </connections>
-                            </imageView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="메모를 입력하세요" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="44h-Es-A7H">
                                 <rect key="frame" x="0.0" y="409" width="414" height="453"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -241,35 +243,34 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <view hidden="YES" userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VtW-8T-a6D">
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="e6V-Ak-Ec4">
+                                <rect key="frame" x="0.0" y="140" width="414" height="269"/>
+                                <gestureRecognizers/>
+                                <imageReference key="image" image="AddPhoto_kor" symbolScale="default"/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="I8i-vg-9Ul" appends="YES" id="zaT-6t-qvG"/>
+                                </connections>
+                            </imageView>
+                            <activityIndicatorView opaque="NO" userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="0CO-rZ-kaI">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                <subviews>
-                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="0CO-rZ-kaI">
-                                        <rect key="frame" x="188.5" y="429.5" width="37" height="37"/>
-                                    </activityIndicatorView>
-                                </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstItem="0CO-rZ-kaI" firstAttribute="centerY" secondItem="VtW-8T-a6D" secondAttribute="centerY" id="LqW-KT-hlm"/>
-                                    <constraint firstItem="0CO-rZ-kaI" firstAttribute="centerX" secondItem="VtW-8T-a6D" secondAttribute="centerX" id="OKE-DR-4hk"/>
-                                </constraints>
-                            </view>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="QS3-1M-fYw"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="e6V-Ak-Ec4" firstAttribute="top" secondItem="QS3-1M-fYw" secondAttribute="top" id="5aa-Lc-WNa"/>
                             <constraint firstItem="e6V-Ak-Ec4" firstAttribute="height" secondItem="WXf-Zx-eYR" secondAttribute="height" multiplier="0.3" id="6NY-iE-kWS"/>
-                            <constraint firstItem="VtW-8T-a6D" firstAttribute="top" secondItem="WXf-Zx-eYR" secondAttribute="top" id="Hz2-lJ-26t"/>
+                            <constraint firstAttribute="bottom" secondItem="0CO-rZ-kaI" secondAttribute="bottom" id="CuY-It-K1c"/>
                             <constraint firstItem="QS3-1M-fYw" firstAttribute="trailing" secondItem="e6V-Ak-Ec4" secondAttribute="trailing" id="JRA-Zz-dqF"/>
                             <constraint firstItem="e6V-Ak-Ec4" firstAttribute="leading" secondItem="QS3-1M-fYw" secondAttribute="leading" id="KfE-Rn-g6U"/>
                             <constraint firstItem="44h-Es-A7H" firstAttribute="trailing" secondItem="QS3-1M-fYw" secondAttribute="trailing" id="RzW-f8-O2c"/>
                             <constraint firstItem="44h-Es-A7H" firstAttribute="leading" secondItem="QS3-1M-fYw" secondAttribute="leading" id="ZS5-nx-x57"/>
                             <constraint firstItem="44h-Es-A7H" firstAttribute="top" secondItem="e6V-Ak-Ec4" secondAttribute="bottom" id="bYZ-Td-rZN"/>
+                            <constraint firstItem="QS3-1M-fYw" firstAttribute="trailing" secondItem="0CO-rZ-kaI" secondAttribute="trailing" id="cKP-aB-QzU"/>
                             <constraint firstItem="44h-Es-A7H" firstAttribute="bottom" secondItem="QS3-1M-fYw" secondAttribute="bottom" id="iLM-es-DTB"/>
-                            <constraint firstItem="VtW-8T-a6D" firstAttribute="leading" secondItem="QS3-1M-fYw" secondAttribute="leading" id="jnK-P9-uVi"/>
-                            <constraint firstAttribute="bottom" secondItem="VtW-8T-a6D" secondAttribute="bottom" id="xfF-nr-ZYw"/>
-                            <constraint firstItem="QS3-1M-fYw" firstAttribute="trailing" secondItem="VtW-8T-a6D" secondAttribute="trailing" id="xl4-R7-GTR"/>
+                            <constraint firstItem="0CO-rZ-kaI" firstAttribute="top" secondItem="WXf-Zx-eYR" secondAttribute="top" id="qO1-Iy-Uir"/>
+                            <constraint firstItem="0CO-rZ-kaI" firstAttribute="leading" secondItem="QS3-1M-fYw" secondAttribute="leading" id="tDZ-ad-VbK"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="메모 작성" id="P3w-a0-wHr">
@@ -278,7 +279,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="cancelButton" destination="aci-WT-mRV" id="xsZ-bb-1rp"/>
-                        <outlet property="loadingIndicatorView" destination="VtW-8T-a6D" id="i5M-5k-1sH"/>
+                        <outlet property="loadingIndicatorView" destination="0CO-rZ-kaI" id="KV8-rY-vDF"/>
                         <outlet property="memoImageView" destination="e6V-Ak-Ec4" id="9CQ-77-Jd2"/>
                         <outlet property="memoTextView" destination="44h-Es-A7H" id="Ot7-Wg-hHk"/>
                         <outlet property="saveButton" destination="jFF-ua-gBC" id="laY-wV-xDH"/>

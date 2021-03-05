@@ -6,18 +6,15 @@
 //
 
 import UIKit
-import CryptoSwift
 import RxSwift
 import RxCocoa
-import RxRealm
-import RealmSwift
 
 class NewMemoViewController: UIViewController {
     @IBOutlet var memoTextView: UITextView!
     @IBOutlet var saveButton: UIBarButtonItem!
     @IBOutlet var cancelButton: UIBarButtonItem!
     @IBOutlet var memoImageView: UIImageView!
-    @IBOutlet var loadingIndicatorView: UIView!
+    @IBOutlet weak var loadingIndicatorView: UIActivityIndicatorView!
     
     var viewModel: NewMemoViewModel!
     private var disposeBag = DisposeBag()
@@ -53,6 +50,10 @@ class NewMemoViewController: UIViewController {
             self.loadingIndicatorView.isHidden = false
             self.saveButton.isEnabled = false
         }.disposed(by: disposeBag)
+        
+        viewModel.isLoadingIndicatorHidden
+            .bind(to: self.loadingIndicatorView.rx.isHidden)
+            .disposed(by: disposeBag)
     }
     
     private func setGesture() {

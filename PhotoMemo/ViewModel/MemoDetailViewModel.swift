@@ -25,6 +25,7 @@ final class MemoDetailViewModel {
     let memoRelay = BehaviorRelay<Memo>(value: Memo())
     let memoText = PublishRelay<String>()
     let addedMemoImage = PublishRelay<UIImage>()
+    let isLoadingIndicatorHidden = BehaviorRelay<Bool>(value: true)
     
     let saveButtonTapped = PublishRelay<Void>()
     let deleteButtonTapped = PublishRelay<Void>()
@@ -147,6 +148,7 @@ final class MemoDetailViewModel {
             .bind { (action, image) in
                 switch action {
                 case .ok:
+                    self.isLoadingIndicatorHidden.accept(false)
                     self.network.uploadImage(image: image)
                         .subscribe { (url) in
                             self.modifyMemo(memo: self.memoRelay.value, imageURL: url)
@@ -167,6 +169,7 @@ final class MemoDetailViewModel {
                 let (text, image) = memoInfo
                 switch action {
                 case .ok:
+                    self.isLoadingIndicatorHidden.accept(false)
                     self.network.uploadImage(image: image).subscribe { url in
                         self.modifyMemo(memo: self.memoRelay.value, text: text, imageURL: url)
                     } onFailure: { (error) in
