@@ -7,7 +7,7 @@
 
 import RealmSwift
 import SwiftKeychainWrapper
-
+import CryptoSwift
 
 class Memo: Object {
     @objc dynamic var id: String = Date().description.sha256()
