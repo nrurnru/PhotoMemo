@@ -16,6 +16,8 @@ class LoginViewController: UIViewController {
     @IBOutlet var passwordTextField: UITextField!
     @IBOutlet var loginButton: UIButton!
     @IBOutlet var registerButton: UIButton!
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var titleLabel: UIScrollView!
     
     private let disposeBag = DisposeBag()
     var viewModel: LoginViewModel!
@@ -24,6 +26,7 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         bindInput()
         bindOutput()
+        bindGesture()
     }
     
     private func bindInput() {
@@ -42,6 +45,10 @@ class LoginViewController: UIViewController {
         registerButton.rx.tap
             .bind(to: viewModel.registerButtonTapped)
             .disposed(by: disposeBag)
+        
+        idTextField.rx.controlEvent(.editingDidBegin).bind { _ in
+            self.scrollView.setContentOffset(self.titleLabel.frame.origin, animated: true)
+            }.disposed(by: disposeBag)
     }
     
     private func bindOutput() {
@@ -63,6 +70,15 @@ class LoginViewController: UIViewController {
                             .subscribe().disposed(by: self.disposeBag)
                     }
                 }
+        }.disposed(by: disposeBag)
+    }
+    
+    private func bindGesture() {
+        let tapGesture = UITapGestureRecognizer()
+        view.addGestureRecognizer(tapGesture)
+        
+        tapGesture.rx.event.bind { _ in
+            self.view.endEditing(true)
         }.disposed(by: disposeBag)
     }
 }

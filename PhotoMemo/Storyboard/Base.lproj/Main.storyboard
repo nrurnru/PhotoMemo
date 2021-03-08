@@ -318,7 +318,7 @@
                                 <rect key="frame" x="0.0" y="140" width="414" height="722"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="00k-rq-zLa">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1083"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="794"/>
                                         <subviews>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ogx-XH-Eyu">
                                                 <rect key="frame" x="49" y="305" width="333" height="34"/>
@@ -405,7 +405,7 @@
                             <constraint firstItem="Inv-33-okm" firstAttribute="trailing" secondItem="ePa-hO-BsB" secondAttribute="trailing" id="CW2-8T-MdZ"/>
                             <constraint firstItem="ePa-hO-BsB" firstAttribute="leading" secondItem="Inv-33-okm" secondAttribute="leading" id="MrG-Uh-fUA"/>
                             <constraint firstItem="Inv-33-okm" firstAttribute="bottom" secondItem="ePa-hO-BsB" secondAttribute="bottom" id="qa9-2m-z6a"/>
-                            <constraint firstItem="00k-rq-zLa" firstAttribute="height" secondItem="Tay-jI-KPv" secondAttribute="height" multiplier="1.5" id="sAs-Pd-MeF"/>
+                            <constraint firstItem="00k-rq-zLa" firstAttribute="height" secondItem="Tay-jI-KPv" secondAttribute="height" multiplier="1.1" id="sAs-Pd-MeF"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" largeTitleDisplayMode="always" id="pj1-5P-hkx"/>
@@ -414,6 +414,8 @@
                         <outlet property="loginButton" destination="iOo-HP-0Rn" id="BFE-hh-WPl"/>
                         <outlet property="passwordTextField" destination="ogx-XH-Eyu" id="uKx-KX-81V"/>
                         <outlet property="registerButton" destination="aHO-q2-F2n" id="5GJ-uK-sse"/>
+                        <outlet property="scrollView" destination="ePa-hO-BsB" id="WZ5-8k-565"/>
+                        <outlet property="titleLabel" destination="ePa-hO-BsB" id="e0q-pg-P4J"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="loginSuccess" id="c7F-I2-X1F"/>
                     </connections>
                 </viewController>
