@@ -80,7 +80,7 @@ final class MainViewModel {
             self.memoListForDelete.remove(at: index) 
         }.disposed(by: disposeBag)
         
-        syncButtonTapped.bind { _ in
+        syncButtonTapped.subscribe { _ in
             self.startSync()
         }.disposed(by: disposeBag)
         

@@ -41,6 +41,7 @@ class MainViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         memoCollectionView.allowsSelection = true
+        viewModel.startSync()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
