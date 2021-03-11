@@ -126,4 +126,9 @@ extension NewMemoViewController: UITextViewDelegate {
         guard bottomOffset.y > 0 else { return }
         memoScrollView.setContentOffset(bottomOffset, animated: true)
     }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+            memoTextView.text = nil
+            memoTextView.textColor = UIColor.black
+    }
 }
