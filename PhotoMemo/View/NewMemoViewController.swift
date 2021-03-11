@@ -15,6 +15,7 @@ class NewMemoViewController: UIViewController {
     @IBOutlet var cancelButton: UIBarButtonItem!
     @IBOutlet var memoImageView: UIImageView!
     @IBOutlet weak var loadingIndicatorView: UIActivityIndicatorView!
+    @IBOutlet weak var memoScrollView: UIScrollView!
     
     var viewModel: NewMemoViewModel!
     private var disposeBag = DisposeBag()
@@ -27,6 +28,7 @@ class NewMemoViewController: UIViewController {
         bindOutput()
         setGesture()
         picker.delegate = self
+        memoTextView.delegate = self
     }
     
     private func bindInput() {
@@ -78,5 +80,13 @@ extension NewMemoViewController: UIImagePickerControllerDelegate, UINavigationCo
         viewModel.addedMemoImage.accept(image)
         memoImageView.image = image
         dismiss(animated: true)
+    }
+}
+
+extension NewMemoViewController: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        let bottomOffset = CGPoint(x: 0, y: memoScrollView.contentSize.height - memoScrollView.bounds.size.height)
+        guard bottomOffset.y > 0 else { return }
+        memoScrollView.setContentOffset(bottomOffset, animated: true)
     }
 }

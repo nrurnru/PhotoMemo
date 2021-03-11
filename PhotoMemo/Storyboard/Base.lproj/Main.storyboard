@@ -236,21 +236,54 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="메모를 입력하세요" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="44h-Es-A7H">
-                                <rect key="frame" x="0.0" y="409" width="414" height="453"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <color key="textColor" systemColor="labelColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="e6V-Ak-Ec4">
-                                <rect key="frame" x="0.0" y="140" width="414" height="269"/>
-                                <gestureRecognizers/>
-                                <imageReference key="image" image="AddPhoto_kor" symbolScale="default"/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="I8i-vg-9Ul" appends="YES" id="zaT-6t-qvG"/>
-                                </connections>
-                            </imageView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aDX-8x-mHF">
+                                <rect key="frame" x="0.0" y="140" width="414" height="722"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Csf-fH-ozL">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="712"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="e6V-Ak-Ec4">
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="233"/>
+                                                <gestureRecognizers/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="e6V-Ak-Ec4" secondAttribute="height" multiplier="16:9" id="8B6-P3-bTW"/>
+                                                </constraints>
+                                                <imageReference key="image" image="AddPhoto_kor" symbolScale="default"/>
+                                                <connections>
+                                                    <outletCollection property="gestureRecognizers" destination="I8i-vg-9Ul" appends="YES" id="zaT-6t-qvG"/>
+                                                </connections>
+                                            </imageView>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="1" verticalHuggingPriority="1" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" scrollEnabled="NO" text="메모를 입력하세요" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="44h-Es-A7H">
+                                                <rect key="frame" x="0.0" y="233" width="414" height="479"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <color key="textColor" systemColor="labelColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="44h-Es-A7H" firstAttribute="leading" secondItem="Csf-fH-ozL" secondAttribute="leading" id="Pqg-m3-4up"/>
+                                            <constraint firstAttribute="trailing" secondItem="e6V-Ak-Ec4" secondAttribute="trailing" id="cGt-uZ-30C"/>
+                                            <constraint firstItem="e6V-Ak-Ec4" firstAttribute="leading" secondItem="Csf-fH-ozL" secondAttribute="leading" id="ccr-F4-0MD"/>
+                                            <constraint firstItem="44h-Es-A7H" firstAttribute="top" secondItem="e6V-Ak-Ec4" secondAttribute="bottom" id="jFb-Io-MAA"/>
+                                            <constraint firstItem="e6V-Ak-Ec4" firstAttribute="top" secondItem="Csf-fH-ozL" secondAttribute="top" id="kIz-8G-a34"/>
+                                            <constraint firstAttribute="bottom" secondItem="44h-Es-A7H" secondAttribute="bottom" id="lST-nN-BnB"/>
+                                            <constraint firstAttribute="trailing" secondItem="44h-Es-A7H" secondAttribute="trailing" id="no4-nM-NVj"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="Csf-fH-ozL" firstAttribute="top" secondItem="PUp-HB-OYW" secondAttribute="top" id="7Xb-yP-cV6"/>
+                                    <constraint firstItem="Csf-fH-ozL" firstAttribute="leading" secondItem="PUp-HB-OYW" secondAttribute="leading" id="GDk-OH-Rrm"/>
+                                    <constraint firstItem="PUp-HB-OYW" firstAttribute="trailing" secondItem="Csf-fH-ozL" secondAttribute="trailing" id="XYx-VQ-Y00"/>
+                                    <constraint firstItem="Csf-fH-ozL" firstAttribute="centerX" secondItem="aDX-8x-mHF" secondAttribute="centerX" id="jU2-oA-wIz"/>
+                                    <constraint firstItem="PUp-HB-OYW" firstAttribute="bottom" secondItem="Csf-fH-ozL" secondAttribute="bottom" id="rLA-JV-2uT"/>
+                                    <constraint firstItem="5WW-2L-Q4U" firstAttribute="bottom" secondItem="Csf-fH-ozL" secondAttribute="bottom" priority="250" constant="10" id="wv8-5U-IZ5"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="PUp-HB-OYW"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="5WW-2L-Q4U"/>
+                            </scrollView>
                             <activityIndicatorView opaque="NO" userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="0CO-rZ-kaI">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -259,19 +292,20 @@
                         <viewLayoutGuide key="safeArea" id="QS3-1M-fYw"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="e6V-Ak-Ec4" firstAttribute="top" secondItem="QS3-1M-fYw" secondAttribute="top" id="5aa-Lc-WNa"/>
-                            <constraint firstItem="e6V-Ak-Ec4" firstAttribute="height" secondItem="WXf-Zx-eYR" secondAttribute="height" multiplier="0.3" id="6NY-iE-kWS"/>
                             <constraint firstAttribute="bottom" secondItem="0CO-rZ-kaI" secondAttribute="bottom" id="CuY-It-K1c"/>
-                            <constraint firstItem="QS3-1M-fYw" firstAttribute="trailing" secondItem="e6V-Ak-Ec4" secondAttribute="trailing" id="JRA-Zz-dqF"/>
-                            <constraint firstItem="e6V-Ak-Ec4" firstAttribute="leading" secondItem="QS3-1M-fYw" secondAttribute="leading" id="KfE-Rn-g6U"/>
-                            <constraint firstItem="44h-Es-A7H" firstAttribute="trailing" secondItem="QS3-1M-fYw" secondAttribute="trailing" id="RzW-f8-O2c"/>
-                            <constraint firstItem="44h-Es-A7H" firstAttribute="leading" secondItem="QS3-1M-fYw" secondAttribute="leading" id="ZS5-nx-x57"/>
-                            <constraint firstItem="44h-Es-A7H" firstAttribute="top" secondItem="e6V-Ak-Ec4" secondAttribute="bottom" id="bYZ-Td-rZN"/>
+                            <constraint firstItem="QS3-1M-fYw" firstAttribute="trailing" secondItem="aDX-8x-mHF" secondAttribute="trailing" id="ZS2-OW-K4C"/>
+                            <constraint firstItem="QS3-1M-fYw" firstAttribute="bottom" secondItem="aDX-8x-mHF" secondAttribute="bottom" id="ZY2-rE-Y7W"/>
                             <constraint firstItem="QS3-1M-fYw" firstAttribute="trailing" secondItem="0CO-rZ-kaI" secondAttribute="trailing" id="cKP-aB-QzU"/>
-                            <constraint firstItem="44h-Es-A7H" firstAttribute="bottom" secondItem="QS3-1M-fYw" secondAttribute="bottom" id="iLM-es-DTB"/>
+                            <constraint firstItem="aDX-8x-mHF" firstAttribute="top" secondItem="QS3-1M-fYw" secondAttribute="top" id="f6w-Wf-yfN"/>
+                            <constraint firstItem="aDX-8x-mHF" firstAttribute="leading" secondItem="QS3-1M-fYw" secondAttribute="leading" id="kRi-sQ-OUO"/>
                             <constraint firstItem="0CO-rZ-kaI" firstAttribute="top" secondItem="WXf-Zx-eYR" secondAttribute="top" id="qO1-Iy-Uir"/>
                             <constraint firstItem="0CO-rZ-kaI" firstAttribute="leading" secondItem="QS3-1M-fYw" secondAttribute="leading" id="tDZ-ad-VbK"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="0CO-rZ-kaI"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="메모 작성" id="P3w-a0-wHr">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="aci-WT-mRV"/>
@@ -281,6 +315,7 @@
                         <outlet property="cancelButton" destination="aci-WT-mRV" id="xsZ-bb-1rp"/>
                         <outlet property="loadingIndicatorView" destination="0CO-rZ-kaI" id="KV8-rY-vDF"/>
                         <outlet property="memoImageView" destination="e6V-Ak-Ec4" id="9CQ-77-Jd2"/>
+                        <outlet property="memoScrollView" destination="aDX-8x-mHF" id="P9T-vC-Wnu"/>
                         <outlet property="memoTextView" destination="44h-Es-A7H" id="Ot7-Wg-hHk"/>
                         <outlet property="saveButton" destination="jFF-ua-gBC" id="laY-wV-xDH"/>
                     </connections>
