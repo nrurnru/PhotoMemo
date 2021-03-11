@@ -99,7 +99,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <activityIndicatorView opaque="NO" userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="kpZ-No-GpF">
+                            <activityIndicatorView opaque="NO" userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="kpZ-No-GpF">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </activityIndicatorView>
@@ -251,7 +251,7 @@
                                     <outletCollection property="gestureRecognizers" destination="I8i-vg-9Ul" appends="YES" id="zaT-6t-qvG"/>
                                 </connections>
                             </imageView>
-                            <activityIndicatorView opaque="NO" userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="0CO-rZ-kaI">
+                            <activityIndicatorView opaque="NO" userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="0CO-rZ-kaI">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </activityIndicatorView>
@@ -397,13 +397,21 @@
                                 <viewLayoutGuide key="contentLayoutGuide" id="pmW-5t-1mH"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="Tay-jI-KPv"/>
                             </scrollView>
+                            <activityIndicatorView opaque="NO" alpha="0.29999999999999999" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="LQo-Au-P12">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Inv-33-okm"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="ePa-hO-BsB" firstAttribute="top" secondItem="Inv-33-okm" secondAttribute="top" id="9z5-H9-GKb"/>
                             <constraint firstItem="Inv-33-okm" firstAttribute="trailing" secondItem="ePa-hO-BsB" secondAttribute="trailing" id="CW2-8T-MdZ"/>
+                            <constraint firstItem="LQo-Au-P12" firstAttribute="leading" secondItem="Inv-33-okm" secondAttribute="leading" id="GSx-Tk-jqZ"/>
+                            <constraint firstAttribute="bottom" secondItem="LQo-Au-P12" secondAttribute="bottom" id="H90-9w-4ND"/>
+                            <constraint firstItem="Inv-33-okm" firstAttribute="trailing" secondItem="LQo-Au-P12" secondAttribute="trailing" id="KUd-My-jBt"/>
                             <constraint firstItem="ePa-hO-BsB" firstAttribute="leading" secondItem="Inv-33-okm" secondAttribute="leading" id="MrG-Uh-fUA"/>
+                            <constraint firstItem="LQo-Au-P12" firstAttribute="top" secondItem="EdL-Mf-5RV" secondAttribute="top" id="e9N-7b-cRD"/>
                             <constraint firstItem="Inv-33-okm" firstAttribute="bottom" secondItem="ePa-hO-BsB" secondAttribute="bottom" id="qa9-2m-z6a"/>
                             <constraint firstItem="00k-rq-zLa" firstAttribute="height" secondItem="Tay-jI-KPv" secondAttribute="height" multiplier="1.1" id="sAs-Pd-MeF"/>
                         </constraints>
@@ -411,6 +419,7 @@
                     <navigationItem key="navigationItem" largeTitleDisplayMode="always" id="pj1-5P-hkx"/>
                     <connections>
                         <outlet property="idTextField" destination="bxW-W4-SYk" id="0iG-Zt-et2"/>
+                        <outlet property="loadingIndicator" destination="LQo-Au-P12" id="H9N-p2-jnD"/>
                         <outlet property="loginButton" destination="iOo-HP-0Rn" id="BFE-hh-WPl"/>
                         <outlet property="passwordTextField" destination="ogx-XH-Eyu" id="uKx-KX-81V"/>
                         <outlet property="registerButton" destination="aHO-q2-F2n" id="5GJ-uK-sse"/>

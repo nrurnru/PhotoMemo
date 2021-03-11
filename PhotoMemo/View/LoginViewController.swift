@@ -18,6 +18,7 @@ class LoginViewController: UIViewController {
     @IBOutlet var registerButton: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var titleLabel: UIScrollView!
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
     private let disposeBag = DisposeBag()
     var viewModel: LoginViewModel!
@@ -71,6 +72,10 @@ class LoginViewController: UIViewController {
                     }
                 }
         }.disposed(by: disposeBag)
+        
+        viewModel.isLoadingIndicatorAnimating
+            .bind(to: loadingIndicator.rx.isAnimating)
+            .disposed(by: disposeBag)
     }
     
     private func bindGesture() {

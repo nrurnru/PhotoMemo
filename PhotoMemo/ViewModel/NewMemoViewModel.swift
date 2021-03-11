@@ -22,7 +22,7 @@ final class NewMemoViewModel {
     let cancelButtonTapped = PublishRelay<Void>()
     let addedMemoImage = PublishRelay<UIImage?>()
     let imageURL = PublishRelay<String>()
-    let isLoadingIndicatorHidden = BehaviorRelay<Bool>(value: true)
+    let isLoadingIndicatorAnimating = BehaviorRelay<Bool>(value: false)
     
     init(coordinator: SceneCoordinatorType, network: Network) {
         self.coordinator = coordinator
@@ -30,13 +30,16 @@ final class NewMemoViewModel {
         
         saveButtonTapped.withLatestFrom(addedMemoImage.startWith(nil)).bind { image in
             if let image = image {
-                self.isLoadingIndicatorHidden.accept(false)
+                self.isLoadingIndicatorAnimating.accept(true)
                 self.network.uploadImage(image: image)
                     .subscribe { url in
                         self.imageURL.accept(url)
                     } onFailure: { error in
                         print(error.localizedDescription)
-                    }.disposed(by: self.disposeBag)
+                    } onDisposed: {
+                        self.isLoadingIndicatorAnimating.accept(false)
+                    }
+                    .disposed(by: self.disposeBag)
             } else {
                 self.imageURL.accept("")
             }

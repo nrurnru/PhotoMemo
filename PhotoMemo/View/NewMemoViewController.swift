@@ -51,8 +51,8 @@ class NewMemoViewController: UIViewController {
             self.saveButton.isEnabled = false
         }.disposed(by: disposeBag)
         
-        viewModel.isLoadingIndicatorHidden
-            .bind(to: self.loadingIndicatorView.rx.isHidden)
+        viewModel.isLoadingIndicatorAnimating
+            .bind(to: self.loadingIndicatorView.rx.isAnimating)
             .disposed(by: disposeBag)
     }
     

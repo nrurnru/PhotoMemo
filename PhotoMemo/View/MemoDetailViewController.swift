@@ -85,8 +85,8 @@ class MemoDetailViewController: UIViewController {
             .bind(to: self.saveButton.rx.isEnabled)
             .disposed(by: disposeBag)
         
-        viewModel.isLoadingIndicatorHidden
-            .bind(to: self.loadingIndicatorView.rx.isHidden)
+        viewModel.isLoadingIndicatorAnimating
+            .bind(to: self.loadingIndicatorView.rx.isAnimating)
             .disposed(by: disposeBag)
     }
     
