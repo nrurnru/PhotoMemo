@@ -240,7 +240,7 @@
                                 <rect key="frame" x="0.0" y="140" width="414" height="722"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Csf-fH-ozL">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="712"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="722"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="e6V-Ak-Ec4">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="233"/>
@@ -253,33 +253,41 @@
                                                     <outletCollection property="gestureRecognizers" destination="I8i-vg-9Ul" appends="YES" id="zaT-6t-qvG"/>
                                                 </connections>
                                             </imageView>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="1" verticalHuggingPriority="1" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" scrollEnabled="NO" text="메모를 입력하세요" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="44h-Es-A7H">
-                                                <rect key="frame" x="0.0" y="233" width="414" height="479"/>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="1" verticalHuggingPriority="1" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" scrollEnabled="NO" keyboardDismissMode="onDrag" text="메모를 입력하세요" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="44h-Es-A7H">
+                                                <rect key="frame" x="0.0" y="233" width="414" height="489"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <color key="textColor" systemColor="labelColor"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
+                                            <view contentMode="scaleToFill" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="hOH-nM-iWF" userLabel="KeyboardRegion">
+                                                <rect key="frame" x="0.0" y="722" width="414" height="0.0"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" id="Jcc-VV-SQZ"/>
+                                                </constraints>
+                                            </view>
                                         </subviews>
                                         <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="hOH-nM-iWF" secondAttribute="bottom" id="0jo-cZ-p7r"/>
                                             <constraint firstItem="44h-Es-A7H" firstAttribute="leading" secondItem="Csf-fH-ozL" secondAttribute="leading" id="Pqg-m3-4up"/>
+                                            <constraint firstItem="hOH-nM-iWF" firstAttribute="leading" secondItem="Csf-fH-ozL" secondAttribute="leading" id="SKa-04-xKy"/>
+                                            <constraint firstItem="hOH-nM-iWF" firstAttribute="top" secondItem="44h-Es-A7H" secondAttribute="bottom" id="Ufb-zb-D9l"/>
                                             <constraint firstAttribute="trailing" secondItem="e6V-Ak-Ec4" secondAttribute="trailing" id="cGt-uZ-30C"/>
                                             <constraint firstItem="e6V-Ak-Ec4" firstAttribute="leading" secondItem="Csf-fH-ozL" secondAttribute="leading" id="ccr-F4-0MD"/>
                                             <constraint firstItem="44h-Es-A7H" firstAttribute="top" secondItem="e6V-Ak-Ec4" secondAttribute="bottom" id="jFb-Io-MAA"/>
                                             <constraint firstItem="e6V-Ak-Ec4" firstAttribute="top" secondItem="Csf-fH-ozL" secondAttribute="top" id="kIz-8G-a34"/>
-                                            <constraint firstAttribute="bottom" secondItem="44h-Es-A7H" secondAttribute="bottom" id="lST-nN-BnB"/>
                                             <constraint firstAttribute="trailing" secondItem="44h-Es-A7H" secondAttribute="trailing" id="no4-nM-NVj"/>
+                                            <constraint firstAttribute="trailing" secondItem="hOH-nM-iWF" secondAttribute="trailing" id="rRn-zX-nSd"/>
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="Csf-fH-ozL" firstAttribute="top" secondItem="PUp-HB-OYW" secondAttribute="top" id="7Xb-yP-cV6"/>
                                     <constraint firstItem="Csf-fH-ozL" firstAttribute="leading" secondItem="PUp-HB-OYW" secondAttribute="leading" id="GDk-OH-Rrm"/>
                                     <constraint firstItem="PUp-HB-OYW" firstAttribute="trailing" secondItem="Csf-fH-ozL" secondAttribute="trailing" id="XYx-VQ-Y00"/>
                                     <constraint firstItem="Csf-fH-ozL" firstAttribute="centerX" secondItem="aDX-8x-mHF" secondAttribute="centerX" id="jU2-oA-wIz"/>
                                     <constraint firstItem="PUp-HB-OYW" firstAttribute="bottom" secondItem="Csf-fH-ozL" secondAttribute="bottom" id="rLA-JV-2uT"/>
-                                    <constraint firstItem="5WW-2L-Q4U" firstAttribute="bottom" secondItem="Csf-fH-ozL" secondAttribute="bottom" priority="250" constant="10" id="wv8-5U-IZ5"/>
+                                    <constraint firstItem="5WW-2L-Q4U" firstAttribute="bottom" secondItem="Csf-fH-ozL" secondAttribute="bottom" priority="250" id="wv8-5U-IZ5"/>
                                 </constraints>
                                 <viewLayoutGuide key="contentLayoutGuide" id="PUp-HB-OYW"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="5WW-2L-Q4U"/>
@@ -313,6 +321,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="cancelButton" destination="aci-WT-mRV" id="xsZ-bb-1rp"/>
+                        <outlet property="keyboardRegionHeight" destination="Jcc-VV-SQZ" id="EQH-0D-yBT"/>
                         <outlet property="loadingIndicatorView" destination="0CO-rZ-kaI" id="KV8-rY-vDF"/>
                         <outlet property="memoImageView" destination="e6V-Ak-Ec4" id="9CQ-77-Jd2"/>
                         <outlet property="memoScrollView" destination="aDX-8x-mHF" id="P9T-vC-Wnu"/>

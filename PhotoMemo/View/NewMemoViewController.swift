@@ -16,19 +16,25 @@ class NewMemoViewController: UIViewController {
     @IBOutlet var memoImageView: UIImageView!
     @IBOutlet weak var loadingIndicatorView: UIActivityIndicatorView!
     @IBOutlet weak var memoScrollView: UIScrollView!
+    @IBOutlet weak var keyboardRegionHeight: NSLayoutConstraint!
     
     var viewModel: NewMemoViewModel!
     private var disposeBag = DisposeBag()
-    
-    let picker = UIImagePickerController()
+    private let picker = UIImagePickerController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         bindInput()
         bindOutput()
+        setupUI()
         setGesture()
-        picker.delegate = self
-        memoTextView.delegate = self
+        setDelegate()
+        setNotification()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        removeNotification()
     }
     
     private func bindInput() {
@@ -58,6 +64,10 @@ class NewMemoViewController: UIViewController {
             .disposed(by: disposeBag)
     }
     
+    private func setupUI() {
+        memoTextView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    }
+    
     private func setGesture() {
         let tapGesture = UITapGestureRecognizer()
         memoImageView.addGestureRecognizer(tapGesture)
@@ -65,6 +75,33 @@ class NewMemoViewController: UIViewController {
         tapGesture.rx.event.bind { recognizer in
             self.openLibrary()
         }.disposed(by: disposeBag)
+    }
+    
+    private func setDelegate() {
+        picker.delegate = self
+        memoTextView.delegate = self
+    }
+    
+    private func setNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc func keyboardWillShow(_ notification: Notification) {
+        let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let offset = keyboardSize.height - view.safeAreaInsets.bottom
+        keyboardRegionHeight.constant = offset
+        self.view.layoutIfNeeded()
+    }
+    
+    @objc func keyboardWillHide() {
+        keyboardRegionHeight.constant = 0
+        self.view.layoutIfNeeded()
+    }
+    
+    private func removeNotification() {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 }
 
