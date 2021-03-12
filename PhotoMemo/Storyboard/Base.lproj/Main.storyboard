@@ -89,7 +89,13 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </activityIndicatorView>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="UaV-PX-7Al">
+                            <view contentMode="scaleToFill" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="H4U-VN-PTC" userLabel="KeyBoardRegion">
+                                <rect key="frame" x="0.0" y="862" width="414" height="0.0"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" id="2fa-qS-WII"/>
+                                </constraints>
+                            </view>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="UaV-PX-7Al">
                                 <rect key="frame" x="0.0" y="140" width="414" height="722"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SaI-3I-B0D">
@@ -107,36 +113,25 @@
                                                 </connections>
                                             </imageView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="1" verticalHuggingPriority="1" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="999" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" keyboardDismissMode="onDrag" text="메모 들어갈 부분" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="IA6-Gj-RSo">
-                                                <rect key="frame" x="0.0" y="233" width="414" height="439"/>
+                                                <rect key="frame" x="0.0" y="233" width="414" height="489"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <color key="textColor" systemColor="labelColor"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
-                                            <view contentMode="scaleToFill" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="H4U-VN-PTC" userLabel="KeyBoardRegion">
-                                                <rect key="frame" x="0.0" y="672" width="414" height="50"/>
-                                                <color key="backgroundColor" systemColor="systemOrangeColor"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="50" id="2fa-qS-WII"/>
-                                                </constraints>
-                                            </view>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBlueColor"/>
                                         <constraints>
-                                            <constraint firstItem="H4U-VN-PTC" firstAttribute="leading" secondItem="SaI-3I-B0D" secondAttribute="leading" id="2EL-PN-3eU"/>
                                             <constraint firstAttribute="trailing" secondItem="IA6-Gj-RSo" secondAttribute="trailing" id="2Qk-Q8-e9Y"/>
-                                            <constraint firstAttribute="bottom" secondItem="H4U-VN-PTC" secondAttribute="bottom" id="7ZA-hy-hDH"/>
                                             <constraint firstItem="IA6-Gj-RSo" firstAttribute="leading" secondItem="SaI-3I-B0D" secondAttribute="leading" id="KdA-lY-sF6"/>
                                             <constraint firstItem="WSN-61-7f6" firstAttribute="top" secondItem="SaI-3I-B0D" secondAttribute="top" id="NSw-be-6RM"/>
                                             <constraint firstItem="WSN-61-7f6" firstAttribute="bottom" secondItem="IA6-Gj-RSo" secondAttribute="top" id="Nph-7o-6f5"/>
-                                            <constraint firstAttribute="trailing" secondItem="H4U-VN-PTC" secondAttribute="trailing" id="jOZ-g5-vqq"/>
+                                            <constraint firstAttribute="bottom" secondItem="IA6-Gj-RSo" secondAttribute="bottom" id="SWO-sA-OEX"/>
                                             <constraint firstItem="WSN-61-7f6" firstAttribute="trailing" secondItem="SaI-3I-B0D" secondAttribute="trailing" id="pII-it-cUr"/>
-                                            <constraint firstItem="H4U-VN-PTC" firstAttribute="top" secondItem="IA6-Gj-RSo" secondAttribute="bottom" id="qul-2J-2pA"/>
                                             <constraint firstItem="WSN-61-7f6" firstAttribute="leading" secondItem="SaI-3I-B0D" secondAttribute="leading" id="r55-fy-bl3"/>
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemPinkColor"/>
                                 <constraints>
                                     <constraint firstItem="SaI-3I-B0D" firstAttribute="top" secondItem="RJ8-qK-75f" secondAttribute="top" id="N1E-th-dEi"/>
                                     <constraint firstItem="Q1w-Ho-KLF" firstAttribute="bottom" secondItem="SaI-3I-B0D" secondAttribute="bottom" priority="250" id="N5C-r8-gbS"/>
@@ -152,10 +147,13 @@
                         <viewLayoutGuide key="safeArea" id="O9J-x7-JZR"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="H4U-VN-PTC" firstAttribute="top" secondItem="UaV-PX-7Al" secondAttribute="bottom" id="3IL-VH-r07"/>
                             <constraint firstItem="UaV-PX-7Al" firstAttribute="trailing" secondItem="O9J-x7-JZR" secondAttribute="trailing" id="7xr-yq-xH4"/>
+                            <constraint firstItem="O9J-x7-JZR" firstAttribute="bottom" secondItem="H4U-VN-PTC" secondAttribute="bottom" id="NtR-An-xDc"/>
                             <constraint firstItem="UaV-PX-7Al" firstAttribute="leading" secondItem="O9J-x7-JZR" secondAttribute="leading" id="S9d-h6-3zq"/>
+                            <constraint firstItem="H4U-VN-PTC" firstAttribute="leading" secondItem="O9J-x7-JZR" secondAttribute="leading" id="ZVf-zi-29L"/>
                             <constraint firstItem="UaV-PX-7Al" firstAttribute="top" secondItem="O9J-x7-JZR" secondAttribute="top" id="ad1-v9-Reb"/>
-                            <constraint firstItem="O9J-x7-JZR" firstAttribute="bottom" secondItem="UaV-PX-7Al" secondAttribute="bottom" id="fCK-aj-fAf"/>
+                            <constraint firstItem="H4U-VN-PTC" firstAttribute="trailing" secondItem="O9J-x7-JZR" secondAttribute="trailing" id="iKD-4s-Hhm"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
@@ -353,11 +351,6 @@
                             <constraint firstItem="0CO-rZ-kaI" firstAttribute="leading" secondItem="QS3-1M-fYw" secondAttribute="leading" id="tDZ-ad-VbK"/>
                             <constraint firstItem="hOH-nM-iWF" firstAttribute="leading" secondItem="QS3-1M-fYw" secondAttribute="leading" id="uOO-hA-avw"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="0CO-rZ-kaI"/>
-                            </mask>
-                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="메모 작성" id="P3w-a0-wHr">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="aci-WT-mRV"/>
@@ -556,12 +549,6 @@
         </systemColor>
         <systemColor name="systemBlueColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemOrangeColor">
-            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemPinkColor">
-            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

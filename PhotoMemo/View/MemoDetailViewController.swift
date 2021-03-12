@@ -29,10 +29,11 @@ class MemoDetailViewController: UIViewController {
         super.viewDidLoad()
         bindInput()
         bindOutput()
+        setupUI()
         setGesture()
         setNotification()
+        
         picker.delegate = self
-        memoTextView.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -94,6 +95,10 @@ class MemoDetailViewController: UIViewController {
             .disposed(by: disposeBag)
     }
     
+    private func setupUI() {
+        memoTextView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    }
+    
     private func setGesture() {
         let tapGesture = UITapGestureRecognizer()
         memoImageView.addGestureRecognizer(tapGesture)
@@ -137,14 +142,5 @@ extension MemoDetailViewController: UIImagePickerControllerDelegate, UINavigatio
         viewModel.addedMemoImage.accept(image)
         memoImageView.image = image
         dismiss(animated: true)
-    }
-}
-
-
-extension MemoDetailViewController: UITextViewDelegate {
-    func textViewDidChange(_ textView: UITextView) {
-        let bottomOffset = CGPoint(x: 0, y: memoScrollView.contentSize.height - memoScrollView.bounds.size.height)
-        guard bottomOffset.y > 0 else { return }
-        memoScrollView.setContentOffset(bottomOffset, animated: true)
     }
 }
