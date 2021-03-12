@@ -18,6 +18,8 @@ class MemoDetailViewController: UIViewController {
     @IBOutlet var memoImageView: UIImageView!
     @IBOutlet var cancelButton: UIBarButtonItem!
     @IBOutlet weak var loadingIndicatorView: UIActivityIndicatorView!
+    @IBOutlet weak var memoScrollView: UIScrollView!
+    @IBOutlet weak var keyboardRegionHeight: NSLayoutConstraint!
     
     var viewModel: MemoDetailViewModel!
     private var disposeBag = DisposeBag()
@@ -28,7 +30,9 @@ class MemoDetailViewController: UIViewController {
         bindInput()
         bindOutput()
         setGesture()
+        setNotification()
         picker.delegate = self
+        memoTextView.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -98,6 +102,28 @@ class MemoDetailViewController: UIViewController {
             self.openLibrary()
         }.disposed(by: disposeBag)
     }
+    
+    private func setNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    private func removeNotification() {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc private func keyboardWillShow(_ notification: Notification) {
+        let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let offset = keyboardSize.height - view.safeAreaInsets.bottom
+        keyboardRegionHeight.constant = offset
+        view.layoutIfNeeded()
+    }
+    
+    @objc private func keyboardWillHide() {
+        keyboardRegionHeight.constant = 0
+        view.layoutIfNeeded()
+    }
 }
 
 extension MemoDetailViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -111,5 +137,14 @@ extension MemoDetailViewController: UIImagePickerControllerDelegate, UINavigatio
         viewModel.addedMemoImage.accept(image)
         memoImageView.image = image
         dismiss(animated: true)
+    }
+}
+
+
+extension MemoDetailViewController: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        let bottomOffset = CGPoint(x: 0, y: memoScrollView.contentSize.height - memoScrollView.bounds.size.height)
+        guard bottomOffset.y > 0 else { return }
+        memoScrollView.setContentOffset(bottomOffset, animated: true)
     }
 }

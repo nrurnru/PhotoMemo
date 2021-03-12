@@ -121,14 +121,10 @@ extension NewMemoViewController: UIImagePickerControllerDelegate, UINavigationCo
 }
 
 extension NewMemoViewController: UITextViewDelegate {
-    func textViewDidChange(_ textView: UITextView) {
-        let bottomOffset = CGPoint(x: 0, y: memoScrollView.contentSize.height - memoScrollView.bounds.size.height)
-        guard bottomOffset.y > 0 else { return }
-        memoScrollView.setContentOffset(bottomOffset, animated: true)
-    }
-    
     func textViewDidBeginEditing(_ textView: UITextView) {
+        if memoTextView.textColor != UIColor.black {
             memoTextView.text = nil
             memoTextView.textColor = UIColor.black
+        }
     }
 }
