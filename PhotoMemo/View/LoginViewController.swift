@@ -19,6 +19,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var titleLabel: UIScrollView!
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var keyboardRegionHeight: NSLayoutConstraint!
     
     private let disposeBag = DisposeBag()
     var viewModel: LoginViewModel!
@@ -28,6 +29,13 @@ class LoginViewController: UIViewController {
         bindInput()
         bindOutput()
         bindGesture()
+        setupUI()
+        setNotification()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        removeNotification()
     }
     
     private func bindInput() {
@@ -46,10 +54,6 @@ class LoginViewController: UIViewController {
         registerButton.rx.tap
             .bind(to: viewModel.registerButtonTapped)
             .disposed(by: disposeBag)
-        
-        idTextField.rx.controlEvent(.editingDidBegin).bind { _ in
-            self.scrollView.setContentOffset(self.titleLabel.frame.origin, animated: true)
-            }.disposed(by: disposeBag)
     }
     
     private func bindOutput() {
@@ -85,5 +89,38 @@ class LoginViewController: UIViewController {
         tapGesture.rx.event.bind { _ in
             self.view.endEditing(true)
         }.disposed(by: disposeBag)
+    }
+    
+    private func setupUI() {
+        loginButton.backgroundColor = UIColor.systemBlue
+        loginButton.setTitleColor(.white, for: .normal)
+        loginButton.layer.cornerRadius = 5
+        loginButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        registerButton.backgroundColor = UIColor.systemBlue
+        registerButton.setTitleColor(.white, for: .normal)
+        registerButton.layer.cornerRadius = 5
+        registerButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+    }
+    
+    private func setNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc func keyboardWillShow(_ notification: Notification) {
+        let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let offset = keyboardSize.height - view.safeAreaInsets.bottom
+        keyboardRegionHeight.constant = offset
+        self.view.layoutIfNeeded()
+    }
+    
+    @objc func keyboardWillHide() {
+        keyboardRegionHeight.constant = 0
+        self.view.layoutIfNeeded()
+    }
+    
+    private func removeNotification() {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 }
