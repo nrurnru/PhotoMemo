@@ -366,22 +366,6 @@
             </objects>
             <point key="canvasLocation" x="2815.9420289855075" y="113.83928571428571"/>
         </scene>
-        <!--Settings-->
-        <scene sceneID="wDR-aX-tfx">
-            <objects>
-                <viewController storyboardIdentifier="SettingVC" id="q9p-dV-jFp" customClass="SettingViewController" customModule="PhotoMemo" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="hdB-oy-Tfq">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="2Tr-Cl-EHk"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Settings" image="gearshape.fill" catalog="system" id="9xO-7F-hcA"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gV4-hn-UqK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="821.73913043478262" y="835.71428571428567"/>
-        </scene>
         <!--Login View Controller-->
         <scene sceneID="lvV-vh-D60">
             <objects>
@@ -550,7 +534,6 @@
     <resources>
         <image name="AddPhoto_kor" width="708" height="495"/>
         <image name="arrow.clockwise.icloud" catalog="system" width="128" height="88"/>
-        <image name="gearshape.fill" catalog="system" width="128" height="121"/>
         <image name="icon" width="180" height="180"/>
         <image name="lock.slash" catalog="system" width="124" height="128"/>
         <image name="pencil.and.outline" catalog="system" width="128" height="128"/>

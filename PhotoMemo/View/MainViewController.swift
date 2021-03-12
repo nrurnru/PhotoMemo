@@ -8,8 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import SwiftKeychainWrapper
-import RealmSwift
+
 
 class MainViewController: UIViewController {
     var selectedItem: [Memo] = []
