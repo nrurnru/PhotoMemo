@@ -108,6 +108,7 @@ class MainViewController: UIViewController {
                     self.updateConstraintWithAnimation(of: self.searchBarHeight, to: 56)
                 } else {
                     self.updateConstraintWithAnimation(of: self.searchBarHeight, to: 0)
+                    self.view.endEditing(true)
                 }
             }.disposed(by: disposeBag)
         

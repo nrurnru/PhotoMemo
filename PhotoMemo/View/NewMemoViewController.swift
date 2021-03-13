@@ -75,6 +75,12 @@ class NewMemoViewController: UIViewController {
         tapGesture.rx.event.bind { recognizer in
             self.openLibrary()
         }.disposed(by: disposeBag)
+        
+        saveButton.rx.tap
+            .subscribe { _ in
+                self.memoTextView.resignFirstResponder()
+                self.view.endEditing(true)
+            }.disposed(by: disposeBag)
     }
     
     private func setDelegate() {

@@ -30,13 +30,14 @@ class MemoDetailViewController: UIViewController {
         bindOutput()
         setupUI()
         setGesture()
-        setNotification()
         
         picker.delegate = self
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        setNotification()
+        removeNotification()
     }
     
     private func bindInput(){
@@ -105,6 +106,12 @@ class MemoDetailViewController: UIViewController {
         tapGesture.rx.event.bind { recognizer in
             self.openLibrary()
         }.disposed(by: disposeBag)
+        
+        saveButton.rx.tap
+            .subscribe { _ in
+                self.view.endEditing(true)
+                self.memoTextView.resignFirstResponder()
+            }.disposed(by: disposeBag)
     }
     
     private func setNotification() {

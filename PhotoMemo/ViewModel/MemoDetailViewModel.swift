@@ -172,10 +172,10 @@ final class MemoDetailViewModel {
                     self.isLoadingIndicatorAnimating.accept(true)
                     self.network.uploadImage(image: image).subscribe { url in
                         self.modifyMemo(memo: self.memoRelay.value, text: text, imageURL: url)
+                        self.coordinator.close(animated: true).subscribe().disposed(by: self.disposeBag)
                     } onFailure: { (error) in
                         print(error.localizedDescription)
                     }.disposed(by: self.disposeBag)
-                    self.coordinator.close(animated: true).subscribe().disposed(by: self.disposeBag)
                 case .cancel:
                     break
                 }

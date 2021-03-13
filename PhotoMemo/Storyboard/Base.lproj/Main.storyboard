@@ -380,7 +380,7 @@
                                     <constraint firstAttribute="height" id="5tt-jI-bQC"/>
                                 </constraints>
                             </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ePa-hO-BsB">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="ePa-hO-BsB">
                                 <rect key="frame" x="0.0" y="140" width="414" height="722"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="00k-rq-zLa">
@@ -488,11 +488,6 @@
                             <constraint firstItem="LQo-Au-P12" firstAttribute="top" secondItem="EdL-Mf-5RV" secondAttribute="top" id="e9N-7b-cRD"/>
                             <constraint firstItem="hlR-TC-qeo" firstAttribute="leading" secondItem="Inv-33-okm" secondAttribute="leading" id="lbL-X3-XwC"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="LQo-Au-P12"/>
-                            </mask>
-                        </variation>
                     </view>
                     <navigationItem key="navigationItem" largeTitleDisplayMode="always" id="pj1-5P-hkx"/>
                     <connections>

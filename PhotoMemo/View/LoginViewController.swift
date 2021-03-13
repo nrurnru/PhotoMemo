@@ -35,6 +35,8 @@ class LoginViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         removeNotification()
+        idTextField.text = nil
+        passwordTextField.text = nil
     }
     
     private func bindInput() {
