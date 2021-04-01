@@ -20,7 +20,7 @@
 
 <img src="https://user-images.githubusercontent.com/53948757/111023620-66e2f500-841d-11eb-86bc-4145b9ebb064.gif" width="250">
 
-- 서버와 통신하여 회원가입을 하고, 로그인하여 jwt 토큰을 발급받아 RST API 통신에 사용합니다.
+- 서버와 통신하여 회원가입을 하고, 로그인하여 jwt 토큰을 발급받아 REST API 통신에 사용합니다.
 
 <br>
 
